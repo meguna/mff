@@ -1,49 +1,16 @@
-import React, { Component } from 'react';
-import './styles.css';
+import { connect } from 'react-redux';
+import {fetchRecipes, setSelectedRecipe} from '../Actions/index.js';
 
-class RecipeList extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {recipes: [], fetch_err: false}
-  }
+import RecipeList from './view.jsx';
 
-  componentDidMount() {
-    fetch(`http://localhost:3005/api/getrecipes`)
-      .then(function(res, err) {
-        if(res.status !== 200) {
-          this.setState({fetch_err: true});
-          return '{}';
-        } else {
-          console.log(res);
-          return res.json();
-        }
-      })
-      .then(parsedData => {
-        this.setState({recipes: parsedData})
-      })
-  }
+const mapStateToProps = state => state;
 
-  getRecipes() {
-    let recipes = this.state.recipes;
-    let newarr =  Object.keys(recipes).map(function(i) {
-      try {
-        return <div key={i}>
-                  <h1>{recipes[i].name}</h1>
-               </div>;
-      } catch(e) {
-        return <div key={i}><p>Coming Soon!</p></div>
-      }
-    })
-    return newarr;
-  }
+const mapDispatchToProps = {
+  fetchRecipes,
+  setSelectedRecipe
+};
 
-  render() {
-    return (
-      <div className="recipe-list-wrapper">
-        {this.getRecipes()} 
-      </div>
-    );
-  }
-}
-
-export default RecipeList;
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(RecipeList);
