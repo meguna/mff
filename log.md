@@ -1,5 +1,7 @@
 # Log
 
+Documenting my progress as I move through the project.
+
 ## May 17
 
 * planned database schema
@@ -23,3 +25,4 @@
 
 #### Notes
 * currently have CORS enabled on API for local development. take care when setting up production version
+* serviceworkers? 

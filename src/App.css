@@ -3,6 +3,10 @@ body {
   font-weight: 100;
 }
 
+.app-recipe-wrapper {
+  display: flex;
+}
+
 header.app-main-header {
   width: 100vw;
   text-align: center;

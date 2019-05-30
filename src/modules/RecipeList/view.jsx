@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './styles.css';
+import RecipeInfo from '../RecipeInfo';
 
 class RecipeList extends Component {
   constructor(props) {
@@ -25,18 +26,18 @@ class RecipeList extends Component {
 
     let recipes = this.props.recipes;
 
-
-
     return (
-      <div className="recipe-list-wrapper">
-      <div className='recipe-list-item-wrapper add-recipe-list-item-wrapper'>
-        <p>Add a recipe!</p>
-      </div>
-        {recipes.map(item => (
-          <div onClick={() => this.onRecipeClick(item.id)} key={item.id} className='recipe-list-item-wrapper'>
-             <p className={(item.id === this.props.selected_id ? "selected" : "blue")}> {item.name}</p>
+      <div className="recipe-everything-wrapper">
+        <div className="recipe-list-wrapper">
+          <div className='recipe-list-item-wrapper add-recipe-list-item-wrapper'>
+            <p>Add a recipe!</p>
           </div>
-        ))}
+            {recipes.map(item => (
+              <div onClick={() => this.onRecipeClick(item.id)} key={item.id} className='recipe-list-item-wrapper'>
+                 <p className={(item.id === this.props.selected_id ? "selected" : "blue")}> {item.name}</p>
+              </div>
+            ))}
+        </div>
       </div>
     );
   }
