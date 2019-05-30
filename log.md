@@ -22,6 +22,8 @@ Documenting my progress as I move through the project.
 * started this log to keep track of tasks & progress and to maintain motivation
 
 * set up redux! stores Selected Recipe and list of Recipes
+* preliminary styling: warm red as theme color
+* created simple RecipeInfo module to display the selected recipe's info
 
 #### Notes
 * currently have CORS enabled on API for local development. take care when setting up production version
