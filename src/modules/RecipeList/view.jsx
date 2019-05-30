@@ -15,8 +15,8 @@ class RecipeList extends Component {
     if (id !== this.props.selected_id) {
       this.props.setSelectedRecipe(id);   
     }
-    
   }
+
 
   render() {
     if (this.props.loading) {
@@ -25,12 +25,16 @@ class RecipeList extends Component {
 
     let recipes = this.props.recipes;
 
+
+
     return (
       <div className="recipe-list-wrapper">
+      <div className='recipe-list-item-wrapper add-recipe-list-item-wrapper'>
+        <p>Add a recipe!</p>
+      </div>
         {recipes.map(item => (
-          <div key={item.id} >
-             <h1 onClick={() => this.onRecipeClick(item.id)} 
-                 className={(item.id === this.props.selected_id ? "red" : "blue")}> {item.name}</h1>
+          <div onClick={() => this.onRecipeClick(item.id)} key={item.id} className='recipe-list-item-wrapper'>
+             <p className={(item.id === this.props.selected_id ? "selected" : "blue")}> {item.name}</p>
           </div>
         ))}
       </div>

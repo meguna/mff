@@ -4,9 +4,9 @@ import RecipeList from './modules/RecipeList';
 
 function App() {
   return (
-    <div className="App">
-      <header>Recipe Organization App</header>
-      <RecipeList/>
+    <div className="app">
+      <header className="app-main-header">In the Mood for Food</header>
+      <div className="app-recipelist"><RecipeList/></div>
     </div>
   );
 }

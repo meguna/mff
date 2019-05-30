@@ -1,10 +1,31 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+@font-face {
+  font-family: 'Brown';
+  src: url('/assets/fonts/Brown-Bold.otf');
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: 'Brown';
+  src: url('/assets/fonts/Brown-Regular.otf');
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: 'Brown';
+  src: url('/assets/fonts/Brown-Light.otf');
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: 'Brown';
+  src: url('/assets/fonts/Brown-Thin.otf');
+  font-weight: 100;
 }
 
 code {

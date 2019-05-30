@@ -1,6 +1,19 @@
-.red {
-	color: red;
+.recipe-list-item-wrapper {
+	padding:10px;
+	cursor: pointer;
+	border-bottom: 2px solid #F8EBE9;
 }
-.blue {
-	color: blue;
+
+.recipe-list-item-wrapper p {
+ 	font-weight: 500;
+	font-size: 2em;
+}
+
+.selected {
+	color: #FF320C;
+	transition: 0.1s;
+}
+
+.add-recipe-list-item-wrapper p {
+	color: #DFC7C3;
 }
