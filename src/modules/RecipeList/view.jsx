@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import './styles.css';
-import RecipeInfo from '../RecipeInfo';
 
 class RecipeList extends Component {
   constructor(props) {
@@ -14,7 +13,7 @@ class RecipeList extends Component {
 
   onRecipeClick(id) {
     if (id !== this.props.selected_id) {
-      this.props.setSelectedRecipe(id);   
+      this.props.setSelectedRecipe(id);
     }
   }
 
