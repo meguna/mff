@@ -16,7 +16,6 @@ class RecipeList extends Component {
     }
   }
 
-
   render() {
     const { loading, recipes, selected_id: selectedId } = this.props;
 

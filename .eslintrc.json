@@ -20,5 +20,6 @@
         "react"
     ],
     "rules": {
+        "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }]
     }
 }

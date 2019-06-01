@@ -1,5 +1,6 @@
 .recipe-list-item-wrapper {
 	padding:10px;
+	text-transform: capitalize;
 	cursor: pointer;
 	border-bottom: 2px solid var(--light-brown);
 }

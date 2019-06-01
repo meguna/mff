@@ -44,6 +44,17 @@ Documenting my progress as I move through the project.
 * more research & develop list of new features that need to be added
 * Add ESLint & Airbnb Style Guide
 * went through and linted EVERYTHING!
+* started adding functionality for GROUPING ingredients
+
+#### Notes
+* currently only support for recipes where ingredients have been grouped
+  (not where Group_id column is null). Consider two options: 
+  1. revising front end code so that ungrouped recipes are restructured so that
+  all ingredients are one group, mimicking group structure. OR 2. make sure 
+  that the Group_id field is always filled in on Form input when creating new
+  recipe (ie, set default value in mysql table for Group_id to 1). Leaning
+  towards 2. With #2, this means that we don't really need Ingredient_Groups
+  table? Just put them all in one thing. 
 
 ## To Do
 * MOVE INGREDIENT FETCH FUNCTION - DONT RE-RENDER MULTIPLE TIMES
@@ -53,3 +64,4 @@ Documenting my progress as I move through the project.
 * imperial / customary change! 
 * search functionality
 * i18n with i18next & react-i18next
+* React Native export

@@ -10,7 +10,6 @@
 	margin: 10px 0 5vh 0;
 	font-family: 'Brown', sans-serif;
 	font-weight: 300;
-
 }
 
 .recipe-info-notes {
@@ -22,9 +21,9 @@
 	font-weight: 300;
 }
 
-.recipe-info-ingredients-list li {
+.recipe-info-ingredients-list {
 	font-size: 1.5em;
-	padding: 10px;
+	list-style: none;
 }
 
 .recipe-info-label {
@@ -32,4 +31,22 @@
 	font-size: 1.5em;
 	font-weight: 500;
 	color: var(--medium-brown);
+}
+.recipe-info-ingredient-note {
+	color: var(--darker-medium-brown);
+	font-size: 0.8em;
+	padding-left: 10px;
+}
+
+.recipe-info-ingredients-list-group {
+	padding: 8px 0 8px 0;
+	border-top: 1px solid var(--medium-brown);
+}
+
+.recipe-info-ingredients-list .recipe-info-ingredients-list-group:first-child {
+	border-top: none;
+}
+
+.recipe-info-ingredients-item {
+	margin: 0;
 }

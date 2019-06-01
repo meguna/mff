@@ -41,18 +41,40 @@ class RecipeInfo extends Component {
         .catch(() => {
         });
 
+      // reorganize ingredients based on "group_id" parameter
+      // in order to organize DOM better
       const { ingredients } = this.state;
+
+
+      const max = ingredients.reduce((result, item = 0) => {
+        if (item.group_id > result) result = item.group_id;
+        return result;
+      }, 0);
+      const ingredientsGrouped = [];
+      for (let i = 0; i < max; i++) {
+        ingredientsGrouped.push([]);
+      }
+      ingredients.forEach((item) => {
+        ingredientsGrouped[item.group_id - 1].push(item);
+      });
+
       ings = (
-        <ul className="recipe-info-ingredients-list">
-          {ingredients.map(item => (
-            <li key={item.id}>
-              {item.name}
-              &mdash;
-              {item.amount}
-              {item.amount_unit}
-            </li>
+        <div className="recipe-info-ingredients-list">
+          {ingredientsGrouped.map((group,i) => (
+            <div className="recipe-info-ingredients-list-group" key={i}>
+              {group.map(item => (
+                <p key={item.id} className="recipe-info-ingredients-item">
+                  {item.name}
+                  &mdash;
+                  {item.amount}
+                  &nbsp;
+                  {item.amount_unit}
+                  <span className="recipe-info-ingredient-note">{item.notes}</span>
+                </p>
+              ))}
+            </div>
           ))}
-        </ul>
+        </div>
       );
     }
     return ings;
