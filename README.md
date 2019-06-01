@@ -25,13 +25,31 @@ Documenting my progress as I move through the project.
 * preliminary styling: warm red as theme color
 * created simple RecipeInfo module to display the selected recipe's info
 
+
 #### Notes
 * currently have CORS enabled on API for local development. take care when setting up production version
 * serviceworkers? 
 
+
+## May 31
+
+* Add method to grab list of ingredients from ingredient database
+* populate ingredient database with real information
+* updates to styles
+
+## June 1
+
+* establish global color variables in CSS
+* Create new group database
+* more research & develop list of new features that need to be added
+* Add ESLint & Airbnb Style Guide
+* went through and linted EVERYTHING!
+
 ## To Do
-* get real recipes to put in dummy database
-* set up ingredients database
-  * add to redux store
+* MOVE INGREDIENT FETCH FUNCTION - DONT RE-RENDER MULTIPLE TIMES
 * add CRUD operations to API? 
 * image handling
+* drag to change ingredient order
+* imperial / customary change! 
+* search functionality
+* i18n with i18next & react-i18next

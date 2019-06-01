@@ -8,8 +8,8 @@ function App() {
     <div className="app">
       <header className="app-main-header">In the Mood for Food</header>
       <div className="app-recipe-wrapper">
-          <div className="app-recipelist"><RecipeList/></div>
-          <div className="app-recipelist"><RecipeInfo/></div>
+        <div className="app-recipelist"><RecipeList /></div>
+        <div className="app-recipelist"><RecipeInfo /></div>
       </div>
 
     </div>

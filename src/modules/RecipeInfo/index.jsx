@@ -1,70 +1,88 @@
-// simple enough component, so Redux logic is combined with Component view. 
-// separate if becomes too complex. 
+// simple enough component, so Redux logic is combined with Component view.
+// separate if becomes too complex.
 
 import { connect } from 'react-redux';
 import React, { Component } from 'react';
 import './styles.css';
+import PropTypes from 'prop-types';
 
 class RecipeInfo extends Component {
   constructor(props) {
     super(props);
-    this.state = {ingredients: []}
+    this.state = { ingredients: [] };
   }
 
-  selected_recipe_info() {
+  SelectedRecipeInfo() {
     // database id's start at 1, array index starts at 0
     // probably bad practice, change to grab item using its ID instead of index
-    let selected = this.props.recipes[this.props.selected_id - 1];
+    const { recipes, selected_id: selectedId } = this.props;
+    const selected = recipes[selectedId - 1];
     return (
       <div>
-        <p className='recipe-info-name'>{selected.name}</p>
-        <p className='recipe-info-serves'>{selected.size}</p>
+        <p className="recipe-info-name">{selected.name}</p>
+        <p className="recipe-info-serves">{selected.size}</p>
         <p className="recipe-info-label">ingredients</p>
-        {this.fetch_ingredients()}
+        {this.fetchIngredients()}
         <p className="recipe-info-label">notes</p>
-        <p className='recipe-info-notes'>{selected.notes}</p>
+        <p className="recipe-info-notes">{selected.notes}</p>
       </div>
-    )
+    );
   }
 
-  fetch_ingredients() {
-    let ings = <div></div>;
+  fetchIngredients() {
+    let ings = <div />;
+    const { selected_id: selectedId } = this.props;
+    if (selectedId) {
+      fetch(`http://localhost:3005/api/getingredients/${selectedId}`)
+        .then(res => res.json())
+        .then((res) => {
+          this.setState({ ingredients: res });
+        })
+        .catch(() => {
+        });
 
-    if (this.props.selected_id) {
-      fetch('http://localhost:3005/api/getingredients/' + this.props.selected_id)
-      .then(res => res.json())
-      .then(res => {
-        this.setState({ingredients: res})
-      })
-      .catch(() => {
-      })
-
-      let ing_list = this.state.ingredients;
-      ings = <ul className='recipe-info-ingredients-list'>
-              {ing_list.map(item => (
-                <li key={item.id}>{item.name} &mdash; {item.amount} {item.amount_unit}</li>
-              ))}
-             </ul>
+      const { ingredients } = this.state;
+      ings = (
+        <ul className="recipe-info-ingredients-list">
+          {ingredients.map(item => (
+            <li key={item.id}>
+              {item.name}
+              &mdash;
+              {item.amount}
+              {item.amount_unit}
+            </li>
+          ))}
+        </ul>
+      );
     }
     return ings;
   }
 
-  no_selected_recipe() {
-    return (
-      <div>
-        <p>Nothing selected</p>
-      </div>
-    )
-  }
-
   render() {
-    if (this.props.selected_id && !this.props.loading && !this.props.error) {
-      return <div>{this.selected_recipe_info()}</div>
+    const { selected_id: selectedId, loading, error } = this.props;
+    let renderVal;
+    if (selectedId && !loading && !error) {
+      renderVal = <div>{this.SelectedRecipeInfo()}</div>;
     } else {
-      return <div>{this.no_selected_recipe()}</div>
-    }    
+      renderVal = <div><p>Nothing selected</p></div>;
+    }
+    return renderVal;
   }
 }
+
+RecipeInfo.propTypes = {
+  recipes: PropTypes.arrayOf(PropTypes.object),
+  error: PropTypes.bool,
+  loading: PropTypes.bool,
+  selected_id: PropTypes.number,
+};
+
+RecipeInfo.defaultProps = {
+  recipes: {},
+  error: false,
+  loading: false,
+  selected_id: null,
+};
 
 const mapStateToProps = state => state;
 

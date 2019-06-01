@@ -1,16 +1,16 @@
 import { connect } from 'react-redux';
-import {fetchRecipes, setSelectedRecipe} from '../Actions/index.js';
+import { fetchRecipes, setSelectedRecipe } from '../Actions/index';
 
-import RecipeList from './view.jsx';
+import RecipeList from './view';
 
 const mapStateToProps = state => state;
 
 const mapDispatchToProps = {
   fetchRecipes,
-  setSelectedRecipe
+  setSelectedRecipe,
 };
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(RecipeList);
