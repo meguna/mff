@@ -1,8 +1,3 @@
-body {
-  font-family: 'Brown', sans-serif;
-  font-weight: 100;
-}
-
 .app-recipe-wrapper {
   display: flex;
 }
@@ -15,7 +10,7 @@ header.app-main-header {
   font-weight: 700;
   box-sizing: border-box;
   margin: 0;
-  background-color: #FF320C;
+  background-color: var(--key-red);
   text-transform: uppercase;
   color: #fff;
 }

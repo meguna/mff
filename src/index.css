@@ -1,34 +1,51 @@
-body {
-  margin: 0;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
 @font-face {
   font-family: 'Brown';
-  src: url('/assets/fonts/Brown-Bold.otf');
+  src: url('./assets/fonts/Brown-Bold.otf') format("opentype");
   font-weight: 700;
 }
 
 @font-face {
   font-family: 'Brown';
-  src: url('/assets/fonts/Brown-Regular.otf');
+  src: url('./assets/fonts/Brown-Regular.otf') format("opentype");
   font-weight: 500;
 }
 
 @font-face {
   font-family: 'Brown';
-  src: url('/assets/fonts/Brown-Light.otf');
+  src: url('./assets/fonts/Brown-Light.otf') format("opentype");
   font-weight: 300;
 }
 
 @font-face {
   font-family: 'Brown';
-  src: url('/assets/fonts/Brown-Thin.otf');
+  src: url('./assets/fonts/Brown-Thin.otf') format("opentype");
   font-weight: 100;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+@font-face {
+  font-family: 'Domaine Text';
+  src: url('./assets/fonts/DomaineText-Regular.otf') format("opentype");
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: 'Domaine Text';
+  src: url('./assets/fonts/DomaineText-Light.otf');
+  font-weight: 100;
+}
+
+:root {
+  --key-red: #FF320C;
+  --medium-brown: #DFC7C3;
+  --light-brown: #F8EBE9;
+}
+
+body {
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-family: 'Brown', sans-serif;
+  font-weight: 100;
+  overflow-x: hidden;
+  width: 100vw;
 }

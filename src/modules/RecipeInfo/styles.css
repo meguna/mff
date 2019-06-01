@@ -1,11 +1,35 @@
 .recipe-info-name {
-	font-size: 3em;
+	font-weight: 500;
+	font-size: 4em;
+	text-transform: capitalize;
+	margin: 0;
 }
 
 .recipe-info-serves {
 	font-size: 1.5em;
+	margin: 10px 0 5vh 0;
+	font-family: 'Brown', sans-serif;
+	font-weight: 300;
+
 }
 
 .recipe-info-notes {
 	font-size: 1.5em;
+}
+
+.recipe-info-ingredients-list, .recipe-info-notes {
+	font-family: 'Domaine Text', serif;
+	font-weight: 300;
+}
+
+.recipe-info-ingredients-list li {
+	font-size: 1.5em;
+	padding: 10px;
+}
+
+.recipe-info-label {
+	text-transform: uppercase;
+	font-size: 1.5em;
+	font-weight: 500;
+	color: var(--medium-brown);
 }
