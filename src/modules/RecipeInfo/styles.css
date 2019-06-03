@@ -50,3 +50,7 @@
 .recipe-info-ingredients-item {
 	margin: 0;
 }
+.recipe-info-error-message {
+	font-size: 2em;
+	font-weight: 300;
+}

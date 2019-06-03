@@ -25,7 +25,8 @@ Documenting my progress as I move through the project.
 * created simple RecipeInfo module to display the selected recipe's info
 
 #### Notes
-* currently have CORS enabled on API for local development. take care when setting up production version
+* currently have CORS enabled on API for local development. 
+  take care when setting up production version
 * serviceworkers? 
 
 
@@ -54,7 +55,17 @@ Documenting my progress as I move through the project.
   towards 2. With #2, this means that we don't really need Ingredient_Groups
   table? Just put them all in one thing. 
 
+## June 2
+
+* change database schema - groups now listed in Recipe_ingredients table
+* create new fields Create_Time and Update_Time to sort by
+
+## June 3
+
 ## To Do
+* sort 
+* "load more" ingredients list
+* "baking" vs "cooking" filter
 * MOVE INGREDIENT FETCH FUNCTION - DONT RE-RENDER MULTIPLE TIMES
 * add CRUD operations to API? 
 * image handling

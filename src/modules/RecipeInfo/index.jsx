@@ -45,7 +45,6 @@ class RecipeInfo extends Component {
       // in order to organize DOM better
       const { ingredients } = this.state;
 
-
       const max = ingredients.reduce((result, item = 0) => {
         if (item.group_id > result) result = item.group_id;
         return result;
@@ -60,7 +59,7 @@ class RecipeInfo extends Component {
 
       ings = (
         <div className="recipe-info-ingredients-list">
-          {ingredientsGrouped.map((group,i) => (
+          {ingredientsGrouped.map((group, i) => (
             <div className="recipe-info-ingredients-list-group" key={i}>
               {group.map(item => (
                 <p key={item.id} className="recipe-info-ingredients-item">
@@ -69,7 +68,9 @@ class RecipeInfo extends Component {
                   {item.amount}
                   &nbsp;
                   {item.amount_unit}
-                  <span className="recipe-info-ingredient-note">{item.notes}</span>
+                  <span className="recipe-info-ingredient-note">
+                    {item.notes}
+                  </span>
                 </p>
               ))}
             </div>
@@ -86,7 +87,11 @@ class RecipeInfo extends Component {
     if (selectedId && !loading && !error) {
       renderVal = <div>{this.SelectedRecipeInfo()}</div>;
     } else {
-      renderVal = <div><p>Nothing selected</p></div>;
+      renderVal = (
+        <div className="recipe-info-error-message">
+          <p>Click on a recipe to view its details!</p>
+        </div>
+      );
     }
     return renderVal;
   }

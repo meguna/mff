@@ -25,6 +25,11 @@ class RecipeList extends Component {
 
     return (
       <div className="recipe-everything-wrapper">
+        <select id="sort-by-select">
+          <option value="update_date">Most Recently Edited</option>
+          <option value="create_date">Most Recently Created</option>
+          <option value="name">Name</option>
+        </select>
         <div className="recipe-list-wrapper">
           <div className="recipe-list-item-wrapper add-recipe-list-item-wrapper">
             <p>Add a recipe!</p>
