@@ -1,3 +1,9 @@
+#recipe-list {
+	width: 30vw;
+	overflow-y: scroll;
+	height:70vh;
+}
+
 .recipe-list-item-wrapper {
 	padding:10px;
 	text-transform: capitalize;
@@ -18,6 +24,11 @@
 	transition: 0.1s;
 }
 
-.add-recipe-list-item-wrapper p {
+.list-item-wrapper-link p {
 	color: var(--medium-brown);
+}
+
+.load-more-button {
+	color: var(--darker-medium-brown);
+	padding: 10px;
 }

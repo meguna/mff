@@ -23,9 +23,9 @@ const fetchRecipesFailure = error => ({
   payload: error,
 });
 
-export const fetchRecipes = () => (dispatch) => {
+export const fetchRecipes = offset => (dispatch) => {
   dispatch(fetchRecipesStart);
-  fetch('http://localhost:3005/api/getrecipes')
+  fetch(`http://localhost:3005/api/getrecipes/${offset}`)
     .then(res => res.json())
     .then(res => dispatch(fetchRecipesSuccess(res)))
     .catch(err => dispatch(fetchRecipesFailure(err)));

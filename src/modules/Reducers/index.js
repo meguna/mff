@@ -5,11 +5,14 @@ import {
   SET_SELECTED_RECIPE,
 } from '../Actions/ActionTypes';
 
+const LIST_FETCH_COUNT = 5;
+
 const INITIAL_STATE = {
   recipes: [],
-  selected_id: null,
+  selectedId: -1,
   error: null,
   loading: false,
+  listOffset: 0,
 };
 
 const reducer = (state = INITIAL_STATE, action) => {
@@ -19,28 +22,32 @@ const reducer = (state = INITIAL_STATE, action) => {
         recipes: state.recipes,
         error: null,
         loading: true,
-        selected_id: state.selected_id,
+        selectedId: state.selectedId,
+        listOffset: state.listOffset,
       };
     case FETCH_RECIPES_SUCCESS:
       return {
-        recipes: [...state.recipes, action.payload][0],
+        recipes: [...state.recipes, ...action.payload],
         error: null,
         loading: false,
-        selected_id: state.selected_id,
+        selectedId: state.selectedId,
+        listOffset: state.listOffset + LIST_FETCH_COUNT,
       };
     case FETCH_RECIPES_FAILURE:
       return {
         recipes: state.recipes,
         error: action.payload,
         loading: false,
-        selected_id: state.selected_id,
+        selectedId: state.selectedId,
+        listOffset: state.listOffset,
       };
     case SET_SELECTED_RECIPE:
       return {
         recipes: state.recipes,
         error: state.error,
         loading: state.loading,
-        selected_id: action.payload,
+        selectedId: action.payload,
+        listOffset: state.listOffset,
       };
     default:
       return state;

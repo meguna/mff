@@ -6,94 +6,168 @@ import React, { Component } from 'react';
 import './styles.css';
 import PropTypes from 'prop-types';
 
+const Ingredient = ({ ingredient }) => (
+  <p key={ingredient.id} className="recipe-info-ingredients-item">
+    {ingredient.name}
+    &mdash;
+    {ingredient.amount}
+    &nbsp;
+    {ingredient.amount_unit}
+    <span className="recipe-info-ingredient-note">
+      {ingredient.notes}
+    </span>
+  </p>
+);
+
+Ingredient.propTypes = {
+  ingredient: PropTypes.object,
+};
+
+Ingredient.defaultProps = {
+  ingredient: {},
+};
+
+const groupLetterLabel = (int, groupCount) => {
+  if (groupCount > 1) {
+    return (
+      <span className="recipe-info-group-letter-label">
+        {String.fromCharCode(65 + int)}
+      </span>
+    );
+  }
+};
+
+const IngredientGroup = ({ ingredients, groups, groupCount }) => {
+  const ingredientGroups = [];
+  for (let i = 1; i < groupCount + 1; i++) {
+    ingredientGroups.push(ingredients.filter(item => item.group_id === i));
+  }
+  return (
+    <div className="recipe-info-ingredients-list">
+      {ingredientGroups.map((group, i) => (
+        <div className="recipe-info-ingredients-list-group" key={i}>
+          <p className="recipe-info-group-note">{groups[i].notes}</p>
+          {groupLetterLabel(i, groupCount)}
+          <div className="recipe-info-ingredients-item-parent">
+            {group.map(ingredient => (
+              <Ingredient ingredient={ingredient} key={ingredient.id} />
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+IngredientGroup.propTypes = {
+  ingredients: PropTypes.arrayOf(PropTypes.object),
+  groups: PropTypes.arrayOf(PropTypes.object),
+  groupCount: PropTypes.number,
+};
+
+IngredientGroup.defaultProps = {
+  ingredients: [],
+  groups: [{}],
+  groupCount: null,
+};
+
+const RecipeNotes = ({ notes }) => (
+  <div>
+    <p className="recipe-info-label">notes</p>
+    <p className="recipe-info-notes">{notes}</p>
+  </div>
+);
+
+RecipeNotes.propTypes = {
+  notes: PropTypes.string,
+};
+
+RecipeNotes.defaultProps = {
+  notes: '',
+};
+
 class RecipeInfo extends Component {
   constructor(props) {
     super(props);
-    this.state = { ingredients: [] };
+    this.state = {
+      ingredients: [],
+      groups: [],
+      loadingGroups: true,
+      groupCount: 1,
+      loadingIngredients: true,
+    };
   }
 
-  SelectedRecipeInfo() {
-    // database id's start at 1, array index starts at 0
-    // probably bad practice, change to grab item using its ID instead of index
-    const { recipes, selected_id: selectedId } = this.props;
-    const selected = recipes[selectedId - 1];
+  componentDidUpdate(prevProps) {
+    const { selectedId } = this.props;
+    if (selectedId !== prevProps.selectedId) {
+      this.fetchIngredients();
+      this.fetchGroups();
+    }
+  }
+
+  fetchGroups() {
+    const { selectedId } = this.props;
+    this.setState({ loadingGroups: true });
+    fetch(`http://localhost:3005/api/getingredientgroups/${selectedId}`)
+      .then(res => res.json())
+      .then((res) => {
+        this.setState({ groups: res });
+        this.setState({ groupCount: res[res.length - 1].group_id });
+        this.setState({ loadingGroups: false });
+      })
+      .catch(() => {
+        this.setState({ error: true });
+      });
+  }
+
+  fetchIngredients() {
+    const { selectedId } = this.props;
+    this.setState({ loadingIngredients: true });
+    fetch(`http://localhost:3005/api/getingredients/${selectedId}`)
+      .then(res => res.json())
+      .then((res) => {
+        this.setState({ ingredients: res, loadingIngredients: false });
+      })
+      .catch(() => {
+        this.setState({ error: true });
+      });
+  }
+
+  render() {
+    const {
+      selectedId,
+      loading,
+      error,
+      recipes,
+    } = this.props;
+    const {
+      loadingGroups,
+      groups,
+      groupCount,
+      ingredients,
+      loadingIngredients,
+    } = this.state;
+    if (selectedId === -1) {
+      return <p className="housekeeping-message">Select a recipe to view it!</p>;
+    }
+    if (loading || error || loadingGroups || loadingIngredients) {
+      return <p />;
+    }
+    const selected = recipes.filter(item => item.id === selectedId)[0];
     return (
       <div>
         <p className="recipe-info-name">{selected.name}</p>
         <p className="recipe-info-serves">{selected.size}</p>
         <p className="recipe-info-label">ingredients</p>
-        {this.fetchIngredients()}
-        <p className="recipe-info-label">notes</p>
-        <p className="recipe-info-notes">{selected.notes}</p>
+        <IngredientGroup
+          ingredients={ingredients}
+          groups={groups}
+          groupCount={groupCount}
+        />
+        <RecipeNotes notes={selected.notes} />
       </div>
     );
-  }
-
-  fetchIngredients() {
-    let ings = <div />;
-    const { selected_id: selectedId } = this.props;
-    if (selectedId) {
-      fetch(`http://localhost:3005/api/getingredients/${selectedId}`)
-        .then(res => res.json())
-        .then((res) => {
-          this.setState({ ingredients: res });
-        })
-        .catch(() => {
-        });
-
-      // reorganize ingredients based on "group_id" parameter
-      // in order to organize DOM better
-      const { ingredients } = this.state;
-
-      const max = ingredients.reduce((result, item = 0) => {
-        if (item.group_id > result) result = item.group_id;
-        return result;
-      }, 0);
-      const ingredientsGrouped = [];
-      for (let i = 0; i < max; i++) {
-        ingredientsGrouped.push([]);
-      }
-      ingredients.forEach((item) => {
-        ingredientsGrouped[item.group_id - 1].push(item);
-      });
-
-      ings = (
-        <div className="recipe-info-ingredients-list">
-          {ingredientsGrouped.map((group, i) => (
-            <div className="recipe-info-ingredients-list-group" key={i}>
-              {group.map(item => (
-                <p key={item.id} className="recipe-info-ingredients-item">
-                  {item.name}
-                  &mdash;
-                  {item.amount}
-                  &nbsp;
-                  {item.amount_unit}
-                  <span className="recipe-info-ingredient-note">
-                    {item.notes}
-                  </span>
-                </p>
-              ))}
-            </div>
-          ))}
-        </div>
-      );
-    }
-    return ings;
-  }
-
-  render() {
-    const { selected_id: selectedId, loading, error } = this.props;
-    let renderVal;
-    if (selectedId && !loading && !error) {
-      renderVal = <div>{this.SelectedRecipeInfo()}</div>;
-    } else {
-      renderVal = (
-        <div className="recipe-info-error-message">
-          <p>Click on a recipe to view its details!</p>
-        </div>
-      );
-    }
-    return renderVal;
   }
 }
 
@@ -101,14 +175,14 @@ RecipeInfo.propTypes = {
   recipes: PropTypes.arrayOf(PropTypes.object),
   error: PropTypes.bool,
   loading: PropTypes.bool,
-  selected_id: PropTypes.number,
+  selectedId: PropTypes.number,
 };
 
 RecipeInfo.defaultProps = {
   recipes: {},
   error: false,
   loading: false,
-  selected_id: null,
+  selectedId: 1,
 };
 
 const mapStateToProps = state => state;

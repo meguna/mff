@@ -3,52 +3,57 @@ import './styles.css';
 import PropTypes from 'prop-types';
 
 class RecipeList extends Component {
-  componentDidMount() {
-    const { fetchRecipes } = this.props;
-    fetchRecipes();
-  }
-
   onRecipeClick(id) {
-    const { selected_id: selectedId, setSelectedRecipe } = this.props;
+    const { selectedId, setSelectedRecipe } = this.props;
 
     if (id !== selectedId) {
       setSelectedRecipe(id);
     }
   }
 
-  render() {
-    const { loading, recipes, selected_id: selectedId } = this.props;
+  fetchMoreRecipes() {
+    const { fetchRecipes, listOffset } = this.props;
+    fetchRecipes(listOffset);
+  }
 
-    if (loading) {
-      return <p>Loading...</p>;
+
+  render() {
+    const {
+      recipes, selectedId, loading, error,
+    } = this.props;
+    if (loading || error) {
+      return (
+        <p className="housekeeping-message">Loading...</p>
+      );
     }
 
     return (
-      <div className="recipe-everything-wrapper">
-        <select id="sort-by-select">
-          <option value="update_date">Most Recently Edited</option>
-          <option value="create_date">Most Recently Created</option>
-          <option value="name">Name</option>
-        </select>
-        <div className="recipe-list-wrapper">
-          <div className="recipe-list-item-wrapper add-recipe-list-item-wrapper">
-            <p>Add a recipe!</p>
-          </div>
-          {recipes.map(item => (
+      <div>
+        {recipes.map(recipe => (
+          <div key={recipe.id}>
             <div
               role="link"
               tabIndex="0"
-              onClick={() => this.onRecipeClick(item.id)}
-              onKeyDown={() => this.onRecipeClick(item.id)}
-              key={item.id}
+              onClick={() => this.onRecipeClick(recipe.id)}
+              onKeyDown={() => this.onRecipeClick(recipe.id)}
               className="recipe-list-item-wrapper"
             >
-              <p className={(item.id === selectedId ? 'selected' : 'blue')}>
-                {item.name}
+              <p className={(recipe.id === selectedId ? 'selected' : 'blue')}>
+                {recipe.name}
               </p>
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
+        <button
+          type="button"
+          role="link"
+          tabIndex="0"
+          onClick={() => this.fetchMoreRecipes()}
+          onKeyDown={() => this.fetchMoreRecipes()}
+          className="housekeeping-message load-more-button"
+        >
+          Load More...
+        </button>
       </div>
     );
   }
@@ -56,18 +61,22 @@ class RecipeList extends Component {
 
 RecipeList.propTypes = {
   recipes: PropTypes.arrayOf(PropTypes.object),
+  error: PropTypes.bool,
   loading: PropTypes.bool,
-  selected_id: PropTypes.number,
+  selectedId: PropTypes.number,
+  listOffset: PropTypes.number,
   fetchRecipes: PropTypes.func,
   setSelectedRecipe: PropTypes.func,
 };
 
 RecipeList.defaultProps = {
-  recipes: {},
+  recipes: [],
+  error: false,
   loading: false,
-  selected_id: null,
-  fetchRecipes: null,
-  setSelectedRecipe: null,
+  selectedId: 1,
+  listOffset: 0,
+  fetchRecipes: () => {},
+  setSelectedRecipe: () => {},
 };
 
 export default RecipeList;
