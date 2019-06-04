@@ -19,3 +19,13 @@ header.app-main-header {
   padding:5vmax;
   width:35vw;
 }
+
+button, input[type="submit"], input[type="reset"] {
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+}
