@@ -62,15 +62,43 @@ Documenting my progress as I move through the project.
 
 ## June 3
 
+* changed recipe fetching mechanism to accomodate a "load more" scheme 
+  where items are loaded chunk by chunk
+
+#### Notes
+* give some kind of UX response when there are no more items to load
+* set up a group structure
+  * groups should be labeled A, B, C..
+  * names & notes fetched with separate call to database
+* restructure dom!!! calling render() unnecessarily
+
+## June 4
+
+* totally restructure all of the modules in order to reduce React DOM 
+  reconcillation (re-rendering). took so much time. 
+* along with that, reorganize modules so that both RecipeInfo and RecipeList
+  are called by RecipeIndex. to help ease possible headaches with routing 
+  further down the line. 
+* much more thorough error checking, loading checking, etc. 
+* add support for displaying group notes and group labels.
+
+#### Notes
+* first thing tomorrow - code clean up. separate RecipeInfo into smaller parts
+* more thorough checking for loading
+* more thorough typechecking with PropsType
+* add API support for sorting, then finally move onto POST requests
+
 ## To Do
-* sort 
-* "load more" ingredients list
+* sort
+* ~~group Names & labels.~~
+* CSS for mobile 
+* ~~"load more" ingredients list~~
 * "baking" vs "cooking" filter
-* MOVE INGREDIENT FETCH FUNCTION - DONT RE-RENDER MULTIPLE TIMES
+* ~~MOVE INGREDIENT FETCH FUNCTION - DONT RE-RENDER MULTIPLE TIMES~~
 * add CRUD operations to API? 
 * image handling
 * drag to change ingredient order
-* imperial / customary change! 
+* imperial / customary change! --> is this really necessary? 
 * search functionality
 * i18n with i18next & react-i18next
 * React Native export
