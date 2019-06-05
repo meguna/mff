@@ -74,6 +74,7 @@ span.recipe-info-group-letter-label {
 .recipe-list-item-wrapper p {
 	margin: 0.5em 0 0.5em 0;
 }
+
 .recipe-info-group-note {
 	position: absolute;
 	color: var(--darker-medium-brown);
@@ -82,6 +83,7 @@ span.recipe-info-group-letter-label {
 	transform: translateX(100%);
 	padding-left: 10px;
 }
+
 .recipe-info-ingredients-item-parent {
 	margin-right:20px;
 }

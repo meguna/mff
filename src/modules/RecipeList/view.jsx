@@ -11,11 +11,15 @@ class RecipeList extends Component {
     }
   }
 
+  onSortSelect(sortBy) {
+    const { fetchRecipes } = this.props;
+    fetchRecipes(0);
+  }
+
   fetchMoreRecipes() {
     const { fetchRecipes, listOffset } = this.props;
     fetchRecipes(listOffset);
   }
-
 
   render() {
     const {
@@ -29,6 +33,14 @@ class RecipeList extends Component {
 
     return (
       <div>
+        <form>
+          <select onChange={() => this.onSortSelect(this.value)}>
+            <option value="name">name</option>
+            <option value="update_date" selected>last updated</option>
+            <option value="create_date">last added</option>
+          </select>
+        </form>
+
         {recipes.map(recipe => (
           <div key={recipe.id}>
             <div

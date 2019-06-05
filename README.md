@@ -88,7 +88,22 @@ Documenting my progress as I move through the project.
 * more thorough typechecking with PropsType
 * add API support for sorting, then finally move onto POST requests
 
+## June 5
+
+* started trying to implement re-sorting. lots and lots of problems with
+  the way the RecipeList fetching is implemented right now - probably need to 
+  set up new redux actions for fetching a totally new list vs fetching the
+  next pieces of a list that's already been loaded. 
+* started setting up form for creating new recipe. will be a delicate endeavor
+  trying to update two tables in the database at once & set up the form so that
+  adding new ingredients & grouping them if necessary is painless and 
+  intuitive. 
+* committed partial changes for now. 
+
+#### Notes
+
 ## To Do
+* Routing! react-router
 * sort
 * ~~group Names & labels.~~
 * CSS for mobile 

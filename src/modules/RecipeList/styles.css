@@ -32,3 +32,16 @@
 	color: var(--darker-medium-brown);
 	padding: 10px;
 }
+select, option {
+    font-size: 1.5em;
+    font-family: 'Brown', sans-serif;
+    padding: 10px;
+    border: none;
+    box-sizing: content-box;
+    border-radius: 1px;
+    -webkit-appearance: none;
+}
+
+select, option :focus {
+    outline: none;
+}

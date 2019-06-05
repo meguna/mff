@@ -3,6 +3,7 @@ import './styles.css';
 import PropTypes from 'prop-types';
 import RecipeInfo from '../RecipeInfo';
 import RecipeList from '../RecipeList';
+import NewRecipeForm from '../NewRecipeForm';
 
 class RecipeIndex extends Component {
   componentDidMount() {
@@ -25,7 +26,7 @@ class RecipeIndex extends Component {
           <RecipeList />
         </div>
         <div id="recipe-info">
-          <RecipeInfo />
+          <NewRecipeForm />
         </div>
       </div>
     );

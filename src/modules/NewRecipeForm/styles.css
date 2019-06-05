@@ -1,0 +1,21 @@
+#newrecipe-form {
+	font-weight: 300;
+	font-size: 1.8em;
+	display: flex;
+	flex-direction: column;
+}
+
+#newrecipe-form label {
+	text-transform: uppercase;
+	font-weight: 500;
+	padding-bottom: 50px;
+}
+
+input:not([type=submit]):not([type=file]) {
+   padding: 25px;
+   border-radius: 3px;
+   border: 1px solid black;
+   font-size: 1.5em;
+   background-image: none;
+   font-family: 'Brown', sans-serif;
+}
