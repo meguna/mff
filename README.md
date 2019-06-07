@@ -100,20 +100,21 @@ Documenting my progress as I move through the project.
   intuitive. 
 * committed partial changes for now. 
 
-TODO
-* implement sorting!! #1
-* finish NewRecipeForm so that you can create a new recipe (no ingredients) #2
-* add ingredient implementation to form #3 
-
-* dont do other shit until this stuff is done!!!!
-
 June 7
 
-* 
+* fully implement sorting! manually tested edge cases, but it needs to be
+  done more comprehensively for the whole app 
+* accordingly, new actions/reducers were added
+* code refactoring 
 
-#### Notes
+#### Lessons
+* only use embedded jsx expressions or variable assignment for conditional
+  rendering - to reduce unnecessary unmounting
+
+
 
 ## To Do
+* testing
 * Routing! react-router
 * sort
 * ~~group Names & labels.~~

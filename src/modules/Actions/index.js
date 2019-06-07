@@ -1,5 +1,3 @@
-// import action constants
-
 import {
   FETCH_RECIPES_START,
   FETCH_RECIPES_SUCCESS,
@@ -60,9 +58,9 @@ const fetchMoreRecipesFailure = error => ({
   payload: error,
 });
 
-export const fetchMoreRecipes = offset => (dispatch) => {
+export const fetchMoreRecipes = (offset, sortMethod) => (dispatch) => {
   dispatch(fetchMoreRecipesStart);
-  fetch(`http://localhost:3005/api/getrecipes/offset=${offset}/`)
+  fetch(`http://localhost:3005/api/getrecipes/offset=${offset}-sort=${sortMethod}`)
     .then(res => res.json())
     .then(res => dispatch(fetchMoreRecipesSuccess(res)))
     .catch(err => dispatch(fetchMoreRecipesFailure(err)));
