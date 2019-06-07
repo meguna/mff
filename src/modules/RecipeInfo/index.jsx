@@ -1,91 +1,9 @@
-// simple enough component, so Redux logic is combined with Component view.
-// separate if becomes too complex.
-
 import { connect } from 'react-redux';
 import React, { Component } from 'react';
 import './styles.css';
 import PropTypes from 'prop-types';
-
-const Ingredient = ({ ingredient }) => (
-  <p key={ingredient.id} className="recipe-info-ingredients-item">
-    {ingredient.name}
-    &mdash;
-    {ingredient.amount}
-    &nbsp;
-    {ingredient.amount_unit}
-    <span className="recipe-info-ingredient-note">
-      {ingredient.notes}
-    </span>
-  </p>
-);
-
-Ingredient.propTypes = {
-  ingredient: PropTypes.object,
-};
-
-Ingredient.defaultProps = {
-  ingredient: {},
-};
-
-const groupLetterLabel = (int, groupCount) => {
-  if (groupCount > 1) {
-    return (
-      <span className="recipe-info-group-letter-label">
-        {String.fromCharCode(65 + int)}
-      </span>
-    );
-  }
-  return null;
-};
-
-const IngredientGroup = ({ ingredients, groups, groupCount }) => {
-  const ingredientGroups = [];
-  for (let i = 1; i < groupCount + 1; i++) {
-    ingredientGroups.push(ingredients.filter(item => item.group_id === i));
-  }
-  return (
-    <div className="recipe-info-ingredients-list">
-      {ingredientGroups.map((group, i) => (
-        <div className="recipe-info-ingredients-list-group" key={groups[i].id}>
-          <p className="recipe-info-group-note">{groups[i].notes}</p>
-          {groupLetterLabel(i, groupCount)}
-          <div className="recipe-info-ingredients-item-parent">
-            {group.map(ingredient => (
-              <Ingredient ingredient={ingredient} key={ingredient.id} />
-            ))}
-          </div>
-        </div>
-      ))}
-    </div>
-  );
-};
-
-IngredientGroup.propTypes = {
-  ingredients: PropTypes.arrayOf(PropTypes.object),
-  groups: PropTypes.arrayOf(PropTypes.object),
-  groupCount: PropTypes.number,
-};
-
-IngredientGroup.defaultProps = {
-  ingredients: [],
-  groups: [{}],
-  groupCount: null,
-};
-
-const RecipeNotes = ({ notes }) => (
-  <div>
-    <p className="recipe-info-label">notes</p>
-    <p className="recipe-info-notes">{notes}</p>
-  </div>
-);
-
-RecipeNotes.propTypes = {
-  notes: PropTypes.string,
-};
-
-RecipeNotes.defaultProps = {
-  notes: '',
-};
+import IngredientGroup from './components/IngredientGroup';
+import RecipeNotes from './components/RecipeNotes';
 
 class RecipeInfo extends Component {
   constructor(props) {
@@ -152,7 +70,11 @@ class RecipeInfo extends Component {
       fetchError,
     } = this.state;
     if (selectedId === -1) {
-      return <p className="housekeeping-message">Select a recipe to view it!</p>;
+      return (
+        <p className="housekeeping-message">
+          Select a recipe to view it!
+        </p>
+      );
     }
     if (loading || error || loadingGroups || loadingIngredients || fetchError) {
       return <p />;
