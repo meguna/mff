@@ -7,26 +7,18 @@ import NewRecipeForm from '../NewRecipeForm';
 
 class RecipeIndex extends Component {
   componentDidMount() {
-    const { fetchRecipes, listOffset } = this.props;
-    fetchRecipes(listOffset);
+    const { fetchRecipes, sortMethod } = this.props;
+    fetchRecipes(sortMethod);
   }
 
   render() {
-    const {
-      loading,
-      error,
-    } = this.props;
-    if (loading || error) {
-      return <p>Loading...</p>;
-    }
-
     return (
       <div className="recipe-everything-wrapper">
         <div id="recipe-list">
           <RecipeList />
         </div>
         <div id="recipe-info">
-          <NewRecipeForm />
+          <RecipeInfo />
         </div>
       </div>
     );
@@ -35,16 +27,12 @@ class RecipeIndex extends Component {
 
 RecipeIndex.propTypes = {
   fetchRecipes: PropTypes.func,
-  listOffset: PropTypes.number,
-  loading: PropTypes.bool,
-  error: PropTypes.bool,
+  sortMethod: PropTypes.string,
 };
 
 RecipeIndex.defaultProps = {
   fetchRecipes: null,
-  listOffset: 0,
-  loading: false,
-  error: false,
+  sortMethod: 'update_date',
 };
 
 

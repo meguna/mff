@@ -3,17 +3,27 @@ import './styles.css';
 import PropTypes from 'prop-types';
 
 class RecipeList extends Component {
+  constructor(props) {
+    console.log('construct!');
+    super(props);
+    this.state = { value: 'update_date' };
+
+    this.onSortSelect = this.onSortSelect.bind(this);
+  }
+
   onRecipeClick(id) {
     const { selectedId, setSelectedRecipe } = this.props;
-
     if (id !== selectedId) {
       setSelectedRecipe(id);
     }
   }
 
-  onSortSelect(sortBy) {
+  onSortSelect(event) {
     const { fetchRecipes } = this.props;
-    fetchRecipes(0);
+    this.setState({ value: event.target.value }, () => {
+      const { value } = this.state;
+      fetchRecipes(value);
+    });
   }
 
   fetchMoreRecipes() {
@@ -25,18 +35,20 @@ class RecipeList extends Component {
     const {
       recipes, selectedId, loading, error,
     } = this.props;
+    const { value } = this.state;
+
     if (loading || error) {
       return (
-        <p className="housekeeping-message">Loading...</p>
+        <div><p className="housekeeping-message">Loading...</p></div>
       );
     }
 
     return (
       <div>
         <form>
-          <select onChange={() => this.onSortSelect(this.value)}>
+          <select value={value} onChange={this.onSortSelect}>
             <option value="name">name</option>
-            <option value="update_date" selected>last updated</option>
+            <option value="update_date">last updated</option>
             <option value="create_date">last added</option>
           </select>
         </form>

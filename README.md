@@ -100,6 +100,17 @@ Documenting my progress as I move through the project.
   intuitive. 
 * committed partial changes for now. 
 
+TODO
+* implement sorting!! #1
+* finish NewRecipeForm so that you can create a new recipe (no ingredients) #2
+* add ingredient implementation to form #3 
+
+* dont do other shit until this stuff is done!!!!
+
+June 7
+
+* 
+
 #### Notes
 
 ## To Do

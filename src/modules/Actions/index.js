@@ -4,13 +4,21 @@ import {
   FETCH_RECIPES_START,
   FETCH_RECIPES_SUCCESS,
   FETCH_RECIPES_FAILURE,
+  FETCH_MORE_RECIPES_START,
+  FETCH_MORE_RECIPES_SUCCESS,
+  FETCH_MORE_RECIPES_FAILURE,
   SET_SELECTED_RECIPE,
 } from './ActionTypes';
 
-// actions to fetch list of recipes
+/**
+ * fetch a list of recipes for the first time
+ * thus, offset is automatically set to zero.
+ * takes a "sort method" argument.
+ */
 
-const fetchRecipesStart = () => ({
+const fetchRecipesStart = sortMethod => ({
   type: FETCH_RECIPES_START,
+  payload: sortMethod,
 });
 
 const fetchRecipesSuccess = recipes => ({
@@ -23,12 +31,41 @@ const fetchRecipesFailure = error => ({
   payload: error,
 });
 
-export const fetchRecipes = offset => (dispatch) => {
-  dispatch(fetchRecipesStart);
-  fetch(`http://localhost:3005/api/getrecipes/${offset}`)
+export const fetchRecipes = sortMethod => (dispatch) => {
+  dispatch(fetchRecipesStart(sortMethod));
+  fetch(`http://localhost:3005/api/getrecipes/sort=${sortMethod}`)
     .then(res => res.json())
     .then(res => dispatch(fetchRecipesSuccess(res)))
     .catch(err => dispatch(fetchRecipesFailure(err)));
+};
+
+/**
+ * fetch more items from a list that has already been fetched.
+ * thus, takes an item "offset" as argument.
+ * assumes "sort method" has already been specified in previous
+ * fetch.
+ */
+
+const fetchMoreRecipesStart = () => ({
+  type: FETCH_MORE_RECIPES_START,
+});
+
+const fetchMoreRecipesSuccess = recipes => ({
+  type: FETCH_MORE_RECIPES_SUCCESS,
+  payload: recipes,
+});
+
+const fetchMoreRecipesFailure = error => ({
+  type: FETCH_MORE_RECIPES_FAILURE,
+  payload: error,
+});
+
+export const fetchMoreRecipes = offset => (dispatch) => {
+  dispatch(fetchMoreRecipesStart);
+  fetch(`http://localhost:3005/api/getrecipes/offset=${offset}/`)
+    .then(res => res.json())
+    .then(res => dispatch(fetchMoreRecipesSuccess(res)))
+    .catch(err => dispatch(fetchMoreRecipesFailure(err)));
 };
 
 // action to set a selected recipe id
