@@ -113,6 +113,9 @@ Documenting my progress as I move through the project.
 * only use embedded jsx expressions or variable assignment for conditional
   rendering - to reduce unnecessary unmounting
 
+## June 8
+* set up API route and working form for POST request (only updates `recipes` 
+  table)
 
 
 ## To Do

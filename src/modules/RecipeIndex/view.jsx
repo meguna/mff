@@ -18,7 +18,7 @@ class RecipeIndex extends Component {
           <RecipeList />
         </div>
         <div id="recipe-info">
-          <RecipeInfo />
+          <NewRecipeForm />
         </div>
       </div>
     );

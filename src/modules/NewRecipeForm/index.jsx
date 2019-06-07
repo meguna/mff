@@ -10,57 +10,77 @@ class NewRecipeForm extends Component {
     this.onSubmit = this.onSubmit.bind(this);
     this.nameChange = this.nameChange.bind(this);
     this.sizeChange = this.sizeChange.bind(this);
-    this.ingredientsChange = this.ingredientsChange.bind(this);
+    // this.ingredientsChange = this.ingredientsChange.bind(this);
     this.notesChange = this.notesChange.bind(this);
 
     this.state = {
       name: '',
       size: '',
-      ingredients: '',
+      // ingredients: '',
       notes: '',
-    }
+    };
   }
 
-  onSubmit = e => {
-    e.preventDefault();
-    console.log(this.state);
-  };
-
-  nameChange = e => {
+  nameChange = (e) => {
     this.setState({ name: e.target.value });
   };
 
-  sizeChange = e => {
+  sizeChange = (e) => {
     this.setState({ size: e.target.value });
   };
 
-  ingredientsChange = e => {
+  ingredientsChange = (e) => {
     this.setState({ ingredients: e.target.value });
   };
 
-  notesChange = e => {
+  notesChange = (e) => {
     this.setState({ notes: e.target.value });
+  };
+
+  onSubmit = (e) => {
+    e.preventDefault();
+    console.log(this.state);
+    fetch('http://localhost:3005/api/createnewrecipe', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(this.state),
+    })
+      .then(res => console.log(res))
+      .catch(err => console.log(err));
   };
 
 
   render() {
+    const {
+      name,
+      size,
+      ingredients,
+      notes,
+    } = this.state;
+
     return (
-      <form id="newrecipe-form" onSubmit={this.onSubmit} >
+      <form id="newrecipe-form" onSubmit={this.onSubmit}>
         <label htmlFor="newrecipe-name-input">
-          Name <br />
-          <input id="newrecipe-name-input" type="text" value={this.state.name} onChange={this.nameChange} />
+          Name
+          <br />
+          <input id="newrecipe-name-input" type="text" value={name} onChange={this.nameChange} />
         </label>
         <label htmlFor="newrecipe-size-input">
-          Size <br />
-          <input id="newrecipe-size-input" type="text" value={this.state.size} onChange={this.sizeChange} />
+          Size
+          <br />
+          <input id="newrecipe-size-input" type="text" value={size} onChange={this.sizeChange} />
         </label>
         <label htmlFor="newrecipe-ingredients-input">
-          Ingredients <br />
-          <input id="newrecipe-ingredients-input" type="text" value={this.state.ingredients} onChange={this.ingredientsChange} />
+          Ingredients
+          <br />
+          <input id="newrecipe-ingredients-input" type="text" value={ingredients} onChange={this.ingredientsChange} />
         </label>
         <label htmlFor="newrecipe-recipenotes-input">
-          Notes <br />
-          <input id="newrecipe-recipenotes-input" type="textarea" value={this.state.notes} onChange={this.notesChange} />
+          Notes
+          <br />
+          <input id="newrecipe-recipenotes-input" type="textarea" value={notes} onChange={this.notesChange} />
         </label>
         <input type="submit" />
       </form>
