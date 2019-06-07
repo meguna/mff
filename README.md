@@ -87,6 +87,8 @@ Documenting my progress as I move through the project.
 * more thorough checking for loading
 * more thorough typechecking with PropsType
 * add API support for sorting, then finally move onto POST requests
+* react dev tools - GREAT new tool for developing in chrome. see when 
+  components are being re-rendered. 
 
 ## June 5
 
@@ -100,7 +102,7 @@ Documenting my progress as I move through the project.
   intuitive. 
 * committed partial changes for now. 
 
-June 7
+## June 7
 
 * fully implement sorting! manually tested edge cases, but it needs to be
   done more comprehensively for the whole app 
@@ -114,6 +116,7 @@ June 7
 
 
 ## To Do
+* add little triangle next to sort button to show that it's a dropdown list
 * testing
 * Routing! react-router
 * sort

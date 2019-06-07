@@ -35,6 +35,7 @@ const groupLetterLabel = (int, groupCount) => {
       </span>
     );
   }
+  return null;
 };
 
 const IngredientGroup = ({ ingredients, groups, groupCount }) => {
@@ -45,7 +46,7 @@ const IngredientGroup = ({ ingredients, groups, groupCount }) => {
   return (
     <div className="recipe-info-ingredients-list">
       {ingredientGroups.map((group, i) => (
-        <div className="recipe-info-ingredients-list-group" key={i}>
+        <div className="recipe-info-ingredients-list-group" key={groups[i].id}>
           <p className="recipe-info-group-note">{groups[i].notes}</p>
           {groupLetterLabel(i, groupCount)}
           <div className="recipe-info-ingredients-item-parent">
@@ -95,6 +96,7 @@ class RecipeInfo extends Component {
       loadingGroups: true,
       groupCount: 1,
       loadingIngredients: true,
+      fetchError: false,
     };
   }
 
@@ -117,7 +119,7 @@ class RecipeInfo extends Component {
         this.setState({ loadingGroups: false });
       })
       .catch(() => {
-        this.setState({ error: true });
+        this.setState({ fetchError: true });
       });
   }
 
@@ -130,7 +132,7 @@ class RecipeInfo extends Component {
         this.setState({ ingredients: res, loadingIngredients: false });
       })
       .catch(() => {
-        this.setState({ error: true });
+        this.setState({ fetchError: true });
       });
   }
 
@@ -147,25 +149,26 @@ class RecipeInfo extends Component {
       groupCount,
       ingredients,
       loadingIngredients,
+      fetchError,
     } = this.state;
     if (selectedId === -1) {
       return <p className="housekeeping-message">Select a recipe to view it!</p>;
     }
-    if (loading || error || loadingGroups || loadingIngredients) {
+    if (loading || error || loadingGroups || loadingIngredients || fetchError) {
       return <p />;
     }
     const selected = recipes.filter(item => item.id === selectedId)[0];
     return (
       <div>
         <p className="recipe-info-name">{selected.name}</p>
-        <p className="recipe-info-serves">{selected.size}</p>
+        {selected.size && <p className="recipe-info-serves">{selected.size}</p>}
         <p className="recipe-info-label">ingredients</p>
         <IngredientGroup
           ingredients={ingredients}
           groups={groups}
           groupCount={groupCount}
         />
-        <RecipeNotes notes={selected.notes} />
+        {selected.notes && <RecipeNotes notes={selected.notes} />}
       </div>
     );
   }

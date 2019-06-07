@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 
 class RecipeList extends Component {
   constructor(props) {
-    console.log('construct!');
     super(props);
     this.state = { value: 'update_date' };
     this.onSortSelect = this.onSortSelect.bind(this);
@@ -19,9 +18,8 @@ class RecipeList extends Component {
 
   onSortSelect(event) {
     const { fetchRecipes } = this.props;
+    const { value } = this.state;
     this.setState({ value: event.target.value }, () => {
-      const { value } = this.state;
-      console.log(value);
       fetchRecipes(value);
     });
   }

@@ -8,8 +8,6 @@ import {
   SET_SELECTED_RECIPE,
 } from '../Actions/ActionTypes';
 
-const LIST_FETCH_COUNT = 5;
-
 const INITIAL_STATE = {
   recipes: [],
   selectedId: -1,
@@ -22,12 +20,15 @@ const INITIAL_STATE = {
 const reducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case FETCH_MORE_RECIPES_SUCCESS:
+      if (action.payload.length === 0) {
+        return state;
+      }
       return {
         ...state,
         recipes: [...state.recipes, ...action.payload],
         error: null,
         loading: false,
-        listOffset: state.listOffset + LIST_FETCH_COUNT,
+        listOffset: state.recipes.length + action.payload.length,
       };
     case FETCH_RECIPES_START:
       return {
@@ -41,7 +42,7 @@ const reducer = (state = INITIAL_STATE, action) => {
         recipes: [...action.payload],
         error: null,
         loading: false,
-        listOffset: 0 + LIST_FETCH_COUNT,
+        listOffset: action.payload.length,
         selectedId: -1,
       };
     case FETCH_RECIPES_FAILURE:
