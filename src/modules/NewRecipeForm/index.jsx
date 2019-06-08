@@ -39,7 +39,6 @@ class NewRecipeForm extends Component {
 
   onSubmit = (e) => {
     e.preventDefault();
-    console.log(this.state);
     fetch('http://localhost:3005/api/createnewrecipe', {
       method: 'POST',
       headers: {
@@ -61,7 +60,7 @@ class NewRecipeForm extends Component {
     } = this.state;
 
     return (
-      <form id="newrecipe-form" onSubmit={this.onSubmit}>
+      <form id="newrecipe-form" onSubmit={this.onSubmit} autoComplete="off">
         <label htmlFor="newrecipe-name-input">
           Name
           <br />
@@ -72,11 +71,21 @@ class NewRecipeForm extends Component {
           <br />
           <input id="newrecipe-size-input" type="text" value={size} onChange={this.sizeChange} />
         </label>
-        <label htmlFor="newrecipe-ingredients-input">
-          Ingredients
-          <br />
-          <input id="newrecipe-ingredients-input" type="text" value={ingredients} onChange={this.ingredientsChange} />
-        </label>
+        <fieldset>
+          <legend>Ingredients</legend>
+          <div className="new-ingredient-fields">
+            <label htmlFor="newrecipe-ingredient-name-input">
+              Name
+              <br />
+              <input id="newrecipe-ingredient-name-input" type="text" value={ingredients} onChange={this.ingredientsChange} />
+            </label>
+            <label htmlFor="newrecipe-ingredient-amount-input">
+              Amount
+              <br />
+              <input id="newrecipe-ingredient-amount-input" type="text" />
+            </label>
+          </div>
+        </fieldset>
         <label htmlFor="newrecipe-recipenotes-input">
           Notes
           <br />

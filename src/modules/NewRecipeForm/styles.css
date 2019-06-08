@@ -6,16 +6,51 @@
 }
 
 #newrecipe-form label {
+	line-height: 2em;
 	text-transform: uppercase;
 	font-weight: 500;
+	font-size: 0.7em;
 	padding-bottom: 50px;
+	display: flex;
+	flex-direction: column;
+	width: 20vw;
+}
+
+#newrecipe-ingredient-amount-input {
+	width: 3em;
 }
 
 input:not([type=submit]):not([type=file]) {
    padding: 25px;
    border-radius: 3px;
-   border: 1px solid black;
+   border: 1px solid var(--grey);
    font-size: 1.5em;
    background-image: none;
    font-family: 'Brown', sans-serif;
+}
+
+input:not([type=submit]):not([type=file]):focus {
+	outline: none;
+	border: 1px solid black;
+}
+
+fieldset {
+	border: none;
+	padding: 0;
+
+}
+
+legend {
+	font-weight: 700;
+	font-size: 0.9em;
+	text-transform: uppercase;
+}
+
+div.new-ingredient-fields {
+	display: flex;
+	flex-direction: row;
+}
+
+div.new-ingredient-fields label {
+	padding-right: 50px;
 }
