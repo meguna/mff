@@ -18,8 +18,8 @@ class RecipeList extends Component {
 
   onSortSelect(event) {
     const { fetchRecipes } = this.props;
-    const { value } = this.state;
     this.setState({ value: event.target.value }, () => {
+      const { value } = this.state;
       fetchRecipes(value);
     });
   }
