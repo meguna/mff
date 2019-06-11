@@ -117,21 +117,62 @@ Documenting my progress as I move through the project.
 * set up API route and working form for POST request (only updates `recipes` 
   table)
 
+## June 10
 
-## To Do
+* minor update to package.json for security purposes
+
+## June 11
+
+* organized form into Field and IngField components while managing 
+  communication between these new subcomponents and the main form component
+* really clean UI UX!! 
+
+#### Lessons
+* GOD forms are such a pain in the ass
+* sometimes React feels really tough because I don't always know when to 
+  separate things into different components
+* common pattern for passing data from child to parent - passing handler funcs
+* HUUGe difficulty with dynamically setting an event handler (onFocus) for the 
+  last child of a div inside the DOM. My goal was that whenever the user
+  clicked on the last ingredients input fields, a new set of fields would
+  automatically appear under it, so that they didn't have to keep clicking 
+  some kind of "add" button to continuously input all of the ingredients. 
+  although there are some antipattern ways to do it (`ReactDOM.findDomNode`)
+  I wanted to find a method to do it programmatically, since maintaining ID #s
+  for each ingredient is necessary elsewhere anyway. 
+
+## General To Do Wflow
+
+* ~~planning~~
+* ~~set up db~~
+* ~~fetch list of recipes~~
+* ~~view details about recipe~~
+* form to add new recipe
+* form to edit pre-existing recipe
+* image handling (CRUD for images per recipe)
+* search functionality
+* routing
+* login / auth
+* i18n with i18next & react-i18next
+* responsive styling for mobile screens
+* deploy to web
+* set up demo page 
+* mobile dev with React Mobile
+* deploy to iOS App Store
+
+## To Do Notes
+
+* change error message for "load more" to "no more to load" when there 
+  is no more to load
 * add little triangle next to sort button to show that it's a dropdown list
 * testing
-* Routing! react-router
 * sort
 * ~~group Names & labels.~~
-* CSS for mobile 
 * ~~"load more" ingredients list~~
 * "baking" vs "cooking" filter
 * ~~MOVE INGREDIENT FETCH FUNCTION - DONT RE-RENDER MULTIPLE TIMES~~
-* add CRUD operations to API? 
 * image handling
 * drag to change ingredient order
 * imperial / customary change! --> is this really necessary? 
-* search functionality
-* i18n with i18next & react-i18next
-* React Native export
+* favicon
+* page titles

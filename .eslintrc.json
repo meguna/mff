@@ -29,6 +29,7 @@
             "labelComponents": ["label"],
             "labelAttributes": ["htmlFor"],
             "controlComponents": ["input"]
-        }]
+        }],
+        "indent": ["error", 2, { "ignoreComments": true }]
     }
 }

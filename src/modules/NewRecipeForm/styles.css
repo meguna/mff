@@ -75,7 +75,7 @@ div.new-ingredient-fields {
 	display: flex;
 	flex-direction: row;
 	width: 50vw;
-	padding-bottom: 0;
+	padding-bottom: 20px;
 }
 
 div.new-ingredient-fields label, div.new-ingredient-fields input {
