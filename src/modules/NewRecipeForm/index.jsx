@@ -64,7 +64,7 @@ class NewRecipeForm extends Component {
         <label htmlFor="newrecipe-name-input">
           Name
           <br />
-          <input id="newrecipe-name-input" type="text" value={name} onChange={this.nameChange} />
+          <input id="newrecipe-name-input" type="text" value={name} onChange={this.nameChange} required />
         </label>
         <label htmlFor="newrecipe-size-input">
           Size
@@ -73,17 +73,13 @@ class NewRecipeForm extends Component {
         </label>
         <fieldset>
           <legend>Ingredients</legend>
-          <div className="new-ingredient-fields">
-            <label htmlFor="newrecipe-ingredient-name-input">
-              Name
-              <br />
-              <input id="newrecipe-ingredient-name-input" type="text" value={ingredients} onChange={this.ingredientsChange} />
-            </label>
-            <label htmlFor="newrecipe-ingredient-amount-input">
-              Amount
-              <br />
-              <input id="newrecipe-ingredient-amount-input" type="text" />
-            </label>
+          <div id="input-data-row-label-wrapper">
+            <label className="input-data-row-label first" htmlFor="newrecipe-ingredient-name-input"> Name </label>
+            <label className="input-data-row-label second" htmlFor="newrecipe-ingredient-amount-input"> Amount </label>
+          </div>
+          <div className="new-ingredient-fields input-data-row-wrapper">
+            <input id="newrecipe-ingredient-name-input" className="input-data-row first" type="text" value={ingredients} onChange={this.ingredientsChange} />
+            <input id="newrecipe-ingredient-amount-input" className="input-data-row second" type="text" />
           </div>
         </fieldset>
         <label htmlFor="newrecipe-recipenotes-input">

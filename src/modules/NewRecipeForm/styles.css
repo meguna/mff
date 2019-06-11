@@ -13,14 +13,13 @@
 	padding-bottom: 50px;
 	display: flex;
 	flex-direction: column;
-	width: 20vw;
 }
 
 #newrecipe-ingredient-amount-input {
-	width: 3em;
+	/*width: 3em;*/
 }
 
-input:not([type=submit]):not([type=file]) {
+input:not([type=submit]):not([type=file]):not(.input-data-row) {
    padding: 25px;
    border-radius: 3px;
    border: 1px solid var(--grey);
@@ -29,15 +28,60 @@ input:not([type=submit]):not([type=file]) {
    font-family: 'Brown', sans-serif;
 }
 
-input:not([type=submit]):not([type=file]):focus {
+input:not([type=submit]):not([type=file]):not(.input-data-row):focus {
 	outline: none;
 	border: 1px solid black;
+}
+
+.input-data-row {
+   padding: 25px;
+   border-radius: 3px;
+   font-size: 1.5em;
+   background-image: none;
+   font-family: 'Brown', sans-serif;
+   border: none;
+}
+
+.input-data-row:focus {
+	outline: none;
+}
+
+.input-data-row-wrapper {
+	border-radius: 3px;
+	border: 1px solid var(--grey);
+}
+.input-data-row-wrapper:focus-within {
+	border: 1px solid black;
+}
+
+#input-data-row-label-wrapper, .input-data-row-wrapper {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+
+#input-data-row-label-wrapper::after, .input-data-row-wrapper::after {
+	content: "";
+}
+
+#input-data-row-label-wrapper label {
+	padding: 0;
+}
+
+.first {
+
+}
+
+.second {
+	/*position: relative;
+	left: 5em;
+	width: 100px;*/
 }
 
 fieldset {
 	border: none;
 	padding: 0;
-
 }
 
 legend {
