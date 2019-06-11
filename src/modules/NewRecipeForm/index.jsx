@@ -10,13 +10,14 @@ class NewRecipeForm extends Component {
     this.onSubmit = this.onSubmit.bind(this);
     this.nameChange = this.nameChange.bind(this);
     this.sizeChange = this.sizeChange.bind(this);
-    // this.ingredientsChange = this.ingredientsChange.bind(this);
+    this.ingNameChange = this.ingNameChange.bind(this);
+    this.ingAmtChange = this.ingAmtChange.bind(this);
     this.notesChange = this.notesChange.bind(this);
 
     this.state = {
       name: '',
       size: '',
-      // ingredients: '',
+      ingredients: [{ name: '', amount: '' }],
       notes: '',
     };
   }
@@ -29,8 +30,16 @@ class NewRecipeForm extends Component {
     this.setState({ size: e.target.value });
   };
 
-  ingredientsChange = (e) => {
-    this.setState({ ingredients: e.target.value });
+  ingNameChange = (e) => {
+    const { ingredients } = this.state;
+    ingredients[ingredients.length - 1].name = e.target.value;
+    this.setState({ ingredients });
+  };
+
+  ingAmtChange = (e) => {
+    const { ingredients } = this.state;
+    ingredients[ingredients.length - 1].amount = e.target.value;
+    this.setState({ ingredients });
   };
 
   notesChange = (e) => {
@@ -39,15 +48,17 @@ class NewRecipeForm extends Component {
 
   onSubmit = (e) => {
     e.preventDefault();
-    fetch('http://localhost:3005/api/createnewrecipe', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(this.state),
-    })
-      .then(res => console.log(res))
-      .catch(err => console.log(err));
+    console.log(this.state);
+    // const picked = (({ name, size, notes }) => ({ name, size, notes }))(this.state);
+    // fetch('http://localhost:3005/api/createnewrecipe', {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    //   body: JSON.stringify(picked),
+    // })
+    //   .then(res => console.log(res))
+    //   .catch(err => console.log(err));
   };
 
 
@@ -60,35 +71,45 @@ class NewRecipeForm extends Component {
     } = this.state;
 
     return (
-      <form id="newrecipe-form" onSubmit={this.onSubmit} autoComplete="off">
-        <label htmlFor="newrecipe-name-input">
-          Name
-          <br />
-          <input id="newrecipe-name-input" type="text" value={name} onChange={this.nameChange} required />
-        </label>
-        <label htmlFor="newrecipe-size-input">
-          Size
-          <br />
-          <input id="newrecipe-size-input" type="text" value={size} onChange={this.sizeChange} />
-        </label>
-        <fieldset>
-          <legend>Ingredients</legend>
-          <div id="input-data-row-label-wrapper">
-            <label className="input-data-row-label first" htmlFor="newrecipe-ingredient-name-input"> Name </label>
-            <label className="input-data-row-label second" htmlFor="newrecipe-ingredient-amount-input"> Amount </label>
+      <div>
+        <h1>Add a New Recipe!</h1>
+        <form id="newrecipe-form" onSubmit={this.onSubmit} autoComplete="off">
+          <div className="form-group">
+            <label htmlFor="newrecipe-name-input">
+              Recipe Name
+            </label>
+            <input placeholder="name" id="newrecipe-name-input" type="text" value={name} onChange={this.nameChange} />
           </div>
-          <div className="new-ingredient-fields input-data-row-wrapper">
-            <input id="newrecipe-ingredient-name-input" className="input-data-row first" type="text" value={ingredients} onChange={this.ingredientsChange} />
-            <input id="newrecipe-ingredient-amount-input" className="input-data-row second" type="text" />
+          <div className="form-group">
+            <label htmlFor="newrecipe-size-input">
+              Size
+            </label>
+            <input placeholder="size" id="newrecipe-size-input" type="text" value={size} onChange={this.sizeChange} />
           </div>
-        </fieldset>
-        <label htmlFor="newrecipe-recipenotes-input">
-          Notes
-          <br />
-          <input id="newrecipe-recipenotes-input" type="textarea" value={notes} onChange={this.notesChange} />
-        </label>
-        <input type="submit" />
-      </form>
+          <fieldset className="ingredients-fieldset">
+            <legend>Ingredients</legend>
+            <div className="new-ingredient-fields form-group">
+              <label className="new-ing-field-left" htmlFor="newrecipe-ingredient-name-input">
+                Ingredient Name
+              </label>
+              <label className="new-ing-field-right" htmlFor="newrecipe-ingredient-amount-input">
+                Amount
+              </label>
+            </div>
+            <div className="new-ingredient-fields form-group">
+              <input className="new-ing-field-left" placeholder="name" id="newrecipe-ingredient-name-input" type="text" value={ingredients[ingredients.length - 1].name} onChange={this.ingNameChange} />
+              <input className="new-ing-field-right" placeholder="amount" id="newrecipe-ingredient-amount-input" type="text" value={ingredients[ingredients.length - 1].amount} onChange={this.ingAmtChange} />
+            </div>
+          </fieldset>
+          <div className="form-group">
+            <label htmlFor="newrecipe-recipenotes-input">
+              Notes
+            </label>
+            <input placeholder="notes" id="newrecipe-recipenotes-input" type="textarea" value={notes} onChange={this.notesChange} />
+          </div>
+          <input type="submit" />
+        </form>
+      </div>
     );
   }
 }

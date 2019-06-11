@@ -5,30 +5,36 @@
 	flex-direction: column;
 }
 
-#newrecipe-form label {
+.form-group {
 	line-height: 2em;
 	text-transform: uppercase;
 	font-weight: 500;
 	font-size: 0.7em;
-	padding-bottom: 50px;
 	display: flex;
 	flex-direction: column;
+	width: 20vw;
 }
 
-#newrecipe-ingredient-amount-input {
-	/*width: 3em;*/
+.form-group, .ingredients-fieldset {
+	padding-bottom: 50px;
 }
 
-input:not([type=submit]):not([type=file]):not(.input-data-row) {
-   padding: 25px;
+input:not([type=submit]):not([type=file]) {
+   padding: 20px;
    border-radius: 3px;
    border: 1px solid var(--grey);
    font-size: 1.5em;
    background-image: none;
    font-family: 'Brown', sans-serif;
+   box-sizing: border-box;
 }
 
-input:not([type=submit]):not([type=file]):not(.input-data-row):focus {
+input:not([type=submit]):not([type=file])::placeholder {
+   font-size: 0.8em;
+   color: var(--grey);
+}
+
+input:not([type=submit]):not([type=file]):focus {
 	outline: none;
 	border: 1px solid black;
 }
@@ -54,31 +60,6 @@ input:not([type=submit]):not([type=file]):not(.input-data-row):focus {
 	border: 1px solid black;
 }
 
-#input-data-row-label-wrapper, .input-data-row-wrapper {
-	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
-}
-
-
-#input-data-row-label-wrapper::after, .input-data-row-wrapper::after {
-	content: "";
-}
-
-#input-data-row-label-wrapper label {
-	padding: 0;
-}
-
-.first {
-
-}
-
-.second {
-	/*position: relative;
-	left: 5em;
-	width: 100px;*/
-}
-
 fieldset {
 	border: none;
 	padding: 0;
@@ -93,8 +74,18 @@ legend {
 div.new-ingredient-fields {
 	display: flex;
 	flex-direction: row;
+	width: 50vw;
+	padding-bottom: 0;
 }
 
-div.new-ingredient-fields label {
-	padding-right: 50px;
+div.new-ingredient-fields label, div.new-ingredient-fields input {
+	margin-right: 50px;
+}
+
+.new-ing-field-left {
+	width: 25vw;
+}
+
+.new-ing-field-right {
+	width: 12vw;
 }
