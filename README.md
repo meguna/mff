@@ -126,6 +126,30 @@ Documenting my progress as I move through the project.
 * organized form into Field and IngField components while managing 
   communication between these new subcomponents and the main form component
 * really clean UI UX!! 
+* finished implemented complicated logic for adding ingredients, with the 
+  automatic adding/removing of fields 
+
+### immediate to do
+* `notes` field for ingredients
+* bare bones form validation (must have name, 1 ingredient, check input length)
+* add ingredients to POST request (remember to put everything in one group 
+  for now and update `group` table too)
+
+#### features that would be great
+* last ingredient field's placeholder says "click to add another ingredient"
+* drag and drop ingredients to change order 
+  (probably gonna be really long task without external library support)
+* delete individual ingredients (button shows up when fields are focused)
+  (easy if they are always there - no fancy appear/disappear)
+* drag to group? some intuitive way to group the ingredients? 
+  or just a new field "group"? (color code the groups?)
+* grouping idea: "add new ingredient group +" button below the first field.
+  on click starts with one ingredient, and same happens (new "add new 
+  ingredient group" button shows up). adds massive complications to 
+  react structuring, but probably pretty good in terms of usabiity
+  ask mom what might feel intuitive for her
+* tool tips ("groups are a handy way to remember which ingredients go
+  together!")
 
 #### Lessons
 * GOD forms are such a pain in the ass
@@ -140,6 +164,12 @@ Documenting my progress as I move through the project.
   although there are some antipattern ways to do it (`ReactDOM.findDomNode`)
   I wanted to find a method to do it programmatically, since maintaining ID #s
   for each ingredient is necessary elsewhere anyway. 
+* React will re-render, just in case, any children components when the 
+  parent component is re-rendered. let children components `extends 
+  PureComponent` instead of `extends Component` and then it will only 
+  update when there is a change in the state or props of the child component.
+  don't do this with child components that use arrays/objects as props/state
+  because the comparison done by PureComponent is shallow.
 
 ## General To Do Wflow
 

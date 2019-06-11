@@ -46,7 +46,6 @@ class IngField extends Component {
   render() {
     const {
       value,
-      ingId,
     } = this.props;
     return (
       <div className="new-ingredient-fields form-group">
@@ -76,13 +75,17 @@ class IngField extends Component {
 
 IngField.propTypes = {
   onChange: PropTypes.func,
-  value: PropTypes.object,
+  onBlur: PropTypes.func,
+  onFocus: PropTypes.func,
+  value: PropTypes.shape({ name: PropTypes.string, amount: PropTypes.string }),
   ingId: PropTypes.number,
 };
 
 IngField.defaultProps = {
   onChange: () => {},
-  value: '',
+  onBlur: () => {},
+  onFocus: () => {},
+  value: { name: '', amount: '' },
   ingId: 0,
 };
 

@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import './styles.css';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import Field from './Field';
-import IngField from './IngField';
+import Field from './components/Field';
+import IngField from './components/IngField';
 
 class NewRecipeForm extends Component {
   constructor(props) {
@@ -18,7 +17,6 @@ class NewRecipeForm extends Component {
       size: '',
       ingredients: [{ name: '', amount: '' }],
       notes: '',
-      ingCount: 1,
     };
   }
 
@@ -69,17 +67,17 @@ class NewRecipeForm extends Component {
 
   onSubmit = (e) => {
     e.preventDefault();
-    console.log(this.state);
-    const picked = (({ name, size, notes }) => ({ name, size, notes }))(this.state);
-    fetch('http://localhost:3005/api/createnewrecipe', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(picked),
-    })
-      .then(res => console.log(res))
-      .catch(err => console.log(err));
+    // console.log(this.state);
+    // const picked = (({ name, size, notes }) => ({ name, size, notes }))(this.state);
+    // fetch('http://localhost:3005/api/createnewrecipe', {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    //   body: JSON.stringify(picked),
+    // })
+    //   .then(res => console.log(res))
+    //   .catch(err => console.log(err));
   };
 
   render() {
@@ -144,15 +142,6 @@ class NewRecipeForm extends Component {
     );
   }
 }
-
-NewRecipeForm.propTypes = {
-
-};
-
-NewRecipeForm.defaultProps = {
-
-};
-
 
 const mapStateToProps = state => state;
 
