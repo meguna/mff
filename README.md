@@ -171,6 +171,10 @@ Documenting my progress as I move through the project.
   don't do this with child components that use arrays/objects as props/state
   because the comparison done by PureComponent is shallow.
 
+## June 12
+* `notes` field for ingredients
+
+
 ## General To Do Wflow
 
 * ~~planning~~

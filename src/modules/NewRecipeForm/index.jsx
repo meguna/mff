@@ -4,6 +4,13 @@ import { connect } from 'react-redux';
 import Field from './components/Field';
 import IngField from './components/IngField';
 
+const ING_FIELD_BLANK = {
+  name: '',
+  amount: '',
+  notes: '',
+  groupId: 1,
+};
+
 class NewRecipeForm extends Component {
   constructor(props) {
     super(props);
@@ -15,7 +22,7 @@ class NewRecipeForm extends Component {
     this.state = {
       name: '',
       size: '',
-      ingredients: [{ name: '', amount: '' }],
+      ingredients: [{ ...ING_FIELD_BLANK }],
       notes: '',
     };
   }
@@ -41,7 +48,7 @@ class NewRecipeForm extends Component {
     const { ingredients } = this.state;
     if (id === ingredients.length - 1) {
       this.setState(prevState => ({
-        ingredients: [...prevState.ingredients, { name: '', amount: '' }],
+        ingredients: [...prevState.ingredients, { ...ING_FIELD_BLANK }],
       }));
     }
   };
@@ -52,6 +59,7 @@ class NewRecipeForm extends Component {
       ingredients.length > 2
       && ingredients[id].name === ''
       && ingredients[id].amount === ''
+      && ingredients[id].notes === ''
     ) {
       this.setState((prevState) => {
         // prevState is only shallow copied by default,
@@ -111,6 +119,7 @@ class NewRecipeForm extends Component {
             value={name}
             name="name"
             id="newrecipe-name-input"
+            labelClassName="required-field"
           />
           <Field
             onChange={this.onFieldChange}
@@ -124,8 +133,11 @@ class NewRecipeForm extends Component {
               <label className="new-ing-field-left" htmlFor="newrecipe-ingredient-name-input">
                 Ingredient Name
               </label>
-              <label className="new-ing-field-right" htmlFor="newrecipe-ingredient-amount-input">
+              <label className="new-ing-field-center" htmlFor="newrecipe-ingredient-amount-input">
                 Amount
+              </label>
+              <label className="new-ing-field-right" htmlFor="newrecipe-ingredient-notes-input">
+                Notes
               </label>
             </div>
             {ingFields}

@@ -18,12 +18,13 @@ class Field extends PureComponent {
     const {
       name,
       className,
+      labelClassName,
       value,
       id,
     } = this.props;
     return (
       <div className="form-group">
-        <label htmlFor={id}>
+        <label htmlFor={id} className={labelClassName}>
           {name}
         </label>
         <input
@@ -43,6 +44,7 @@ class Field extends PureComponent {
 Field.propTypes = {
   onChange: PropTypes.func,
   className: PropTypes.string,
+  labelClassName: PropTypes.string,
   value: PropTypes.string,
   id: PropTypes.string,
   name: PropTypes.string,
@@ -51,6 +53,7 @@ Field.propTypes = {
 Field.defaultProps = {
   onChange: () => {},
   className: '',
+  labelClassName: '',
   value: '',
   id: '',
   name: '',

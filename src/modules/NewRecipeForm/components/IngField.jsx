@@ -6,6 +6,7 @@ class IngField extends Component {
     super(props);
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleAmtChange = this.handleAmtChange.bind(this);
+    this.handleNotesChange = this.handleNotesChange.bind(this);
     this.handleFocus = this.handleFocus.bind(this);
     this.handleBlur = this.handleBlur.bind(this);
   }
@@ -26,6 +27,15 @@ class IngField extends Component {
       onChange('amount', ingId, e.target.value);
     }
   }
+
+  handleNotesChange(e) {
+    e.preventDefault();
+    const { onChange, ingId } = this.props;
+    if (onChange) {
+      onChange('notes', ingId, e.target.value);
+    }
+  }
+
 
   handleFocus(e) {
     e.preventDefault();
@@ -61,11 +71,19 @@ class IngField extends Component {
         />
         <input
           placeholder="amount"
-          className="new-ing-field-right"
+          className="new-ing-field-center"
           id="newrecipe-ingredient-amount-input"
           type="text"
           value={value.amount}
           onChange={this.handleAmtChange}
+        />
+        <input
+          placeholder="notes"
+          className="new-ing-field-right"
+          id="newrecipe-ingredient-notes-input"
+          type="text"
+          value={value.notes}
+          onChange={this.handleNotesChange}
         />
       </div>
     );
@@ -77,7 +95,11 @@ IngField.propTypes = {
   onChange: PropTypes.func,
   onBlur: PropTypes.func,
   onFocus: PropTypes.func,
-  value: PropTypes.shape({ name: PropTypes.string, amount: PropTypes.string }),
+  value: PropTypes.shape({
+    name: PropTypes.string,
+    amount: PropTypes.string,
+    notes: PropTypes.string,
+  }),
   ingId: PropTypes.number,
 };
 

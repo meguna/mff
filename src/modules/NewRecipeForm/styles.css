@@ -83,9 +83,16 @@ div.new-ingredient-fields label, div.new-ingredient-fields input {
 }
 
 .new-ing-field-left {
-	width: 25vw;
+	width: 20vw;
+}
+
+.new-ing-field-center {
+	width: 10vw;
 }
 
 .new-ing-field-right {
-	width: 12vw;
+	width: 10vw;
+}
+.required-field:after {
+	content: "*";
 }
