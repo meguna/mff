@@ -90,7 +90,6 @@ class IngField extends Component {
   }
 }
 
-
 IngField.propTypes = {
   onChange: PropTypes.func,
   onBlur: PropTypes.func,

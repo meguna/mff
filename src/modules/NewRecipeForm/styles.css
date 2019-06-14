@@ -96,3 +96,8 @@ div.new-ingredient-fields label, div.new-ingredient-fields input {
 .required-field:after {
 	content: "*";
 }
+.ingredient-group {
+	border: 1px solid black;
+	border-radius: 2px;
+	padding: 30px;
+}

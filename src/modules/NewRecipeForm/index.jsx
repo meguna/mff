@@ -3,6 +3,7 @@ import './styles.css';
 import { connect } from 'react-redux';
 import Field from './components/Field';
 import IngField from './components/IngField';
+import IngGroup from './components/IngGroup';
 
 const ING_FIELD_BLANK = {
   name: '',
@@ -16,8 +17,6 @@ class NewRecipeForm extends Component {
     super(props);
     this.onSubmit = this.onSubmit.bind(this);
     this.onFieldChange = this.onFieldChange.bind(this);
-    this.onIngFieldChange = this.onIngFieldChange.bind(this);
-    this.addIngField = this.addIngField.bind(this);
 
     this.state = {
       name: '',
@@ -31,47 +30,6 @@ class NewRecipeForm extends Component {
     this.setState({ [param]: val });
   };
 
-  onIngFieldChange = (param, id, val) => {
-    const { ingredients } = this.state;
-    ingredients[id][param] = val;
-    this.setState({ ingredients });
-  };
-
-/**
- * functions to add and remove ingredient fields automatically.
- * when a user focuses on the last field of the list, a new set appears
- * when a user blurs off the last field of the list, and there are two
- * rows of empty fields, the last row is removed.
- */
-
-  addIngField = (id) => {
-    const { ingredients } = this.state;
-    if (id === ingredients.length - 1) {
-      this.setState(prevState => ({
-        ingredients: [...prevState.ingredients, { ...ING_FIELD_BLANK }],
-      }));
-    }
-  };
-
-  removeEmptyIngField = (id) => {
-    const { ingredients } = this.state;
-    if (
-      ingredients.length > 2
-      && ingredients[id].name === ''
-      && ingredients[id].amount === ''
-      && ingredients[id].notes === ''
-    ) {
-      this.setState((prevState) => {
-        // prevState is only shallow copied by default,
-        // so must be done manually to avoid getting empty `ingredients`
-        const newState = JSON.parse(JSON.stringify(prevState));
-        newState.ingredients.pop();
-        return {
-          ingredients: newState.ingredients,
-        };
-      });
-    }
-  }
 
   onSubmit = (e) => {
     e.preventDefault();
@@ -89,6 +47,8 @@ class NewRecipeForm extends Component {
   };
 
   render() {
+    console.log(this.state);
+
     const {
       name,
       size,
@@ -140,7 +100,7 @@ class NewRecipeForm extends Component {
                 Notes
               </label>
             </div>
-            {ingFields}
+            <IngGroup />
           </fieldset>
           <Field
             onChange={this.onFieldChange}

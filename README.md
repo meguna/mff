@@ -174,6 +174,9 @@ Documenting my progress as I move through the project.
 ## June 12
 * `notes` field for ingredients
 
+## June 14
+* (started) with adding groups - new component "inggroups"
+
 
 ## General To Do Wflow
 
