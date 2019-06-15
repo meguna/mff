@@ -26,19 +26,20 @@ class Field extends PureComponent {
       invalid,
       validString,
       onBlur,
+      outerClassName,
     } = this.props;
 
     const TagType = (textarea !== 'notes') ? 'input' : 'textarea';
-    const validClass = invalid ? 'invalid' : '';
+    const validClass = invalid ? ' invalid' : '';
 
     return (
-      <div className="form-group">
+      <div className={outerClassName}>
         <label htmlFor={id} className={labelClassName}>
           {name}
         </label>
         <TagType
           placeholder={name}
-          className={`${className} ${validClass}`}
+          className={`${className}${validClass}`}
           id={id}
           type="text"
           value={value}
@@ -68,6 +69,7 @@ Field.propTypes = {
   textarea: PropTypes.bool,
   invalid: PropTypes.bool,
   validString: PropTypes.string,
+  outerClassName: PropTypes.string,
 };
 
 Field.defaultProps = {
@@ -81,6 +83,7 @@ Field.defaultProps = {
   textarea: false,
   invalid: false,
   validString: '',
+  outerClassName: 'form-group',
 };
 
 export default Field;

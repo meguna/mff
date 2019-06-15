@@ -6,7 +6,7 @@ import IngGroup from './components/IngGroup';
 import Plus from '../../assets/icons/plus.svg';
 
 const IngFieldsHeader = () => (
-  <div className="new-ing-fields form-group">
+  <div className="new-ing-fields form-group ing-field-labels">
     <label className="new-ing-field-left" htmlFor="nr-ing-name-input">
       Ingredient Name
     </label>
@@ -60,12 +60,13 @@ class NewRecipeForm extends Component {
     }));
   };
 
-  onIngGroupUpdate = (ingredients, groupId) => {
+  onIngGroupUpdate = (ingredients, groupId, groupInfo) => {
     const newIng = ingredients.filter(ing => (
       !(ing.name === '' && ing.amount === '' && ing.notes === '')
     ));
     this.setState(prevProps => ({
       ingredients: Object.assign([], prevProps.ingredients, { [groupId - 1]: newIng }),
+      groups: Object.assign([], prevProps.groups, { [groupId - 1]: { groupId: groupId, ...groupInfo } }),
     }));
   };
 
@@ -83,28 +84,48 @@ class NewRecipeForm extends Component {
   };
 
   onSubmit = (e) => {
-    const { invalid } = this.state;
+    const {
+      invalid,
+      ingredients,
+      groups,
+      name,
+      notes,
+      size,
+    } = this.state;
     e.preventDefault();
+
     this.validate();
     if (invalid.name) {
       this.setState({ submitError: true });
       return;
     }
+    const ingCollect = [];
+    ingredients.forEach((group) => {
+      group.forEach((ing) => {
+        ingCollect.push(ing);
+      });
+    });
+
     console.log(this.state);
-    // const picked = (({ name, size, notes }) => ({ name, size, notes }))(this.state);
-    // fetch('http://localhost:3005/api/createnewrecipe', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify(picked),
-    // })
-    //   .then(res => console.log(res))
-    //   .catch(err => console.log(err));
+
+    fetch('http://localhost:3005/api/createnewrecipe', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        name,
+        notes,
+        size,
+        ingredients: ingCollect,
+        groups,
+      }),
+    })
+      .then(res => console.log(res))
+      .catch(err => console.log(err));
   };
 
   render() {
-    console.log(this.state);
     const {
       name,
       size,
@@ -148,7 +169,7 @@ class NewRecipeForm extends Component {
             <IngFieldsHeader />
             {groupFields}
             <button
-              className="add-ing-group-button new-ing-fields"
+              className="add-ing-group-button"
               type="button"
               onClick={this.onAddGroup}
             >

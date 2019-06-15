@@ -182,6 +182,8 @@ Documenting my progress as I move through the project.
   the main form
 * remove ingredient with button
 * use Feather Icons by Cole Bemis for UI icons
+* form validation! require the 'name' field to not be empty
+* add fields for group metadata (notes & name)
 
 ## General To Do Wflow
 

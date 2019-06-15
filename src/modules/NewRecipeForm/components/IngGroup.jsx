@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import IngField from './IngField';
+import Field from './Field';
 
 const ING_FIELD_BLANK = {
   name: '',
@@ -14,20 +15,34 @@ class IngGroup extends Component {
     super(props);
     this.onIngFieldChange = this.onIngFieldChange.bind(this);
     this.addIngField = this.addIngField.bind(this);
+    this.onFieldChange = this.onFieldChange.bind(this);
 
     this.state = {
       ingredients: [{ ...ING_FIELD_BLANK, groupId: props.groupId }],
+      groupInfo: { name: '', notes: '' },
     };
   }
 
   onIngFieldChange = (param, id, val) => {
-    const { ingredients } = this.state;
+    const { ingredients, groupInfo } = this.state;
     const { onIngGroupUpdate, groupId } = this.props;
     ingredients[id][param] = val;
     this.setState({ ingredients });
     if (onIngGroupUpdate) {
-      onIngGroupUpdate(ingredients, groupId);
+      onIngGroupUpdate(ingredients, groupId, groupInfo);
     }
+  };
+
+  onFieldChange = (param, val) => {
+    this.setState(prevState => ({
+      groupInfo: { ...prevState.groupInfo, [param]: val },
+    }), () => {
+      const { onIngGroupUpdate, groupId } = this.props;
+      const { ingredients, groupInfo } = this.state;
+      if (onIngGroupUpdate) {
+        onIngGroupUpdate(ingredients, groupId, groupInfo);
+      }
+    });
   };
 
 /**
@@ -86,8 +101,13 @@ class IngGroup extends Component {
   render() {
     const {
       ingredients,
+      groupInfo,
     } = this.state;
     const { groupId } = this.props;
+
+    if (ingredients.length === 0) {
+      return null;
+    }
 
     const ingFields = [];
     for (let i = 0; i < ingredients.length; i++) {
@@ -108,6 +128,29 @@ class IngGroup extends Component {
     return (
       <div className="ingredient-group">
         {ingFields}
+        <div className="form-group-buttons">
+          <p>
+            If you&apos;d like to elaborate more on this group,
+            use these fields!
+          </p>
+          <div className="ing-group-fields">
+            <Field
+              name="name"
+              className="ing-group-info"
+              outerClassName="no-pad"
+              onChange={this.onFieldChange}
+              value={groupInfo.name}
+            />
+            <Field
+              name="notes"
+              className="ing-group-info"
+              outerClassName="no-pad"
+              onChange={this.onFieldChange}
+              value={groupInfo.notes}
+              textarea
+            />
+          </div>
+        </div>
       </div>
     );
   }
