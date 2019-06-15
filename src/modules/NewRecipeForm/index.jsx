@@ -3,6 +3,8 @@ import './styles.css';
 import { connect } from 'react-redux';
 import Field from './components/Field';
 import IngGroup from './components/IngGroup';
+import Plus from '../../assets/icons/plus.svg';
+
 
 const ING_FIELD_BLANK = {
   name: '',
@@ -122,6 +124,7 @@ class NewRecipeForm extends Component {
               type="button"
               onClick={this.onAddGroup}
             >
+              <img className="add-icon" src={Plus} alt="close-button" />
               add another ingredient group
             </button>
           </fieldset>

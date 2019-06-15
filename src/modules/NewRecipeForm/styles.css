@@ -109,6 +109,9 @@ div.new-ing-fields label, div.new-ing-fields input {
 .close-icon {
 	height: 20px;
 }
+.add-icon {
+	height:25px;
+}
 
 button > img {
   vertical-align: middle;
