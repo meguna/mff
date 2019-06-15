@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import x from '../../../assets/icons/x.svg';
 
 class IngField extends Component {
   constructor(props) {
@@ -9,6 +10,7 @@ class IngField extends Component {
     this.handleNotesChange = this.handleNotesChange.bind(this);
     this.handleFocus = this.handleFocus.bind(this);
     this.handleBlur = this.handleBlur.bind(this);
+    this.removeFields = this.removeFields.bind(this);
   }
 
   handleNameChange(e) {
@@ -53,9 +55,19 @@ class IngField extends Component {
     }
   }
 
+  removeFields(e) {
+    e.preventDefault();
+    const { onRemoveSelected, ingId } = this.props;
+    if (onRemoveSelected) {
+      onRemoveSelected(ingId);
+    }
+  }
+
   render() {
     const {
       value,
+      ingId,
+      groupId,
     } = this.props;
     return (
       <div className="new-ing-fields form-group">
@@ -85,6 +97,16 @@ class IngField extends Component {
           value={value.notes}
           onChange={this.handleNotesChange}
         />
+        {!(ingId === 0 && groupId === 1)
+        && (
+          <button
+            type="button"
+            onClick={this.removeFields}
+            onKeyDown={this.removeFields}
+          >
+            <img className="close-icon" src={x} alt="close-button" />
+          </button>
+        )}
       </div>
     );
   }
@@ -94,20 +116,24 @@ IngField.propTypes = {
   onChange: PropTypes.func,
   onBlur: PropTypes.func,
   onFocus: PropTypes.func,
+  onRemoveSelected: PropTypes.func,
   value: PropTypes.shape({
     name: PropTypes.string,
     amount: PropTypes.string,
     notes: PropTypes.string,
   }),
   ingId: PropTypes.number,
+  groupId: PropTypes.number,
 };
 
 IngField.defaultProps = {
   onChange: () => {},
   onBlur: () => {},
   onFocus: () => {},
+  onRemoveSelected: () => {},
   value: { name: '', amount: '', notes: '' },
   ingId: 0,
+  groupId: 1,
 };
 
 export default IngField;

@@ -177,6 +177,11 @@ Documenting my progress as I move through the project.
 ## June 14
 * (started) with adding groups - new component "inggroups"
 
+## June 15
+* each ingredient group updates the ingredient list & passes it back to 
+  the main form
+* remove ingredient with button
+* use Feather Icons by Cole Bemis for UI icons
 
 ## General To Do Wflow
 

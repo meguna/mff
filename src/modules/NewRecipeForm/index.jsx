@@ -69,6 +69,7 @@ class NewRecipeForm extends Component {
   };
 
   render() {
+    console.log(this.state);
     const {
       name,
       size,
@@ -116,7 +117,11 @@ class NewRecipeForm extends Component {
               </label>
             </div>
             {groupFields}
-            <button className="add-ing-group-button" type="button" onClick={this.onAddGroup}>
+            <button
+              className="add-ing-group-button new-ing-fields"
+              type="button"
+              onClick={this.onAddGroup}
+            >
               add another ingredient group
             </button>
           </fieldset>

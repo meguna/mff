@@ -50,7 +50,7 @@ class IngGroup extends Component {
   removeEmptyIngField = (id) => {
     const { ingredients } = this.state;
     if (
-      ingredients.length > 2
+      ingredients.length > 1
       && ingredients[id].name === ''
       && ingredients[id].amount === ''
       && ingredients[id].notes === ''
@@ -58,19 +58,36 @@ class IngGroup extends Component {
       this.setState((prevState) => {
         // prevState is only shallow copied by default,
         // so must be done manually to avoid getting empty `ingredients`
-        const newState = JSON.parse(JSON.stringify(prevState));
-        newState.ingredients.pop();
+        const newIng = [...prevState.ingredients];
+        newIng.pop();
         return {
-          ingredients: newState.ingredients,
+          ingredients: newIng,
         };
       });
     }
-  }
+  };
+
+  removeSelectedIngField = (id) => {
+    const { onIngGroupUpdate, groupId } = this.props;
+    this.setState((prevState) => {
+      const newIng = [...prevState.ingredients];
+      newIng.splice(id, 1);
+      return {
+        ingredients: newIng,
+      };
+    }, () => {
+      if (onIngGroupUpdate) {
+        const { ingredients } = this.state;
+        onIngGroupUpdate(ingredients, groupId);
+      }
+    });
+  };
 
   render() {
     const {
       ingredients,
     } = this.state;
+    const { groupId } = this.props;
 
     const ingFields = [];
     for (let i = 0; i < ingredients.length; i++) {
@@ -79,9 +96,11 @@ class IngGroup extends Component {
           onChange={this.onIngFieldChange}
           value={ingredients[i]}
           ingId={i}
+          groupId={groupId}
           key={i}
           onFocus={this.addIngField}
           onBlur={this.removeEmptyIngField}
+          onRemoveSelected={this.removeSelectedIngField}
         />),
       );
     }

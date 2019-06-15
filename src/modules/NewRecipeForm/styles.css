@@ -71,13 +71,6 @@ legend {
 	text-transform: uppercase;
 }
 
-div.new-ing-fields {
-	display: flex;
-	flex-direction: row;
-	width: 50vw;
-	padding-bottom: 20px;
-}
-
 div.new-ing-fields label, div.new-ing-fields input {
 	margin-right: 50px;
 }
@@ -97,14 +90,26 @@ div.new-ing-fields label, div.new-ing-fields input {
 	content: "*";
 }
 .ingredient-group, .add-ing-group-button {
-	background-color: var(--light-grey);
+	background-color: var(--faint-grey);
 	border-radius: 2px;
-	padding: 30px;
 	margin-bottom: 10px;
+}
+.new-ing-fields {
+	padding: 30px;
+	display: flex;
+	flex-direction: row;
+	width: 50vw;
 }
 
 .add-ing-group-button {
 	width: 100%;
 	text-transform: uppercase;
 	font-weight: 500;
+}
+.close-icon {
+	height: 20px;
+}
+
+button > img {
+  vertical-align: middle;
 }
