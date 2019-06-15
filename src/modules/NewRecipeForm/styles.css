@@ -1,4 +1,4 @@
-#newrecipe-form {
+#nr-form {
 	font-weight: 300;
 	font-size: 1.8em;
 	display: flex;
@@ -71,14 +71,14 @@ legend {
 	text-transform: uppercase;
 }
 
-div.new-ingredient-fields {
+div.new-ing-fields {
 	display: flex;
 	flex-direction: row;
 	width: 50vw;
 	padding-bottom: 20px;
 }
 
-div.new-ingredient-fields label, div.new-ingredient-fields input {
+div.new-ing-fields label, div.new-ing-fields input {
 	margin-right: 50px;
 }
 
@@ -86,7 +86,7 @@ div.new-ingredient-fields label, div.new-ingredient-fields input {
 	width: 20vw;
 }
 
-.new-ing-field-center {
+.new-ing-field-ctr {
 	width: 10vw;
 }
 
@@ -96,8 +96,15 @@ div.new-ingredient-fields label, div.new-ingredient-fields input {
 .required-field:after {
 	content: "*";
 }
-.ingredient-group {
-	border: 1px solid black;
+.ingredient-group, .add-ing-group-button {
+	background-color: var(--light-grey);
 	border-radius: 2px;
 	padding: 30px;
+	margin-bottom: 10px;
+}
+
+.add-ing-group-button {
+	width: 100%;
+	text-transform: uppercase;
+	font-weight: 500;
 }

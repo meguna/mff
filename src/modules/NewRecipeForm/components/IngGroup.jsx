@@ -12,23 +12,22 @@ const ING_FIELD_BLANK = {
 class IngGroup extends Component {
   constructor(props) {
     super(props);
-    this.onFieldChange = this.onFieldChange.bind(this);
     this.onIngFieldChange = this.onIngFieldChange.bind(this);
     this.addIngField = this.addIngField.bind(this);
 
     this.state = {
-      ingredients: [{ ...ING_FIELD_BLANK }],
+      ingredients: [{ ...ING_FIELD_BLANK, groupId: props.groupId }],
     };
   }
 
-  onFieldChange = (param, val) => {
-    this.setState({ [param]: val });
-  };
-
   onIngFieldChange = (param, id, val) => {
     const { ingredients } = this.state;
+    const { onIngGroupUpdate, groupId } = this.props;
     ingredients[id][param] = val;
     this.setState({ ingredients });
+    if (onIngGroupUpdate) {
+      onIngGroupUpdate(ingredients, groupId);
+    }
   };
 
 /**
@@ -40,9 +39,10 @@ class IngGroup extends Component {
 
   addIngField = (id) => {
     const { ingredients } = this.state;
+    const { groupId } = this.props;
     if (id === ingredients.length - 1) {
       this.setState(prevState => ({
-        ingredients: [...prevState.ingredients, { ...ING_FIELD_BLANK }],
+        ingredients: [...prevState.ingredients, { ...ING_FIELD_BLANK, groupId }],
       }));
     }
   };
@@ -68,8 +68,6 @@ class IngGroup extends Component {
   }
 
   render() {
-    console.log(this.state);
-
     const {
       ingredients,
     } = this.state;
@@ -98,16 +96,13 @@ class IngGroup extends Component {
 
 
 IngGroup.propTypes = {
-  value: PropTypes.shape({
-    name: PropTypes.string,
-    amount: PropTypes.string,
-    notes: PropTypes.string,
-  }),
+  groupId: PropTypes.number,
+  onIngGroupUpdate: PropTypes.func,
 };
 
 IngGroup.defaultProps = {
-  value: { name: '', amount: '' },
-  ingId: 0,
+  groupId: 1,
+  onIngGroupUpdate: () => {},
 };
 
 export default IngGroup;

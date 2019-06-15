@@ -58,11 +58,11 @@ class IngField extends Component {
       value,
     } = this.props;
     return (
-      <div className="new-ingredient-fields form-group">
+      <div className="new-ing-fields form-group">
         <input
           placeholder="name"
           className="new-ing-field-left"
-          id="newrecipe-ingredient-name-input"
+          id="nr-ing-name-input"
           type="text"
           value={value.name}
           onChange={this.handleNameChange}
@@ -71,8 +71,8 @@ class IngField extends Component {
         />
         <input
           placeholder="amount"
-          className="new-ing-field-center"
-          id="newrecipe-ingredient-amount-input"
+          className="new-ing-field-ctr"
+          id="nr-ing-amount-input"
           type="text"
           value={value.amount}
           onChange={this.handleAmtChange}
@@ -80,7 +80,7 @@ class IngField extends Component {
         <input
           placeholder="notes"
           className="new-ing-field-right"
-          id="newrecipe-ingredient-notes-input"
+          id="nr-ing-notes-input"
           type="text"
           value={value.notes}
           onChange={this.handleNotesChange}
@@ -106,7 +106,7 @@ IngField.defaultProps = {
   onChange: () => {},
   onBlur: () => {},
   onFocus: () => {},
-  value: { name: '', amount: '' },
+  value: { name: '', amount: '', notes: '' },
   ingId: 0,
 };
 
