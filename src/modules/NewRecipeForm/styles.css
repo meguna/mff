@@ -29,7 +29,7 @@ input:not([type=submit]):not([type=file]), textarea {
    box-sizing: border-box;
 }
 
-input:not([type=submit]):not([type=file]):placeholder, textarea:placeholder {
+input:not([type=submit]):not([type=file])::placeholder, textarea::placeholder {
    font-size: 0.8em;
    color: var(--grey);
 }
@@ -125,4 +125,18 @@ input[type="submit"] {
 	display: inline-block;
   	cursor: pointer;
   	width: fit-content;
+}
+.error-msg {
+	color: var(--key-red);
+	padding: 10px;
+	text-transform: none;
+}
+
+.invalid {
+	border: 1px solid red !important;
+
+}
+.alert-symbol {
+	fill:red;
+
 }

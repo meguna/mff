@@ -5,6 +5,19 @@ import Field from './components/Field';
 import IngGroup from './components/IngGroup';
 import Plus from '../../assets/icons/plus.svg';
 
+const IngFieldsHeader = () => (
+  <div className="new-ing-fields form-group">
+    <label className="new-ing-field-left" htmlFor="nr-ing-name-input">
+      Ingredient Name
+    </label>
+    <label className="new-ing-field-ctr" htmlFor="nr-ing-amount-input">
+      Amount
+    </label>
+    <label className="new-ing-field-right" htmlFor="nr-ing-notes-input">
+      Notes
+    </label>
+  </div>
+);
 
 const ING_FIELD_BLANK = {
   name: '',
@@ -31,11 +44,14 @@ class NewRecipeForm extends Component {
       ingredients: [{ ...ING_FIELD_BLANK }],
       groups: [{ ...ING_GROUP_BLANK }],
       notes: '',
+      invalid: { name: false, ingCount: false },
+      submitError: false,
     };
   }
 
   onFieldChange = (param, val) => {
     this.setState({ [param]: val });
+    this.validate();
   };
 
   onAddGroup = () => {
@@ -51,13 +67,30 @@ class NewRecipeForm extends Component {
     this.setState(prevProps => ({
       ingredients: Object.assign([], prevProps.ingredients, { [groupId - 1]: newIng }),
     }));
+  };
 
-    console.log(this.state);
-  }
+  validate = () => {
+    const { name } = this.state;
+    if (name === '') {
+      this.setState(prevProps => ({
+        invalid: { ...prevProps.invalid, name: true },
+      }));
+    } else {
+      this.setState(prevProps => ({
+        invalid: { ...prevProps.invalid, name: false },
+      }));
+    }
+  };
 
   onSubmit = (e) => {
+    const { invalid } = this.state;
     e.preventDefault();
-    // console.log(this.state);
+    this.validate();
+    if (invalid.name) {
+      this.setState({ submitError: true });
+      return;
+    }
+    console.log(this.state);
     // const picked = (({ name, size, notes }) => ({ name, size, notes }))(this.state);
     // fetch('http://localhost:3005/api/createnewrecipe', {
     //   method: 'POST',
@@ -77,6 +110,8 @@ class NewRecipeForm extends Component {
       size,
       notes,
       groups,
+      invalid,
+      submitError,
     } = this.state;
 
     const groupFields = [];
@@ -98,6 +133,9 @@ class NewRecipeForm extends Component {
             name="name"
             id="nr-name-input"
             labelClassName="required-field"
+            invalid={invalid.name}
+            validString="a name is required!"
+            onBlur={this.validate}
           />
           <Field
             onChange={this.onFieldChange}
@@ -107,17 +145,7 @@ class NewRecipeForm extends Component {
           />
           <fieldset className="ingredients-fieldset">
             <legend>Ingredients</legend>
-            <div className="new-ing-fields form-group">
-              <label className="new-ing-field-left" htmlFor="nr-ing-name-input">
-                Ingredient Name
-              </label>
-              <label className="new-ing-field-ctr" htmlFor="nr-ing-amount-input">
-                Amount
-              </label>
-              <label className="new-ing-field-right" htmlFor="nr-ing-notes-input">
-                Notes
-              </label>
-            </div>
+            <IngFieldsHeader />
             {groupFields}
             <button
               className="add-ing-group-button new-ing-fields"
@@ -135,7 +163,8 @@ class NewRecipeForm extends Component {
             id="nr-recipenotes-input"
             textarea
           />
-          <input type="submit" value="Add this recipe!"/>
+          <input type="submit" value="Add this recipe!" />
+          {submitError && <p className="error-msg">Please complete the required fields.</p>}
         </form>
       </div>
     );

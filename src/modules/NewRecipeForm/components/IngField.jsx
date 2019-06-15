@@ -97,6 +97,8 @@ class IngField extends Component {
           value={value.notes}
           onChange={this.handleNotesChange}
         />
+        {/* don't show 'remove ingredient' button for the
+          * first ingredient of the first group */}
         {!(ingId === 0 && groupId === 1)
         && (
           <button
