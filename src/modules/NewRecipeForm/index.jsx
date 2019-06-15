@@ -133,8 +133,9 @@ class NewRecipeForm extends Component {
             value={notes}
             name="notes"
             id="nr-recipenotes-input"
+            textarea
           />
-          <input type="submit" />
+          <input type="submit" value="Add this recipe!"/>
         </form>
       </div>
     );

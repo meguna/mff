@@ -21,13 +21,17 @@ class Field extends PureComponent {
       labelClassName,
       value,
       id,
+      textarea,
     } = this.props;
+
+    const TagType = (textarea !== 'notes') ? 'input' : 'textarea';
+
     return (
       <div className="form-group">
         <label htmlFor={id} className={labelClassName}>
           {name}
         </label>
-        <input
+        <TagType
           placeholder={name}
           className={className}
           id={id}
@@ -48,6 +52,7 @@ Field.propTypes = {
   value: PropTypes.string,
   id: PropTypes.string,
   name: PropTypes.string,
+  textarea: PropTypes.bool,
 };
 
 Field.defaultProps = {
@@ -57,6 +62,7 @@ Field.defaultProps = {
   value: '',
   id: '',
   name: '',
+  textarea: false,
 };
 
 export default Field;
