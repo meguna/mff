@@ -77,9 +77,8 @@ class IngField extends Component {
           id="nr-ing-name-input"
           type="text"
           value={value.name}
-          onChange={this.handleNameChange}
           onFocus={this.handleFocus}
-          onBlur={this.handleBlur}
+          onChange={this.handleNameChange}
         />
         <input
           placeholder="amount"
@@ -96,6 +95,7 @@ class IngField extends Component {
           type="text"
           value={value.notes}
           onChange={this.handleNotesChange}
+          onBlur={this.handleBlur}
         />
         {/* don't show 'remove ingredient' button for the
           * first ingredient of the first group */}

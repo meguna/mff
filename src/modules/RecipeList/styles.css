@@ -8,6 +8,9 @@
 	padding:10px;
 	text-transform: capitalize;
 	cursor: pointer;
+	text-decoration: none;
+	color: black;
+	display: block;
 	border-bottom: 2px solid var(--light-brown);
 }
 .recipe-list-item-wrapper:focus {
@@ -15,6 +18,7 @@
 }
 
 .recipe-list-item-wrapper p {
+	text-decoration: none;
  	font-weight: 500;
 	font-size: 2em;
 }

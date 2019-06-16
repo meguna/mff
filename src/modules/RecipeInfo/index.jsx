@@ -4,6 +4,7 @@ import './styles.css';
 import PropTypes from 'prop-types';
 import IngredientGroup from './components/IngredientGroup';
 import RecipeNotes from './components/RecipeNotes';
+import { Link } from 'react-router-dom';
 
 class RecipeInfo extends Component {
   constructor(props) {
@@ -16,6 +17,12 @@ class RecipeInfo extends Component {
       loadingIngredients: true,
       fetchError: false,
     };
+  }
+
+  componentDidMount() {
+    this.fetchIngredients();
+    this.fetchGroups();
+    console.log(this.props);
   }
 
   componentDidUpdate(prevProps) {
@@ -34,7 +41,7 @@ class RecipeInfo extends Component {
       .then((res) => {
         this.setState({ groups: res });
         this.setState({ groupCount: res[res.length - 1].group_id });
-        this.setState({ loadingGroups: false });
+        this.setState({ loadingGroups: false, fetchError: false });
       })
       .catch(() => {
         this.setState({ fetchError: true });
@@ -47,7 +54,7 @@ class RecipeInfo extends Component {
     fetch(`http://localhost:3005/api/getingredients/${selectedId}`)
       .then(res => res.json())
       .then((res) => {
-        this.setState({ ingredients: res, loadingIngredients: false });
+        this.setState({ ingredients: res, loadingIngredients: false, fetchError: false });
       })
       .catch(() => {
         this.setState({ fetchError: true });
@@ -59,7 +66,7 @@ class RecipeInfo extends Component {
       selectedId,
       loading,
       error,
-      recipes,
+      selected,
     } = this.props;
     const {
       loadingGroups,
@@ -76,12 +83,19 @@ class RecipeInfo extends Component {
         </p>
       );
     }
+    console.log(this.state);
+    console.log(this.props);
+
     if (loading || error || loadingGroups || loadingIngredients || fetchError) {
       return <p />;
     }
-    const selected = recipes.filter(item => item.id === selectedId)[0];
     return (
       <div>
+        <div className="add-recipe-button">
+          <Link to="/addRecipe">
+            Add a new recipe
+          </Link>
+        </div>
         <p className="recipe-info-name">{selected.name}</p>
         {selected.size && <p className="recipe-info-serves">{selected.size}</p>}
         <p className="recipe-info-label">ingredients</p>
@@ -97,19 +111,27 @@ class RecipeInfo extends Component {
 }
 
 RecipeInfo.propTypes = {
-  recipes: PropTypes.arrayOf(PropTypes.object),
+  selected: PropTypes.object,
   error: PropTypes.bool,
   loading: PropTypes.bool,
   selectedId: PropTypes.number,
 };
 
 RecipeInfo.defaultProps = {
-  recipes: {},
+  selected: {},
   error: false,
   loading: false,
   selectedId: 1,
 };
 
-const mapStateToProps = state => state;
+const mapStateToProps = (state, ownProps) => {
+  const selectedId = +ownProps.match.params.id;
+  console.log(state.recipes.filter(rec => selectedId === rec.id)[0]);
+  return {
+    ...state,
+    selected: state.recipes.filter(rec => selectedId === rec.id)[0],
+    selectedId,
+  };
+};
 
 export default connect(mapStateToProps)(RecipeInfo);

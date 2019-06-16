@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import './styles.css';
+import { Switch, Route } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import RecipeInfo from '../RecipeInfo';
 import RecipeList from '../RecipeList';
 import NewRecipeForm from '../NewRecipeForm';
+import './styles.css';
 
 class RecipeIndex extends Component {
   componentDidMount() {
@@ -18,7 +19,10 @@ class RecipeIndex extends Component {
           <RecipeList />
         </div>
         <div id="recipe-info">
-          <NewRecipeForm />
+          <Switch>
+            <Route exact path="/addRecipe" component={NewRecipeForm} />
+            <Route path="/recipe/:id" component={RecipeInfo} />
+          </Switch>
         </div>
       </div>
     );
@@ -34,6 +38,5 @@ RecipeIndex.defaultProps = {
   fetchRecipes: null,
   sortMethod: 'update_date',
 };
-
 
 export default RecipeIndex;

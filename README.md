@@ -185,17 +185,21 @@ Documenting my progress as I move through the project.
 * form validation! require the 'name' field to not be empty
 * add fields for group metadata (notes & name)
 
+## June 16 
+* update POST request handler - now the form is fully functional!!
+* set up routing for the whole app as of right now
+
 ## General To Do Wflow
 
 * ~~planning~~
 * ~~set up db~~
 * ~~fetch list of recipes~~
 * ~~view details about recipe~~
-* form to add new recipe
+* ~~form to add new recipe~~
 * form to edit pre-existing recipe
 * image handling (CRUD for images per recipe)
 * search functionality
-* routing
+* ~~routing~~
 * login / auth
 * i18n with i18next & react-i18next
 * responsive styling for mobile screens
@@ -206,6 +210,7 @@ Documenting my progress as I move through the project.
 
 ## To Do Notes
 
+* change document titles according to page
 * change error message for "load more" to "no more to load" when there 
   is no more to load
 * add little triangle next to sort button to show that it's a dropdown list

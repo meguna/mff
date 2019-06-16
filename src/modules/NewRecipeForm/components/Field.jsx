@@ -57,7 +57,6 @@ class Field extends PureComponent {
   }
 }
 
-
 Field.propTypes = {
   onChange: PropTypes.func,
   onBlur: PropTypes.func,

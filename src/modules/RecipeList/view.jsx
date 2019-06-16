@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './styles.css';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 class RecipeList extends Component {
   constructor(props) {
@@ -42,8 +43,9 @@ class RecipeList extends Component {
 
         {(!loading || !error) && recipes.map(recipe => (
           <div key={recipe.id}>
-            <div
+            <Link
               role="link"
+              to={`/recipe/${recipe.id}`}
               tabIndex="0"
               onClick={() => this.onRecipeClick(recipe.id)}
               onKeyDown={() => this.onRecipeClick(recipe.id)}
@@ -52,7 +54,7 @@ class RecipeList extends Component {
               <p className={(recipe.id === selectedId ? 'selected' : 'blue')}>
                 {recipe.name}
               </p>
-            </div>
+            </Link>
           </div>
         ))}
         <button
