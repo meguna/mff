@@ -186,16 +186,23 @@ Documenting my progress as I move through the project.
 * add fields for group metadata (notes & name)
 
 ## June 16 
-* update POST request handler - now the form is fully functional!!
+* update POST request handler - now the form is fully functional!! took a
+  while to get the mysql queries and JSON request body working together
 * set up routing for the whole app as of right now
 
 #### Lessons
 * maintaining immutable objects is so important. `Object.assign` is great
+* use `mysql.escape()` when using template strings instead of passing query
+  variables as an array argument
+* lots of risks surrounding sending multiple mysql queries in one POST
+  action but I settled on doing it anyway while being careful to
+  thoroughly sanitize the input
 
 ## June 17
 * refactoring lotsa code!
 * api route for image upload
 * add image component to form
+* successfully set up image upload field in form + working POST endpoint
 
 #### Notes
 * starting to wish I could use `assert()` in node/react like we did in C/C++.
@@ -208,15 +215,22 @@ Documenting my progress as I move through the project.
 * react DevTools will look like it's re-rendering components a lot if they're
   wrapped in `connect()` for Redux purposes. Quick check using the profiler
   tools will show what's really being re-rendered.
+* Formidable dislikes body-parser. Also, instead of finagling with having
+  multiple forms or multiple submit buttons within a form, set an onChange
+  event listener on the file upload input tag. headache resolved.
 
 ## To Do Notes - Immediate
 
+* RecipeInfo `shouldComponentUpdate()` causing buggy behavior - commented out
+  for now
+* "add new recipe" button only active around text, not colored div
+* tabbing through the form causes buggy undefined behavior. investigate
 * routing - when loading an url for a recipe that's not in the "most recent"
   list (and thus not loaded yet), what to do? make new View for this?
 * change document titles according to page
 * change error message for "load more" to "no more to load" when there 
   is no more to load
-* testing
+* testing with Jest
 * "baking" vs "cooking" filter
 * drag to change ingredient order
 * imperial / customary change! --> is this really necessary?

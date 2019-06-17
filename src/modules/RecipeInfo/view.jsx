@@ -25,13 +25,13 @@ class RecipeInfo extends Component {
     console.log(this.props);
   }
 
-  shouldComponentUpdate(prevProps) {
-    const { selectedId } = this.props;
-    if (selectedId !== prevProps.selectedId) {
-      return true;
-    }
-    return false;
-  }
+  // shouldComponentUpdate(prevProps) {
+  //   const { selectedId } = this.props;
+  //   if (selectedId !== prevProps.selectedId) {
+  //     return true;
+  //   }
+  //   return false;
+  // }
 
   componentDidUpdate(prevProps) {
     const { selectedId } = this.props;

@@ -114,20 +114,37 @@ app.get('/api/getingredientgroups/:id', (req, res) => {
   });
 });
 
-app.post('/api/addImage', (req, res) => {
-  new formidable.IncomingForm().parse(req)
-    .on('fileBegin', () => {
-      console.log('uploading file');
-    })
-    .on('file', (name, file) => {
-      console.log('Uploaded file', name, file);
-    })
-    .on('error', (err) => {
-      console.error('Error', err);
-      throw err;
-    });
+/**
+ * endpoint for adding a new image to /static/userImages
+ * takes: an HTML File object
+ */
+app.post('/api/addimage', (req, res) => {
+  const form = formidable.IncomingForm();
+  const fileNames = [];
+  form.uploadDir = `${__dirname}/static/userImages`;
+  form.mutiples = true;
+  form.on('fileBegin', (name, file) => {
+    file.name = file.name.split('.').join(`-${Date.now()}.`);
+    file.path = `${form.uploadDir}/${file.name}`;
+    fileNames.push(file.name);
+  });
+
+  form.on('error', (err) => {
+    throw err;
+  });
+
+  form.parse(req, () => {
+    res.writeHead(200, { 'content-type': 'text/plain' });
+    res.end(JSON.stringify(fileNames));
+  });
 });
 
+/**
+ * endpoint for adding a new recipe to the database. updates all
+ * three tables (recipes, recipe_ingredients, ingredient_groups).
+ * takes: name (string), notes (string), size(string),
+ *        ingredients (array of objects), groups (array of objects)
+ */
 app.post('/api/createnewrecipe', (req, res) => {
   /**
    * function to check for empty strings and replace them with some value.
@@ -144,7 +161,6 @@ app.post('/api/createnewrecipe', (req, res) => {
     return mysql.escape(input);
   };
 
-  // add recipe to `recipes` table
   const recipeName = mysql.escape(req.body.name);
   const recipeSize = sanitize(req.body.size);
   const recipeNotes = sanitize(req.body.notes);
@@ -153,7 +169,6 @@ app.post('/api/createnewrecipe', (req, res) => {
     VALUES (${recipeName}, ${recipeNotes}, ${recipeSize});
     SET @recid = LAST_INSERT_ID();`;
 
-  // add ingredients to `recipe_ingredients` table
   req.body.ingredients.forEach((ing, i) => {
     const ingName = sanitize(ing.name);
     const ingNotes = sanitize(ing.notes);
@@ -167,7 +182,6 @@ app.post('/api/createnewrecipe', (req, res) => {
     `;
   });
 
-  // add groups to `ingredient_groups` table
   req.body.groups.forEach((group) => {
     const groupName = sanitize(group.name);
     const groupNotes = sanitize(group.notes);
