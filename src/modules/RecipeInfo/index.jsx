@@ -1,10 +1,10 @@
 import { connect } from 'react-redux';
 import React, { Component } from 'react';
-import './styles.css';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import IngredientGroup from './components/IngredientGroup';
 import RecipeNotes from './components/RecipeNotes';
-import { Link } from 'react-router-dom';
+import './styles.css';
 
 class RecipeInfo extends Component {
   constructor(props) {
@@ -54,7 +54,11 @@ class RecipeInfo extends Component {
     fetch(`http://localhost:3005/api/getingredients/${selectedId}`)
       .then(res => res.json())
       .then((res) => {
-        this.setState({ ingredients: res, loadingIngredients: false, fetchError: false });
+        this.setState({
+          ingredients: res,
+          loadingIngredients: false,
+          fetchError: false,
+        });
       })
       .catch(() => {
         this.setState({ fetchError: true });
@@ -83,9 +87,6 @@ class RecipeInfo extends Component {
         </p>
       );
     }
-    console.log(this.state);
-    console.log(this.props);
-
     if (loading || error || loadingGroups || loadingIngredients || fetchError) {
       return <p />;
     }
@@ -98,12 +99,14 @@ class RecipeInfo extends Component {
         </div>
         <p className="recipe-info-name">{selected.name}</p>
         {selected.size && <p className="recipe-info-serves">{selected.size}</p>}
-        <p className="recipe-info-label">ingredients</p>
-        <IngredientGroup
-          ingredients={ingredients}
-          groups={groups}
-          groupCount={groupCount}
-        />
+
+        {ingredients.length !== 0 && (
+          <IngredientGroup
+            ingredients={ingredients}
+            groups={groups}
+            groupCount={groupCount}
+          />
+        )}
         {selected.notes && <RecipeNotes notes={selected.notes} />}
       </div>
     );
@@ -111,14 +114,28 @@ class RecipeInfo extends Component {
 }
 
 RecipeInfo.propTypes = {
-  selected: PropTypes.object,
+  selected: PropTypes.shape({
+    create_date: PropTypes.string,
+    id: PropTypes.number,
+    name: PropTypes.string,
+    notes: PropTypes.string,
+    size: PropTypes.string,
+    update_date: PropTypes.string,
+  }),
   error: PropTypes.bool,
   loading: PropTypes.bool,
   selectedId: PropTypes.number,
 };
 
 RecipeInfo.defaultProps = {
-  selected: {},
+  selected: {
+    create_date: '',
+    id: 1,
+    name: '',
+    notes: '',
+    size: '',
+    update_date: '',
+  },
   error: false,
   loading: false,
   selectedId: 1,
@@ -126,7 +143,6 @@ RecipeInfo.defaultProps = {
 
 const mapStateToProps = (state, ownProps) => {
   const selectedId = +ownProps.match.params.id;
-  console.log(state.recipes.filter(rec => selectedId === rec.id)[0]);
   return {
     ...state,
     selected: state.recipes.filter(rec => selectedId === rec.id)[0],

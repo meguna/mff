@@ -6,6 +6,7 @@ const mysql = require('mysql');
 const bodyParser = require('body-parser');
 const path = require('path');
 const cors = require('cors');
+const formidable = require('formidable');
 
 const app = express();
 
@@ -22,13 +23,13 @@ connection.connect((err) => {
   if (err) throw err;
 });
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({
-  extended: true,
-}));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 app.use(cors());
 
-app.listen(3005, '127.0.0.1');
+const server = app.listen(3005, '127.0.0.1');
+server.timeout = 1000 * 60 * 10;
 
 app.get('/api/static/:folder/:file', (req, res) => {
   const options = {
@@ -115,6 +116,7 @@ app.get('/api/getingredientgroups/:id', (req, res) => {
 });
 
 app.post('/api/createnewrecipe', (req, res) => {
+
   const recipeName = mysql.escape(req.body.name);
   const recipeSize = req.body.size.length === 0 ? 'NULL' : mysql.escape(req.body.size);
   const recipeNotes = req.body.notes.length === 0 ? 'NULL' : mysql.escape(req.body.notes);
@@ -148,10 +150,22 @@ app.post('/api/createnewrecipe', (req, res) => {
   });
 
   connection.query(
-    query,
+    "select * from recipes",
     [req.params.id], (error, results) => {
       if (error) throw error;
       res.end(JSON.stringify(results));
     }
   )
+
+  new formidable.IncomingForm().parse(req)
+    .on('fileBegin', (name, file) => {
+      console.log("uploading file");
+    })
+    .on('file', (name, file) => {
+      console.log('Uploaded file', name, file);
+    })
+    .on('error', (err) => {
+      console.error('Error', err);
+      throw err;
+    });
 });

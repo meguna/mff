@@ -51,7 +51,7 @@ class RecipeList extends Component {
               onKeyDown={() => this.onRecipeClick(recipe.id)}
               className="recipe-list-item-wrapper"
             >
-              <p className={(recipe.id === selectedId ? 'selected' : 'blue')}>
+              <p className={(recipe.id === selectedId ? 'selected' : '')}>
                 {recipe.name}
               </p>
             </Link>

@@ -19,18 +19,21 @@ const IngredientGroup = ({ ingredients, groups, groupCount }) => {
     ingredientGroups.push(ingredients.filter(item => item.group_id === i));
   }
   return (
-    <div className="recipe-info-ingredients-list">
-      {ingredientGroups.map((group, i) => (
-        <div className="recipe-info-ingredients-list-group" key={groups[i].id}>
-          <p className="recipe-info-group-note">{groups[i].notes}</p>
-          {groupLetterLabel(i, groupCount)}
-          <div className="recipe-info-ingredients-item-parent">
-            {group.map(ingredient => (
-              <Ingredient ingredient={ingredient} key={ingredient.id} />
-            ))}
+    <div>
+      <p className="recipe-info-label">ingredients</p>
+      <div className="recipe-info-ing-list">
+        {ingredientGroups.map((group, i) => (
+          <div className="recipe-info-ing-list-group" key={groups[i].id}>
+            <p className="recipe-info-group-note">{groups[i].notes}</p>
+            {groupLetterLabel(i, groupCount)}
+            <div className="recipe-info-ing-item-parent">
+              {group.map(ingredient => (
+                <Ingredient ingredient={ingredient} key={ingredient.id} />
+              ))}
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 };

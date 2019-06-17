@@ -4,20 +4,7 @@ import { connect } from 'react-redux';
 import Field from './components/Field';
 import IngGroup from './components/IngGroup';
 import Plus from '../../assets/icons/plus.svg';
-
-const IngFieldsHeader = () => (
-  <div className="new-ing-fields form-group ing-field-labels">
-    <label className="new-ing-field-left" htmlFor="nr-ing-name-input">
-      Ingredient Name
-    </label>
-    <label className="new-ing-field-ctr" htmlFor="nr-ing-amount-input">
-      Amount
-    </label>
-    <label className="new-ing-field-right" htmlFor="nr-ing-notes-input">
-      Notes
-    </label>
-  </div>
-);
+import IngFieldsHeader from './components/IngFieldsHeader';
 
 const ING_FIELD_BLANK = {
   name: '',
@@ -56,7 +43,10 @@ class NewRecipeForm extends Component {
 
   onAddGroup = () => {
     this.setState(prevProps => ({
-      groups: [...prevProps.groups, { ...ING_GROUP_BLANK, groupId: prevProps.groups.length + 1 }],
+      groups: [
+        ...prevProps.groups,
+        { ...ING_GROUP_BLANK, groupId: prevProps.groups.length + 1 },
+      ],
     }));
   };
 
@@ -65,8 +55,14 @@ class NewRecipeForm extends Component {
       !(ing.name === '' && ing.amount === '' && ing.notes === '')
     ));
     this.setState(prevProps => ({
-      ingredients: Object.assign([], prevProps.ingredients, { [groupId - 1]: newIng }),
-      groups: Object.assign([], prevProps.groups, { [groupId - 1]: { groupId: groupId, ...groupInfo } }),
+      ingredients: Object.assign(
+        [], prevProps.ingredients,
+        { [groupId - 1]: newIng },
+      ),
+      groups: Object.assign(
+        [], prevProps.groups,
+        { [groupId - 1]: { groupId, ...groupInfo } },
+      ),
     }));
   };
 
@@ -84,6 +80,8 @@ class NewRecipeForm extends Component {
   };
 
   onSubmit = (e) => {
+    console.log(e.target);
+
     const {
       invalid,
       ingredients,
@@ -99,18 +97,16 @@ class NewRecipeForm extends Component {
       this.setState({ submitError: true });
       return;
     }
-    const ingCollect = [];
-    ingredients.forEach((group) => {
-      group.forEach((ing) => {
-        ingCollect.push(ing);
-      });
-    });
 
-    console.log(this.state);
+    // `ingredients` is a nested array, with individual elements
+    // grouped by ingredient groups. get all nested elements in `ingCollect`
+    const ingCollect = [].concat(...ingredients);
 
     fetch('http://localhost:3005/api/createnewrecipe', {
       method: 'POST',
       headers: {
+        // 'Accept': 'application/json',
+        // 'Content-Type': 'multipart/form-data',
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
@@ -121,8 +117,11 @@ class NewRecipeForm extends Component {
         groups,
       }),
     })
-      .then(res => console.log(res))
-      .catch(err => console.log(err));
+      .then((res) => {
+        this.setState({ submitError: false });
+        console.log(res);
+      })
+      .catch(err => console.error(err));
   };
 
   render() {
@@ -184,7 +183,10 @@ class NewRecipeForm extends Component {
             id="nr-recipenotes-input"
             textarea
           />
-          <input type="submit" value="Add this recipe!" />
+          <label htmlFor="recipe-image-upload">Upload images of the recipe</label>
+          <input id="recipe-image-upload" name="image" type="file" accept="image/*" />
+          <input type="button" name="image" value="upload image" />
+          <input type="submit" name="other-fields" value="Add this recipe!" />
           {submitError && <p className="error-msg">Please complete the required fields.</p>}
         </form>
       </div>
