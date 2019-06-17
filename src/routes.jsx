@@ -9,7 +9,6 @@ export default class AppRouter extends PureComponent {
       <BrowserRouter>
         <Switch>
           <Route path="/" component={RecipeIndex} />
-
         </Switch>
       </BrowserRouter>
     );

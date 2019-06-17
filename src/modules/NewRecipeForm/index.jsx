@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import './styles.css';
 import { connect } from 'react-redux';
 import Field from './components/Field';
@@ -80,8 +80,6 @@ class NewRecipeForm extends Component {
   };
 
   onSubmit = (e) => {
-    console.log(e.target);
-
     const {
       invalid,
       ingredients,
@@ -105,8 +103,6 @@ class NewRecipeForm extends Component {
     fetch('http://localhost:3005/api/createnewrecipe', {
       method: 'POST',
       headers: {
-        // 'Accept': 'application/json',
-        // 'Content-Type': 'multipart/form-data',
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
@@ -144,7 +140,7 @@ class NewRecipeForm extends Component {
     }
 
     return (
-      <div>
+      <Fragment>
         <h1>Add a New Recipe!</h1>
         <form id="nr-form" onSubmit={this.onSubmit} autoComplete="off">
           <Field
@@ -183,13 +179,14 @@ class NewRecipeForm extends Component {
             id="nr-recipenotes-input"
             textarea
           />
-          <label htmlFor="recipe-image-upload">Upload images of the recipe</label>
+          {/*<label htmlFor="recipe-image-upload">Upload images of the recipe</label>
           <input id="recipe-image-upload" name="image" type="file" accept="image/*" />
-          <input type="button" name="image" value="upload image" />
+          <input type="button" name="image" value="upload image" />*/}
+
           <input type="submit" name="other-fields" value="Add this recipe!" />
           {submitError && <p className="error-msg">Please complete the required fields.</p>}
         </form>
-      </div>
+      </Fragment>
     );
   }
 }

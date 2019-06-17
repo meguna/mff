@@ -1,5 +1,9 @@
 import { connect } from 'react-redux';
-import { fetchRecipes, setSelectedRecipe, fetchMoreRecipes } from '../Actions/index';
+import {
+  fetchRecipes,
+  setSelectedRecipe,
+  fetchMoreRecipes,
+} from '../Actions/index';
 
 import RecipeList from './view';
 

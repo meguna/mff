@@ -189,6 +189,19 @@ Documenting my progress as I move through the project.
 * update POST request handler - now the form is fully functional!!
 * set up routing for the whole app as of right now
 
+#### Lessons
+* maintaining immutable objects is so important. `Object.assign` is great
+
+## June 17
+* refactoring lotsa code!
+* api route for image upload
+* add image component to form
+
+#### Notes
+* starting to wish I could use `assert()` in node/react like we did in C/C++.
+  must be a good sign. will add testing suite when this project starts to get
+  more robust
+
 ## General To Do Wflow
 
 * ~~planning~~

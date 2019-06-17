@@ -10,6 +10,14 @@ class RecipeList extends Component {
     this.onSortSelect = this.onSortSelect.bind(this);
   }
 
+  shouldComponentUpdate(prevProps) {
+    const { recipes } = this.props;
+    if (recipes !== prevProps.recipes) {
+      return true;
+    }
+    return false;
+  }
+
   onRecipeClick(id) {
     const { selectedId, setSelectedRecipe } = this.props;
     if (id !== selectedId) {

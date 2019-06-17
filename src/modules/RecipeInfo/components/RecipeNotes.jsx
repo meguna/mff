@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 
 const RecipeNotes = ({ notes }) => (
-  <div>
+  <Fragment>
     <p className="recipe-info-label">notes</p>
     <p className="recipe-info-notes">{notes}</p>
-  </div>
+  </Fragment>
 );
 
 RecipeNotes.propTypes = {
@@ -16,4 +16,4 @@ RecipeNotes.defaultProps = {
   notes: '',
 };
 
-export default RecipeNotes;
+export default React.memo(RecipeNotes);
