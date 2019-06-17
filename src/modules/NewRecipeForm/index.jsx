@@ -5,6 +5,7 @@ import Field from './components/Field';
 import IngGroup from './components/IngGroup';
 import Plus from '../../assets/icons/plus.svg';
 import IngFieldsHeader from './components/IngFieldsHeader';
+import ImageUpload from './components/ImageUpload';
 
 const ING_FIELD_BLANK = {
   name: '',
@@ -33,6 +34,7 @@ class NewRecipeForm extends Component {
       notes: '',
       invalid: { name: false, ingCount: false },
       submitError: false,
+      images: [],
     };
   }
 
@@ -79,31 +81,6 @@ class NewRecipeForm extends Component {
     }
   };
 
-  onImageChosen = (e) => {
-    e.preventDefault();
-    const data = new FormData();
-    const maxFileSize = 1024 * 1024 * 2; // 2MB
-    const maxNumFiles = 5;
-
-    // FileList is not an array but array-list, so
-    // create array from it then iterate
-    Array.from(e.target.files).forEach((file, i) => {
-      if (file.size < maxFileSize && i < maxNumFiles) {
-        data.append('file', e.target.files[i]);
-      }
-    });
-
-    fetch('http://localhost:3005/api/addimage', {
-      method: 'POST',
-      body: data,
-    })
-      .then(res => res.json())
-      .then((res) => {
-        console.log(res);
-      })
-      .catch(err => console.error(err));
-  }
-
   onSubmit = (e) => {
     const {
       invalid,
@@ -144,6 +121,10 @@ class NewRecipeForm extends Component {
       })
       .catch(err => console.error(err));
   };
+
+  updateImageState = (images) => {
+    this.setState({ images });
+  }
 
   render() {
     const {
@@ -204,16 +185,7 @@ class NewRecipeForm extends Component {
             id="nr-recipenotes-input"
             textarea
           />
-
-          <label htmlFor="recipe-image-upload">Upload images of the recipe</label>
-          <input
-            id="recipe-image-upload"
-            type="file"
-            accept="image/*"
-            onChange={this.onImageChosen}
-            multiple
-          />
-          <p>Max image size: 2MB. Max number of images: 5</p>
+          <ImageUpload onDone={this.updateImageState} />
           <input type="submit" value="Add this recipe!" />
           {submitError && <p className="error-msg">Please complete the required fields.</p>}
         </form>

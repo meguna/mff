@@ -204,6 +204,12 @@ Documenting my progress as I move through the project.
 * add image component to form
 * successfully set up image upload field in form + working POST endpoint
 
+#### Do Next
+* add image table to database
+* update create-recipe main form to include images
+* update main createrecipe API endpoint to upload image paths to database
+* load images in RecipeInfo
+
 #### Notes
 * starting to wish I could use `assert()` in node/react like we did in C/C++.
   must be a good sign. will add testing suite when this project starts to get
@@ -259,3 +265,8 @@ Documenting my progress as I move through the project.
 * set up demo page 
 * mobile dev with React Mobile
 * deploy to iOS App Store
+
+## List of Potential Graphics
+* something under the "add a new recipe" header in /addRecipe
+* 404 page
+* landing page - demo / sign up / login buttons
