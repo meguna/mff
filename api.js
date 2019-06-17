@@ -3,7 +3,6 @@ require('fs');
 require('dotenv').config();
 const express = require('express');
 const mysql = require('mysql');
-const bodyParser = require('body-parser');
 const path = require('path');
 const cors = require('cors');
 const formidable = require('formidable');
@@ -115,51 +114,10 @@ app.get('/api/getingredientgroups/:id', (req, res) => {
   });
 });
 
-app.post('/api/createnewrecipe', (req, res) => {
-
-  const recipeName = mysql.escape(req.body.name);
-  const recipeSize = req.body.size.length === 0 ? 'NULL' : mysql.escape(req.body.size);
-  const recipeNotes = req.body.notes.length === 0 ? 'NULL' : mysql.escape(req.body.notes);
-
-  let query = `
-    INSERT INTO recipes (\`name\`, notes, size)
-    VALUES (${recipeName}, ${recipeNotes}, ${recipeSize});
-    SET @recid = LAST_INSERT_ID();`;
-
-  req.body.ingredients.forEach((ing, i) => {
-    const ingName = ing.name.length === 0 ? 'NULL' : mysql.escape(ing.name);
-    const ingNotes = ing.name.length === 0 ? 'NULL' : mysql.escape(ing.notes);
-    const ingAmt = ing.name.length === 0 ? 'NULL' : mysql.escape(ing.amount);
-    const ingGroup = ing.name.length === 0 ? 'NULL' : mysql.escape(ing.groupId);
-
-    query += `
-    INSERT INTO recipe_ingredients (recipe_id, \`name\`, amount, notes, \`order\`, group_id)
-    VALUES (@recid, ${ingName}, ${ingNotes}, ${ingAmt}, ${i}, ${ingGroup});
-    `;
-  });
-
-  req.body.groups.forEach((group) => {
-    const groupName = group.name.length === 0 ? 'NULL' : mysql.escape(group.name);
-    const groupNotes = group.name.length === 0 ? 'NULL' : mysql.escape(group.notes);
-    const groupId = group.name.length === 0 ? 'NULL' : mysql.escape(group.groupId);
-
-    query += `
-    INSERT INTO ingredient_groups (recipe_id, \`name\`, notes, group_id)
-    VALUES (@recid, ${groupName}, ${groupNotes}, ${groupId});
-    `;
-  });
-
-  connection.query(
-    "select * from recipes",
-    [req.params.id], (error, results) => {
-      if (error) throw error;
-      res.end(JSON.stringify(results));
-    }
-  )
-
+app.post('/api/addImage', (req, res) => {
   new formidable.IncomingForm().parse(req)
-    .on('fileBegin', (name, file) => {
-      console.log("uploading file");
+    .on('fileBegin', () => {
+      console.log('uploading file');
     })
     .on('file', (name, file) => {
       console.log('Uploaded file', name, file);
@@ -168,4 +126,62 @@ app.post('/api/createnewrecipe', (req, res) => {
       console.error('Error', err);
       throw err;
     });
+});
+
+app.post('/api/createnewrecipe', (req, res) => {
+  /**
+   * function to check for empty strings and replace them with some value.
+   * default value is 'NULL', the null value in mysql.
+   * if a second parameter is passed, it is used as the replacement value.
+   * otherwise, the given input is sanitized for mysql.
+   */
+  const sanitize = (input, replaceVal) => {
+    let defaultOnNull = 'NULL';
+    if (replaceVal) defaultOnNull = replaceVal;
+    if (!input || input.length === 0) {
+      return defaultOnNull;
+    }
+    return mysql.escape(input);
+  };
+
+  // add recipe to `recipes` table
+  const recipeName = mysql.escape(req.body.name);
+  const recipeSize = sanitize(req.body.size);
+  const recipeNotes = sanitize(req.body.notes);
+  let query = `
+    INSERT INTO recipes (\`name\`, notes, size)
+    VALUES (${recipeName}, ${recipeNotes}, ${recipeSize});
+    SET @recid = LAST_INSERT_ID();`;
+
+  // add ingredients to `recipe_ingredients` table
+  req.body.ingredients.forEach((ing, i) => {
+    const ingName = sanitize(ing.name);
+    const ingNotes = sanitize(ing.notes);
+    const ingAmt = sanitize(ing.amount);
+    const ingGroup = sanitize(ing.groupId, 1);
+    query += `
+    INSERT INTO recipe_ingredients
+    (recipe_id, \`name\`, amount, notes, \`order\`, group_id)
+    VALUES (
+      @recid, ${ingName}, ${ingNotes}, ${ingAmt}, ${i}, ${ingGroup});
+    `;
+  });
+
+  // add groups to `ingredient_groups` table
+  req.body.groups.forEach((group) => {
+    const groupName = sanitize(group.name);
+    const groupNotes = sanitize(group.notes);
+    const groupId = sanitize(group.Id);
+    query += `
+    INSERT INTO ingredient_groups (recipe_id, \`name\`, notes, group_id)
+    VALUES (@recid, ${groupName}, ${groupNotes}, ${groupId});
+    `;
+  });
+
+  connection.query(
+    query, [req.params.id], (error, results) => {
+      if (error) throw error;
+      res.end(JSON.stringify(results));
+    }
+  )
 });
