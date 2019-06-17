@@ -11,8 +11,11 @@ class RecipeList extends Component {
   }
 
   shouldComponentUpdate(prevProps) {
-    const { recipes } = this.props;
+    const { recipes, selectedId } = this.props;
     if (recipes !== prevProps.recipes) {
+      return true;
+    }
+    if (selectedId !== prevProps.selectedId) {
       return true;
     }
     return false;

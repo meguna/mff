@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 const RecipeNotes = ({ notes }) => (
   <Fragment>
-    <p className="recipe-info-label">notes</p>
+    {notes && <p className="recipe-info-label">notes</p>}
     <p className="recipe-info-notes">{notes}</p>
   </Fragment>
 );

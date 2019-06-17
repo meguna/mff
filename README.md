@@ -202,7 +202,32 @@ Documenting my progress as I move through the project.
   must be a good sign. will add testing suite when this project starts to get
   more robust
 
-## General To Do Wflow
+#### Lessons
+* React Memos! quick optimization trick for stateless functional components
+* Fragments to forgo wrapper div tags
+* react DevTools will look like it's re-rendering components a lot if they're
+  wrapped in `connect()` for Redux purposes. Quick check using the profiler
+  tools will show what's really being re-rendered.
+
+## To Do Notes - Immediate
+
+* routing - when loading an url for a recipe that's not in the "most recent"
+  list (and thus not loaded yet), what to do? make new View for this?
+* change document titles according to page
+* change error message for "load more" to "no more to load" when there 
+  is no more to load
+* testing
+* "baking" vs "cooking" filter
+* drag to change ingredient order
+* imperial / customary change! --> is this really necessary?
+* favicon
+* ~~add little triangle next to sort button to show that it's a dropdown list~~
+* ~~sort~~
+* ~~group Names & labels.~~
+* ~~"load more" ingredients list~~
+* ~~MOVE INGREDIENT FETCH FUNCTION - DONT RE-RENDER MULTIPLE TIMES~~
+
+## General Workflow Plan
 
 * ~~planning~~
 * ~~set up db~~
@@ -220,21 +245,3 @@ Documenting my progress as I move through the project.
 * set up demo page 
 * mobile dev with React Mobile
 * deploy to iOS App Store
-
-## To Do Notes
-
-* change document titles according to page
-* change error message for "load more" to "no more to load" when there 
-  is no more to load
-* add little triangle next to sort button to show that it's a dropdown list
-* testing
-* sort
-* ~~group Names & labels.~~
-* ~~"load more" ingredients list~~
-* "baking" vs "cooking" filter
-* ~~MOVE INGREDIENT FETCH FUNCTION - DONT RE-RENDER MULTIPLE TIMES~~
-* image handling
-* drag to change ingredient order
-* imperial / customary change! --> is this really necessary? 
-* favicon
-* page titles
