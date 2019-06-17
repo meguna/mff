@@ -129,9 +129,12 @@ class IngGroup extends Component {
       <div className="ingredient-group">
         {ingFields}
         <div className="form-group-buttons">
-          <p>
+          <p className="form-description">
             If you&apos;d like to elaborate more on this group,
             use these fields!
+            <br />
+            For example, you might have groups called
+            &quot;batter mix&quot; or &quot;dry ingredients.&quot;
           </p>
           <div className="ing-group-fields">
             <Field
@@ -147,7 +150,6 @@ class IngGroup extends Component {
               outerClassName="no-pad"
               onChange={this.onFieldChange}
               value={groupInfo.notes}
-              textarea
             />
           </div>
         </div>

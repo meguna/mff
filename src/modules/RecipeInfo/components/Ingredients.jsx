@@ -4,7 +4,9 @@ import PropTypes from 'prop-types';
 const Ingredient = ({ ingredient }) => (
   <p key={ingredient.id} className="recipe-info-ingredients-item">
     {ingredient.name}
+    &nbsp;
     &mdash;
+    &nbsp;
     {ingredient.amount}
     &nbsp;
     {ingredient.amount_unit}

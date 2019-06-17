@@ -1,11 +1,12 @@
 import React, { Component, Fragment } from 'react';
 import './styles.css';
 import { connect } from 'react-redux';
+import { Plus, AlertCircle } from 'react-feather';
 import Field from './components/Field';
 import IngGroup from './components/IngGroup';
-import Plus from '../../assets/icons/plus.svg';
 import IngFieldsHeader from './components/IngFieldsHeader';
 import ImageUpload from './components/ImageUpload';
+import FormSubHeader from './components/FormSubHeader';
 
 const ING_FIELD_BLANK = {
   name: '',
@@ -147,37 +148,28 @@ class NewRecipeForm extends Component {
 
     return (
       <Fragment>
-        <h1>Add a New Recipe!</h1>
+        <h1 className="title">Add a New Recipe</h1>
+        <FormSubHeader subtitle="info" />
         <form id="nr-form" onSubmit={this.onSubmit} autoComplete="off">
           <Field
             onChange={this.onFieldChange}
             value={name}
             name="name"
             id="nr-name-input"
-            labelClassName="required-field"
             invalid={invalid.name}
             validString="a name is required!"
             onBlur={this.validate}
+            required
           />
           <Field
             onChange={this.onFieldChange}
             value={size}
             name="size"
             id="nr-size-input"
+            info={`
+              Use this field creatively - for anything from serving count to 
+              baking tray dimensions`}
           />
-          <fieldset className="ingredients-fieldset">
-            <legend>Ingredients</legend>
-            <IngFieldsHeader />
-            {groupFields}
-            <button
-              className="add-ing-group-button"
-              type="button"
-              onClick={this.onAddGroup}
-            >
-              <img className="add-icon" src={Plus} alt="close-button" />
-              add another ingredient group
-            </button>
-          </fieldset>
           <Field
             onChange={this.onFieldChange}
             value={notes}
@@ -185,9 +177,33 @@ class NewRecipeForm extends Component {
             id="nr-recipenotes-input"
             textarea
           />
+          <fieldset className="ingredients-fieldset">
+            <legend>
+              <FormSubHeader subtitle="ingredients" />
+            </legend>
+            <IngFieldsHeader />
+            {groupFields}
+            <button
+              className="add-ing-group-button"
+              type="button"
+              onClick={this.onAddGroup}
+            >
+              <Plus />
+              add another ingredient group
+            </button>
+          </fieldset>
+
+          <FormSubHeader subtitle="Images" />
           <ImageUpload onDone={this.updateImageState} />
+
+          <FormSubHeader />
           <input type="submit" value="Add this recipe!" />
-          {submitError && <p className="error-msg">Please complete the required fields.</p>}
+          {submitError && (
+            <p className="error-msg">
+              <AlertCircle />
+              Please complete the required fields.
+            </p>
+          )}
         </form>
       </Fragment>
     );

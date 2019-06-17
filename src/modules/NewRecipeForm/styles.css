@@ -1,45 +1,106 @@
+h1.title {
+    font-family: 'Souvenir', serif;
+    color: var(--key-red);
+    font-size: 4.5rem;
+    padding: 0;
+}
+
+h2.subtitle {
+    font-family: 'Styrene', sans-serif;
+    text-transform: uppercase;
+    font-size: 3.5rem;
+    margin: 0;
+    margin-bottom: 30px;
+    font-weight: 100;
+}
+
+hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid var(--grey);
+    margin: 0.2rem 0;
+    padding: 0;
+}
+
+svg {
+   display: inline-block;
+   vertical-align: middle;
+}
+
+.field-label {
+    font-family: 'Apercu', sans-serif;
+    text-transform: none;
+    font-size: 1.5rem;
+    text-transform: lowercase;
+}
+
+span.required-label {
+    color: var(--medium-red);
+    font-size: 1.2rem;
+}
+
+.form-description {
+    font-family: 'Apercu', sans-serif;
+    text-transform: lowercase;
+    padding: 10px 0;
+    font-size: 1.2rem;
+    color: var(--dark-grey);
+}
+
 #nr-form {
-	font-weight: 300;
-	font-size: 1.8em;
-	display: flex;
-	flex-direction: column;
+    font-weight: 300;
+    font-size: 1.8em;
+    display: flex;
+    flex-direction: column;
 }
 
 .form-group {
-	text-transform: uppercase;
-	font-weight: 500;
-	font-size: 0.7em;
-	display: flex;
-	flex-direction: column;
-	width: 20vw;
-}
-
-.form-group label {
-	padding: 10px 0;
+    text-transform: uppercase;
+    font-weight: 500;
+    font-size: 0.7em;
+    display: flex;
+    flex-direction: column;
 }
 
 .form-group, .ingredients-fieldset {
-	padding-bottom: 50px;
+    padding-bottom: 50px;
 }
 
-input:not([type=submit]):not([type=file]):not([type=button]), textarea {
+input[type=file] {
+   font-family: 'Apercu', sans-serif;
+   padding: 20px;
+   border-radius: 3px;
+   font-size: 1.5rem;
+   cursor: pointer;
+}
+
+input[type=file]:focus {
+   outline: none;
+}
+
+input:not([type=submit]):not([type=file]):not([type=button]),
+textarea {
+   font-family: 'Apercu', sans-serif;
    padding: 20px;
    border-radius: 3px;
    border: 1px solid var(--grey);
-   font-size: 1.5em;
+   font-size: 1.5rem;
    background-image: none;
-   font-family: 'Brown', sans-serif;
    box-sizing: border-box;
+   max-width: 30vw;
 }
 
-input:not([type=submit]):not([type=file]):not([type=button])::placeholder, textarea::placeholder {
+input:not([type=submit]):not([type=file]):not([type=button])::placeholder,
+textarea::placeholder {
    font-size: 0.8em;
    color: var(--grey);
 }
 
-input:not([type=submit]):not([type=file]):not([type=button]):focus, textarea:focus {
-	outline: none;
-	border: 1px solid black;
+input:not([type=submit]):not([type=file]):not([type=button]):focus,
+textarea:focus {
+    outline: none;
+    border: 1px solid black;
 }
 
 .input-data-row {
@@ -47,81 +108,79 @@ input:not([type=submit]):not([type=file]):not([type=button]):focus, textarea:foc
    border-radius: 3px;
    font-size: 1.5em;
    background-image: none;
-   font-family: 'Brown', sans-serif;
    border: none;
 }
 
 .input-data-row:focus {
-	outline: none;
+    outline: none;
 }
 
 .input-data-row-wrapper {
-	border-radius: 3px;
-	border: 1px solid var(--grey);
+    border-radius: 3px;
+    border: 1px solid var(--grey);
 }
 .input-data-row-wrapper:focus-within {
-	border: 1px solid black;
+    border: 1px solid black;
 }
 
 fieldset {
-	border: none;
-	padding: 0;
+    border: none;
+    padding: 0;
 }
 
 legend {
-	font-weight: 700;
-	font-size: 0.9em;
-	text-transform: uppercase;
+    font-weight: 700;
+    font-size: 0.9em;
+    text-transform: uppercase;
+    width: 100%;
 }
 
 div.new-ing-fields label, div.new-ing-fields input {
-	margin-right: 50px;
+    margin-right: 50px;
 }
 
 .new-ing-field-left {
-	width: 20vw;
+    width: 20vw;
 }
 
 .new-ing-field-ctr {
-	width: 10vw;
+    width: 10vw;
 }
 
 .new-ing-field-right {
-	width: 10vw;
+    width: 10vw;
 }
 .required-field:after {
-	content: "*";
+    content: "*";
 }
 .ingredient-group, .add-ing-group-button {
-	background-color: var(--faint-grey);
-	border: 1px solid var(--grey);
-	border-radius: 2px;
-	margin-bottom: 50px;
+    background-color: var(--faint-grey);
+    border: 1px solid var(--grey);
+    border-radius: 2px;
+    margin-bottom: 50px;
 }
 .new-ing-fields {
-	padding: 30px;
-	display: flex;
-	flex-direction: row;
-	width: 50vw;
+    padding: 30px;
+    display: flex;
+    flex-direction: row;
+    width: 50vw;
 }
 
 .new-ing-fields:not(:nth-child(1)) {
-	padding-top: 0;
+    padding-top: 0;
 }
 
 .add-ing-group-button {
-	width: 50vw;
-	padding: 30px;
-	width: 100%;
-	text-transform: uppercase;
-	font-weight: 500;
-	text-align: left;
+    padding: 30px;
+    width: 100%;
+    text-align: center;
 }
+
 .close-icon {
-	height: 20px;
+    height: 20px;
 }
 .add-icon {
-	height:25px;
+    height:25px;
 }
 
 button > img {
@@ -129,79 +188,73 @@ button > img {
 }
 
 input[type="submit"], input[type="button"] {
-	text-align: left;
-	background-color: var(--medium-red);
-	padding: 20px;
-	border-radius: 5px;
-	display: inline-block;
-  	cursor: pointer;
-  	width: fit-content;
+    font-family: 'Apercu', sans-serif;
+    text-align: left;
+    background-color: var(--light-red);
+    border: 1px solid var(--medium-red);
+    padding: 20px;
+    border-radius: 5px;
+    display: inline-block;
+    cursor: pointer;
+    width: fit-content;
 }
 
 .form-group-buttons {
-	border-top: 1px solid var(--grey);
-	padding: 20px 0px 20px 30px;
+    border-top: 1px solid var(--grey);
+    padding: 20px 0px 20px 30px;
 }
-
-.form-group-buttons p {
-	font-size: 0.8em;
-	padding: 5px;
-}
-
-
 
 .mini-button {
-	background-color: var(--light-red);
-	padding: 10px;
-	margin-left: 15px;
-	border-radius: 5px;
-	font-size: 0.8em;
+    background-color: var(--light-red);
+    padding: 10px;
+    margin-left: 15px;
+    border-radius: 5px;
+    font-size: 0.8em;
 }
 
 .error-msg {
-	color: var(--key-red);
-	padding: 10px;
-	text-transform: none;
+    color: var(--key-red);
+    padding: 10px;
+    text-transform: none;
 }
 
 .invalid {
-	border: 1px solid red !important;
+    border: 1px solid red !important;
 }
 
 .alert-symbol {
-	fill:red;
+    fill:red;
 }
 
 .ing-group-fields {
-	display: flex;
-	flex-direction: row;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
 }
 .ing-group-info {
-	margin-right: 50px;
-	background-color: var(--faint-grey);
+    margin-right: 50px;
+    background-color: var(--faint-grey);
 }
 .ing-group-info:focus {
-	transition: 0.2s;
-	background-color: white;
+    transition: 0.2s;
+    background-color: white;
 }
 
 .no-pad {
-	padding-bottom: 0;
-	line-height: 2em;
-	text-transform: uppercase;
-	font-weight: 500;
-	font-size: 0.7em;
-	display: flex;
-	flex-direction: column;
-	width: 20vw;
+    padding-bottom: 0;
+    line-height: 2em;
+    text-transform: uppercase;
+    font-weight: 500;
+    font-size: 0.7em;
+    display: flex;
+    flex-direction: column;
+    width: 20vw;
 }
 
 .ing-field-labels {
-	padding: 30px 0px 0px 20px;
+    padding: 30px 0px 5px 30px;
 }
 
-label {
-	text-transform: uppercase;
-	font-weight: 500;
-	font-size: 1.5em;
+.hidden {
+    display: none;
 }

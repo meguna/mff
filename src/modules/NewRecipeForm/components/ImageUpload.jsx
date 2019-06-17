@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 class ImageUpload extends Component {
@@ -40,8 +40,15 @@ class ImageUpload extends Component {
   render() {
     return (
       <div className="form-group">
-        <label htmlFor="recipe-image-upload">
-          Upload images of the recipe
+        <p className="form-description">
+          Attach any images you have of your recipe!
+          <br />
+          Max image size: 2MB.
+          <br />
+          Max number of images: 5.
+        </p>
+        <label htmlFor="recipe-image-upload" className="hidden">
+          Image Upload
         </label>
         <input
           id="recipe-image-upload"
@@ -50,7 +57,6 @@ class ImageUpload extends Component {
           onChange={this.onImageChosen}
           multiple
         />
-        <p>Max image size: 2MB. Max number of images: 5</p>
       </div>
     );
   }

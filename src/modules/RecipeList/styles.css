@@ -33,12 +33,14 @@
 }
 
 .load-more-button {
+	font-family: 'Apercu', sans-serif;
 	color: var(--darker-medium-brown);
 	padding: 10px;
 }
+
 select, option {
+	font-family: 'Apercu', sans-serif;
     font-size: 1.5em;
-    font-family: 'Brown', sans-serif;
     padding: 10px;
     border: none;
     box-sizing: content-box;

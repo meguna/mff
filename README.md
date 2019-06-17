@@ -203,6 +203,7 @@ Documenting my progress as I move through the project.
 * api route for image upload
 * add image component to form
 * successfully set up image upload field in form + working POST endpoint
+* huge style overhaul based on AI mockup. new fonts Apercu / Souvenir / Styrene
 
 #### Do Next
 * add image table to database

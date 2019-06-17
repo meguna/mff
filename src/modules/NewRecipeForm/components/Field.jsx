@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import alertCircle from '../../../assets/icons/alert-circle.svg';
+import { AlertCircle } from 'react-feather';
 
 class Field extends PureComponent {
   constructor(props) {
@@ -27,16 +27,20 @@ class Field extends PureComponent {
       validString,
       onBlur,
       outerClassName,
+      required,
+      info,
     } = this.props;
 
-    const TagType = (textarea !== 'notes') ? 'input' : 'textarea';
+    const TagType = textarea ? 'textarea' : 'input';
     const validClass = invalid ? ' invalid' : '';
 
     return (
       <div className={outerClassName}>
-        <label htmlFor={id} className={labelClassName}>
+        <label htmlFor={id} className={`${labelClassName} field-label`}>
           {name}
+          {required && <span className="required-label"> required</span>}
         </label>
+        <p className="form-description">{info}</p>
         <TagType
           placeholder={name}
           className={`${className}${validClass}`}
@@ -48,8 +52,8 @@ class Field extends PureComponent {
         />
         {invalid && (
           <p className="error-msg">
-            <img className="alert-symbol" src={alertCircle} alt="alert-symbol" />
-            {validString}
+            <AlertCircle />
+            {` ${validString}`}
           </p>
         )}
       </div>
@@ -69,6 +73,8 @@ Field.propTypes = {
   invalid: PropTypes.bool,
   validString: PropTypes.string,
   outerClassName: PropTypes.string,
+  info: PropTypes.string,
+  required: PropTypes.bool,
 };
 
 Field.defaultProps = {
@@ -83,6 +89,8 @@ Field.defaultProps = {
   invalid: false,
   validString: '',
   outerClassName: 'form-group',
+  info: '',
+  required: false,
 };
 
 export default Field;

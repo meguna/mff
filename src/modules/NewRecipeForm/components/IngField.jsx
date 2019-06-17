@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import x from '../../../assets/icons/x.svg';
+import { X } from 'react-feather';
 
 class IngField extends Component {
   constructor(props) {
@@ -73,7 +73,7 @@ class IngField extends Component {
       <div className="new-ing-fields form-group">
         <input
           placeholder="name"
-          className="new-ing-field-left"
+          className="new-ing-field-left field-label"
           id="nr-ing-name-input"
           type="text"
           value={value.name}
@@ -82,7 +82,7 @@ class IngField extends Component {
         />
         <input
           placeholder="amount"
-          className="new-ing-field-ctr"
+          className="new-ing-field-ctr field-label"
           id="nr-ing-amount-input"
           type="text"
           value={value.amount}
@@ -90,7 +90,7 @@ class IngField extends Component {
         />
         <input
           placeholder="notes"
-          className="new-ing-field-right"
+          className="new-ing-field-right field-label"
           id="nr-ing-notes-input"
           type="text"
           value={value.notes}
@@ -106,7 +106,7 @@ class IngField extends Component {
             onClick={this.removeFields}
             onKeyDown={this.removeFields}
           >
-            <img className="close-icon" src={x} alt="close-button" />
+            <X />
           </button>
         )}
       </div>

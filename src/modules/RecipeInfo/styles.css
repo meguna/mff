@@ -1,19 +1,19 @@
 .recipe-info-name {
 	font-weight: 500;
-	font-size: 4em;
+	font-size: 4rem;
 	text-transform: capitalize;
 	margin: 0;
 }
 
 .recipe-info-serves {
-	font-size: 1.5em;
+	font-size: 1.5rem;
 	margin: 10px 0 15px 0;
-	font-family: 'Brown', sans-serif;
+	font-family: 'Styrene', sans-serif;
 	font-weight: 300;
 }
 
 .recipe-info-notes {
-	font-size: 1.5em;
+	font-size: 1.5rem;
 }
 
 .recipe-info-ing-list, .recipe-info-notes {
@@ -22,7 +22,7 @@
 }
 
 .recipe-info-ing-list {
-	font-size: 1.5em;
+	font-size: 1.5rem;
 	list-style: none;
 	display: inline-block;
 	margin-right:20px;
@@ -30,43 +30,51 @@
 
 .recipe-info-label {
 	text-transform: uppercase;
-	font-size: 1.5em;
+	font-size: 1.5rem;
 	font-weight: 500;
 	color: var(--medium-brown);
-	margin: 0;
-	padding-top: 20px;
+	margin: 30px 0 10px 0;
 	font-weight: 500;
-	font-family: 'Brown', sans-serif;
+	font-family: 'Styrene', sans-serif;
 }
 
 span.recipe-info-group-letter-label {
-	font-size: 0.8em;
+	font-size: 1.2rem;
 	position: absolute;
 	color: var(--medium-brown);
-	font-family: 'Brown', sans-serif;
-	padding-top: 0.4em;
-	left:-1.5em;
+	font-family: 'Styrene', sans-serif;
+	padding-top: 0.5rem;
+	left:-2rem;
 }
 
 .recipe-info-ingredient-note {
 	color: var(--darker-medium-brown);
-	font-size: 0.6em;
+	font-size: 1.1rem;
 	display: block;
 }
 
 .recipe-info-ing-list-group {
-	padding: 20px 10px 20px 10px;
 	border-top: 1px solid var(--medium-brown);
 	position: relative;
 }
 
-.recipe-info-ing-list .recipe-info-ing-list-group:first-child {
+.recipe-info-ing-list-group div:first-of-type {
+	margin-top: 0;
+}
+
+.recipe-info-ing-list div:first-of-type {
 	border-top: none;
+	padding-top: 0;
 }
 
 .recipe-info-ing-item {
 	margin: 0;
 }
+
+.recipe-info-ing-list-group, span.recipe-info-group-letter-label {
+	padding: 1rem 0;
+}
+
 
 .recipe-info-error-message {
 	font-size: 2em;
@@ -74,13 +82,13 @@ span.recipe-info-group-letter-label {
 }
 
 .recipe-list-item-wrapper p {
-	margin: 0.5em 0 0.5em 0;
+	margin: 0.5rem 0 0.5rem 0;
 }
 
 .recipe-info-group-note {
 	position: absolute;
 	color: var(--darker-medium-brown);
-	font-size: 0.6em;
+	font-size: 1.1rem;
 	right: 0;
 	transform: translateX(100%);
 	padding-left: 10px;
