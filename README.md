@@ -228,9 +228,11 @@ Documenting my progress as I move through the project.
 * add status (success/fail) to create recipe form.
 * fix bug in API where sort order wasn't applying correctly (hadn't been
   using ASC or DESC keywords in query)
+* optimizing selective loading in RecipeInfo
+* RecipeInfo image loading!!!!!!!!!!!!
 
-#### Do Next
-* load images in RecipeInfo
+#### Lessons
+* as always, setState() gotchas with multiple calls and its async nature
 
 ## To Do Notes - Immediate
 
