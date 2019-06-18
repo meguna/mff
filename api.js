@@ -57,9 +57,13 @@ app.use((req, res, next) => {
 });
 
 app.get('/api/getrecipes/offset=:offset-sort=:sort', (req, res) => {
+  let order = 'DESC';
+  if (req.params.sort === 'name') {
+    order = 'ASC';
+  }
   connection.query(`
     SELECT * FROM recipes
-    ORDER BY recipes.${req.params.sort}
+    ORDER BY recipes.${req.params.sort} ${order}
     LIMIT ?,5
     `,
   [+req.params.offset], (error, results) => {
@@ -69,9 +73,13 @@ app.get('/api/getrecipes/offset=:offset-sort=:sort', (req, res) => {
 });
 
 app.get('/api/getrecipes/sort=:sort', (req, res) => {
+  let order = 'DESC';
+  if (req.params.sort === 'name') {
+    order = 'ASC';
+  }
   const query = `
     SELECT * FROM recipes
-    ORDER BY recipes.${req.params.sort}
+    ORDER BY recipes.${req.params.sort} ${order}
     LIMIT 5
     `;
   connection.query(query, (error, results) => {

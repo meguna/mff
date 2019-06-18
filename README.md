@@ -226,7 +226,8 @@ Documenting my progress as I move through the project.
 * fix bug that allowed unvalidated form to send
 * fix bug that sent empty groups/ingredients to DB if recipes.name existed
 * add status (success/fail) to create recipe form.
-
+* fix bug in API where sort order wasn't applying correctly (hadn't been
+  using ASC or DESC keywords in query)
 
 #### Do Next
 * load images in RecipeInfo
@@ -235,7 +236,7 @@ Documenting my progress as I move through the project.
 
 * ~~clear input fields on successful submit~~
 * ~~reset 'choose recipes' image input on load~~
-* after adding new recipe, re-fetch & update the RecipeList!
+* ~~after adding new recipe, re-fetch & update the RecipeList!~~
 * add status & error messages to image upload - "uploading...", "uploaded!",
   "error - one of your files is too big. please check again.", "error - you
   selected more than five images. only the first five have been uploaded."
@@ -268,13 +269,15 @@ Documenting my progress as I move through the project.
 * ~~fetch list of recipes~~
 * ~~view details about recipe~~
 * ~~form to add new recipe~~
-* form to edit pre-existing recipe
+* UPDATE form to edit pre-existing recipe
+* DELETE api routes & interface within UPDATE form
 * image handling (CRUD for images per recipe)
 * search functionality
 * ~~routing~~
 * login / auth
 * i18n with i18next & react-i18next
 * responsive styling for mobile screens
+* graphics / illustrations
 * deploy to web
 * set up demo page 
 * mobile dev with React Mobile
@@ -284,3 +287,4 @@ Documenting my progress as I move through the project.
 * something under the "add a new recipe" header in /addRecipe
 * 404 page
 * landing page - demo / sign up / login buttons
+* select a recipe! view

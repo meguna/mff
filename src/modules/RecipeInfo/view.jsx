@@ -73,7 +73,7 @@ class RecipeInfo extends Component {
   }
 
   render() {
-    const { selectedId, loading, error, selected, } = this.props;
+    const { selectedId, loading, error, selected } = this.props;
     const {
       loadingGroups,
       groups,
