@@ -22,7 +22,6 @@ class RecipeInfo extends Component {
   componentDidMount() {
     this.fetchIngredients();
     this.fetchGroups();
-    console.log(this.props);
   }
 
   // shouldComponentUpdate(prevProps) {

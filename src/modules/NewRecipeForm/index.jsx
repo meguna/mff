@@ -69,39 +69,51 @@ class NewRecipeForm extends Component {
     }));
   };
 
+  updateImageState = (images) => {
+    this.setState({ images });
+  }
+
   validate = () => {
     const { name } = this.state;
     if (name === '') {
       this.setState(prevProps => ({
         invalid: { ...prevProps.invalid, name: true },
       }));
-    } else {
-      this.setState(prevProps => ({
-        invalid: { ...prevProps.invalid, name: false },
-      }));
+      return true;
     }
+    this.setState(prevProps => ({
+      invalid: { ...prevProps.invalid, name: false },
+    }));
+    return false;
   };
 
   onSubmit = (e) => {
+    e.preventDefault();
+
     const {
-      invalid,
       ingredients,
       groups,
       name,
       notes,
       size,
+      images,
     } = this.state;
-    e.preventDefault();
 
-    this.validate();
-    if (invalid.name) {
+    // directly using the 'invalid' state parameter after calling
+    // validate() can be buggy because the function is asynchronous.
+    // Thus we directly take the return value of the function instead
+    if (this.validate()) {
       this.setState({ submitError: true });
       return;
     }
 
     // `ingredients` is a nested array, with individual elements
-    // grouped by ingredient groups. get all nested elements in `ingCollect`
-    const ingCollect = [].concat(...ingredients);
+    // grouped by ingredient groups. get all nested elements in `ingCollect`.
+    // then remove groups & ingredients that are empty
+    const ingCollect = [].concat(...ingredients).filter((ing) => {
+      return !(ing.name === '' && ing.amount === '' && ing.notes === '');
+    });
+    const groupCollect = (ingCollect.length === 0) ? [] : groups;
 
     fetch('http://localhost:3005/api/createnewrecipe', {
       method: 'POST',
@@ -113,7 +125,8 @@ class NewRecipeForm extends Component {
         notes,
         size,
         ingredients: ingCollect,
-        groups,
+        groups: groupCollect,
+        images,
       }),
     })
       .then((res) => {
@@ -122,10 +135,6 @@ class NewRecipeForm extends Component {
       })
       .catch(err => console.error(err));
   };
-
-  updateImageState = (images) => {
-    this.setState({ images });
-  }
 
   render() {
     const {

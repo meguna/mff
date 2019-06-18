@@ -201,15 +201,9 @@ Documenting my progress as I move through the project.
 ## June 17
 * refactoring lotsa code!
 * api route for image upload
-* add image component to form
 * successfully set up image upload field in form + working POST endpoint
 * huge style overhaul based on AI mockup. new fonts Apercu / Souvenir / Styrene
-
-#### Do Next
-* add image table to database
-* update create-recipe main form to include images
-* update main createrecipe API endpoint to upload image paths to database
-* load images in RecipeInfo
+* update create-recipe main form to include image upload
 
 #### Notes
 * starting to wish I could use `assert()` in node/react like we did in C/C++.
@@ -226,8 +220,19 @@ Documenting my progress as I move through the project.
   multiple forms or multiple submit buttons within a form, set an onChange
   event listener on the file upload input tag. headache resolved.
 
+## June 18
+* update main createrecipe API endpoint to upload image paths to database
+* add image table to database
+* fix bug that allowed unvalidated form to send
+* fix bug that sent empty groups/ingredients to DB if recipes.name existed
+
+#### Do Next
+* load images in RecipeInfo
+
 ## To Do Notes - Immediate
 
+* buggy behavior when you change sort method on RecipeList - sometimes
+  RecipeInfo panel hides the recipe name title, sometimes it doesn't change.
 * RecipeInfo `shouldComponentUpdate()` causing buggy behavior - commented out
   for now
 * "add new recipe" button only active around text, not colored div

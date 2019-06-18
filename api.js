@@ -114,6 +114,18 @@ app.get('/api/getingredientgroups/:id', (req, res) => {
   });
 });
 
+app.get('/api/getrecipeimages/:id', (req, res) => {
+  connection.query(`
+    SELECT * FROM recipe_images
+    WHERE recipe_images.recipe_id = ?
+    ORDER BY recipe_images.order
+    `,
+  [req.params.id], (error, results) => {
+    if (error) throw error;
+    res.end(JSON.stringify(results));
+  });
+});
+
 /**
  * endpoint for adding a new image to /static/userImages
  * takes: an HTML File object
@@ -189,6 +201,14 @@ app.post('/api/createnewrecipe', (req, res) => {
     query += `
     INSERT INTO ingredient_groups (recipe_id, \`name\`, notes, group_id)
     VALUES (@recid, ${groupName}, ${groupNotes}, ${groupId});
+    `;
+  });
+
+  req.body.images.forEach((image, i) => {
+    const imagePath = sanitize(image);
+    query += `
+    INSERT INTO recipe_images (recipe_id, order, \`image_path\`)
+    VALUES (@recid, ${i}, ${imagePath});
     `;
   });
 
