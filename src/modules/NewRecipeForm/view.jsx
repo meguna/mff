@@ -7,7 +7,7 @@ import IngGroup from './components/IngGroup';
 import IngFieldsHeader from './components/IngFieldsHeader';
 import ImageUpload from './components/ImageUpload';
 import FormSubHeader from './components/FormSubHeader';
-import SubmitStatus from './components/SubmitStatus';
+import StatusInfo from './components/StatusInfo';
 
 const ING_FIELD_BLANK = {
   name: '',
@@ -169,7 +169,12 @@ class NewRecipeForm extends Component {
 
     return (
       <Fragment>
-        <SubmitStatus status={submitStatus} />
+        <StatusInfo
+          status={submitStatus}
+          failMessage={`Oops! There was an error adding your recipe. 
+            Please try again!`}
+          successMessage="The recipe was added successfully!"
+        />
         <h1 className="title">Add a New Recipe</h1>
         <FormSubHeader subtitle="info" />
         <form id="nr-form" onSubmit={this.onSubmit} autoComplete="off">

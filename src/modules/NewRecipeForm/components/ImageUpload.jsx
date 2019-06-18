@@ -1,43 +1,83 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import StatusInfo from './StatusInfo';
 
 class ImageUpload extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      status: '',
+      statusMessage: '',
+      warn: '',
+      warnMessage: '',
+    };
     this.onImageChosen = this.onImageChosen.bind(this);
   }
 
   onImageChosen = (e) => {
-    const { onDone } = this.props;
-
     e.preventDefault();
+
+    const { onDone } = this.props;
     const data = new FormData();
     const maxFileSize = 1024 * 1024 * 2; // 2MB
     const maxNumFiles = 5;
+    let fail = false;
 
     // FileList is not an array but array-list, so
     // create array from it then iterate
     Array.from(e.target.files).forEach((file, i) => {
-      if (file.size < maxFileSize && i < maxNumFiles) {
+      if (i >= maxNumFiles) {
+        this.setState({
+          warn: 'warn',
+          warnMessage: `You selected over five files.
+          Only the first five will be uploaded.`,
+        });
+      } else if (file.size > maxFileSize) {
+        fail = true;
+        this.setState({
+          status: 'fail',
+          statusMessage: `One or more of your files exceeds the maximum size. 
+          Please choose a different file.`,
+        });
+      } else {
         data.append('file', e.target.files[i]);
       }
     });
-
-    fetch('http://localhost:3005/api/addimage', {
-      method: 'POST',
-      body: data,
-    })
-      .then(res => res.json())
-      .then((res) => {
-        if (onDone) {
-          onDone(res);
-        }
-        console.log(res);
-      })
-      .catch(err => console.error(err));
+    if (!fail) {
+      this.setState({
+        status: 'load',
+        statusMessage: 'Your image(s) are being uploaded.',
+      }, () => {
+        fetch('http://localhost:3005/api/addimage', {
+          method: 'POST',
+          body: data,
+        })
+          .then(res => res.json())
+          .then((res) => {
+            this.setState({
+              status: 'success',
+              statusMessage: 'Your images have been successfully uploaded.',
+            });
+            if (onDone) {
+              onDone(res);
+            }
+            console.log(res);
+          })
+          .catch((err) => {
+            this.setState({
+              status: 'fail',
+              statusMessage: `Your images could not be uploaded.
+              Please try again.`,
+            });
+            console.error(err);
+          });
+      });
+    }
   }
 
   render() {
+    const { status, statusMessage, warn, warnMessage } = this.state;
+
     return (
       <div className="form-group">
         <p className="form-description">
@@ -57,6 +97,14 @@ class ImageUpload extends Component {
           onChange={this.onImageChosen}
           value=""
           multiple
+        />
+        <StatusInfo
+          status={warn}
+          dynamicMessage={warnMessage}
+        />
+        <StatusInfo
+          status={status}
+          dynamicMessage={statusMessage}
         />
       </div>
     );

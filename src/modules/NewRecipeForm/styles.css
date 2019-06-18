@@ -259,6 +259,7 @@ input[type="submit"], input[type="button"] {
     display: none;
 }
 .notification-success {
+    text-transform: none;
     font-size: 1.2rem;
     padding: 20px;
     background-color: var(--notification-green);
@@ -268,6 +269,7 @@ input[type="submit"], input[type="button"] {
 }
 
 .notification-fail {
+    text-transform: none;
     font-size: 1.2rem;
     padding: 20px;
     background-color: var(--notification-yellow);
