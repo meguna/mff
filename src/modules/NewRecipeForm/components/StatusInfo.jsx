@@ -10,7 +10,7 @@ const StatusInfo = (
     loadMessage,
     dynamicMessage,
     warnMessage,
-  }
+  },
 ) => {
   let statusMessage = '';
   let statusClass = '';

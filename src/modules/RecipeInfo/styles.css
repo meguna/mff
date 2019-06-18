@@ -13,6 +13,7 @@
 }
 
 .recipe-info-notes {
+	white-space: pre-line;
 	font-size: 1.5rem;
 }
 
@@ -100,4 +101,8 @@ span.recipe-info-group-letter-label {
 
 .recipe-image {
 	width: 40vw;
+}
+
+.strikethrough {
+	text-decoration: line-through;
 }

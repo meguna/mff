@@ -230,6 +230,7 @@ Documenting my progress as I move through the project.
   using ASC or DESC keywords in query)
 * optimizing selective loading in RecipeInfo
 * RecipeInfo image loading!!!!!!!!!!!!
+* change -70- to ~~70~~!! cute hidden feature
 
 #### Lessons
 * as always, setState() gotchas with multiple calls and its async nature
@@ -239,13 +240,13 @@ Documenting my progress as I move through the project.
 * ~~clear input fields on successful submit~~
 * ~~reset 'choose recipes' image input on load~~
 * ~~after adding new recipe, re-fetch & update the RecipeList!~~
-* add status & error messages to image upload - "uploading...", "uploaded!",
+* ~~add status & error messages to image upload - "uploading...", "uploaded!",
   "error - one of your files is too big. please check again.", "error - you
-  selected more than five images. only the first five have been uploaded."
+  selected more than five images. only the first five have been uploaded."~~
 * buggy behavior when you change sort method on RecipeList - sometimes
   RecipeInfo panel hides the recipe name title, sometimes it doesn't change.
-* RecipeInfo `shouldComponentUpdate()` causing buggy behavior - commented out
-  for now
+* ~~RecipeInfo `shouldComponentUpdate()` causing buggy behavior - commented out
+  for now~~
 * "add new recipe" button only active around text, not colored div
 * ~~tabbing through the form causes buggy undefined behavior. investigate~~
 * routing - when loading an url for a recipe that's not in the "most recent"
@@ -263,6 +264,8 @@ Documenting my progress as I move through the project.
 * ~~group Names & labels.~~
 * ~~"load more" ingredients list~~
 * ~~MOVE INGREDIENT FETCH FUNCTION - DONT RE-RENDER MULTIPLE TIMES~~
+* FUN feature: color picker to choose a theme (replace --key-red in CSS) -
+  forest green! etc.
 
 ## General Workflow Plan
 
