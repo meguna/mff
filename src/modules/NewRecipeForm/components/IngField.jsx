@@ -105,6 +105,7 @@ class IngField extends Component {
             type="button"
             onClick={this.removeFields}
             onKeyDown={this.removeFields}
+            tabIndex="-1"
           >
             <X />
           </button>

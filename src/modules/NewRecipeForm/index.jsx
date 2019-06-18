@@ -7,6 +7,7 @@ import IngGroup from './components/IngGroup';
 import IngFieldsHeader from './components/IngFieldsHeader';
 import ImageUpload from './components/ImageUpload';
 import FormSubHeader from './components/FormSubHeader';
+import SubmitStatus from './components/SubmitStatus';
 
 const ING_FIELD_BLANK = {
   name: '',
@@ -21,22 +22,25 @@ const ING_GROUP_BLANK = {
   groupId: 1,
 };
 
+const INITIAL_FORM_STATE = {
+  name: '',
+  size: '',
+  ingredients: [{ ...ING_FIELD_BLANK }],
+  groups: [{ ...ING_GROUP_BLANK }],
+  notes: '',
+  invalid: { name: false, ingCount: false },
+  submitError: false,
+  submitStatus: '',
+  images: [],
+};
+
 class NewRecipeForm extends Component {
   constructor(props) {
     super(props);
     this.onSubmit = this.onSubmit.bind(this);
     this.onFieldChange = this.onFieldChange.bind(this);
 
-    this.state = {
-      name: '',
-      size: '',
-      ingredients: [{ ...ING_FIELD_BLANK }],
-      groups: [{ ...ING_GROUP_BLANK }],
-      notes: '',
-      invalid: { name: false, ingCount: false },
-      submitError: false,
-      images: [],
-    };
+    this.state = INITIAL_FORM_STATE;
   }
 
   onFieldChange = (param, val) => {
@@ -89,7 +93,6 @@ class NewRecipeForm extends Component {
 
   onSubmit = (e) => {
     e.preventDefault();
-
     const {
       ingredients,
       groups,
@@ -130,10 +133,15 @@ class NewRecipeForm extends Component {
       }),
     })
       .then((res) => {
-        this.setState({ submitError: false });
+        this.setState({...INITIAL_FORM_STATE, submitStatus: 'success'});
+        window.scrollTo(0,0);
         console.log(res);
       })
-      .catch(err => console.error(err));
+      .catch((err) => {
+        this.setState({submitStatus: 'fail'});
+        window.scrollTo(0,0);
+        console.error(err);
+      });
   };
 
   render() {
@@ -144,6 +152,7 @@ class NewRecipeForm extends Component {
       groups,
       invalid,
       submitError,
+      submitStatus,
     } = this.state;
 
     const groupFields = [];
@@ -157,6 +166,7 @@ class NewRecipeForm extends Component {
 
     return (
       <Fragment>
+        <SubmitStatus status={submitStatus} />
         <h1 className="title">Add a New Recipe</h1>
         <FormSubHeader subtitle="info" />
         <form id="nr-form" onSubmit={this.onSubmit} autoComplete="off">

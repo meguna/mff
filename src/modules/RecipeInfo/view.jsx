@@ -73,12 +73,7 @@ class RecipeInfo extends Component {
   }
 
   render() {
-    const {
-      selectedId,
-      loading,
-      error,
-      selected,
-    } = this.props;
+    const { selectedId, loading, error, selected, } = this.props;
     const {
       loadingGroups,
       groups,
@@ -87,6 +82,7 @@ class RecipeInfo extends Component {
       loadingIngredients,
       fetchError,
     } = this.state;
+
     if (selectedId === -1) {
       return (
         <p className="housekeeping-message">

@@ -51,6 +51,10 @@
   --grey: #CECAC9;
   --light-grey: #EBEAE9;
   --faint-grey: #FAF9F8;
+  --notification-green:#90ffc7;
+  --notification-medium-green:#6ae4a7;
+  --notification-yellow: #fff190;
+  --notification-medium-yellow: #f3e37a;
 }
 
 body {

@@ -258,3 +258,20 @@ input[type="submit"], input[type="button"] {
 .hidden {
     display: none;
 }
+.notification-success {
+    font-size: 1.2rem;
+    padding: 20px;
+    background-color: var(--notification-green);
+    width: fit-content;
+    border-radius: 5px;
+    border: 1px solid var(--notification-medium-green);
+}
+
+.notification-fail {
+    font-size: 1.2rem;
+    padding: 20px;
+    background-color: var(--notification-yellow);
+    width: fit-content;
+    border-radius: 5px;
+    border: 1px solid var(--notification-medium-yellow);
+}

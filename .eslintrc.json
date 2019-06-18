@@ -30,6 +30,7 @@
             "labelAttributes": ["htmlFor"],
             "controlComponents": ["input"]
         }],
-        "indent": ["error", 2, { "ignoreComments": true }]
+        "indent": ["error", 2, { "ignoreComments": true }],
+        "object-curly-newline": "off"
     }
 }

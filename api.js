@@ -197,7 +197,7 @@ app.post('/api/createnewrecipe', (req, res) => {
   req.body.groups.forEach((group) => {
     const groupName = sanitize(group.name);
     const groupNotes = sanitize(group.notes);
-    const groupId = sanitize(group.Id);
+    const groupId = sanitize(group.groupId);
     query += `
     INSERT INTO ingredient_groups (recipe_id, \`name\`, notes, group_id)
     VALUES (@recid, ${groupName}, ${groupNotes}, ${groupId});

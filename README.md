@@ -225,14 +225,16 @@ Documenting my progress as I move through the project.
 * add image table to database
 * fix bug that allowed unvalidated form to send
 * fix bug that sent empty groups/ingredients to DB if recipes.name existed
+* add status (success/fail) to create recipe form.
+
 
 #### Do Next
 * load images in RecipeInfo
 
 ## To Do Notes - Immediate
 
-* clear input fields on successful submit
-* reset 'choose recipes' image input on load
+* ~~clear input fields on successful submit~~
+* ~~reset 'choose recipes' image input on load~~
 * after adding new recipe, re-fetch & update the RecipeList!
 * add status & error messages to image upload - "uploading...", "uploaded!",
   "error - one of your files is too big. please check again.", "error - you
@@ -242,7 +244,7 @@ Documenting my progress as I move through the project.
 * RecipeInfo `shouldComponentUpdate()` causing buggy behavior - commented out
   for now
 * "add new recipe" button only active around text, not colored div
-* tabbing through the form causes buggy undefined behavior. investigate
+* ~~tabbing through the form causes buggy undefined behavior. investigate~~
 * routing - when loading an url for a recipe that's not in the "most recent"
   list (and thus not loaded yet), what to do? make new View for this?
 * change document titles according to page
