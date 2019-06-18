@@ -231,6 +231,12 @@ Documenting my progress as I move through the project.
 
 ## To Do Notes - Immediate
 
+* clear input fields on successful submit
+* reset 'choose recipes' image input on load
+* after adding new recipe, re-fetch & update the RecipeList!
+* add status & error messages to image upload - "uploading...", "uploaded!",
+  "error - one of your files is too big. please check again.", "error - you
+  selected more than five images. only the first five have been uploaded."
 * buggy behavior when you change sort method on RecipeList - sometimes
   RecipeInfo panel hides the recipe name title, sometimes it doesn't change.
 * RecipeInfo `shouldComponentUpdate()` causing buggy behavior - commented out

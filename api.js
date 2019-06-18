@@ -190,7 +190,7 @@ app.post('/api/createnewrecipe', (req, res) => {
     INSERT INTO recipe_ingredients
     (recipe_id, \`name\`, amount, notes, \`order\`, group_id)
     VALUES (
-      @recid, ${ingName}, ${ingNotes}, ${ingAmt}, ${i}, ${ingGroup});
+      @recid, ${ingName}, ${ingAmt}, ${ingNotes}, ${i}, ${ingGroup});
     `;
   });
 
@@ -207,7 +207,7 @@ app.post('/api/createnewrecipe', (req, res) => {
   req.body.images.forEach((image, i) => {
     const imagePath = sanitize(image);
     query += `
-    INSERT INTO recipe_images (recipe_id, order, \`image_path\`)
+    INSERT INTO recipe_images (recipe_id, \`order\`, image_path)
     VALUES (@recid, ${i}, ${imagePath});
     `;
   });
