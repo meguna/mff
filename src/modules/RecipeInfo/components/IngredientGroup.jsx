@@ -20,7 +20,7 @@ const IngredientGroup = ({ ingredients, groups, groupCount }) => {
   }
   return (
     <Fragment>
-      <p className="recipe-info-label">ingredients</p>
+      {ingredients.length !== 0 && <p className="recipe-info-label">ingredients</p>}
       <div className="recipe-info-ing-list">
         {ingredientGroups.map((group, i) => (
           <div className="recipe-info-ing-list-group" key={groups[i].id}>

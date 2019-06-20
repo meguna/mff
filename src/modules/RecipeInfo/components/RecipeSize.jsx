@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 const RecipeSize = ({ size }) => (
   <Fragment>
-    <p className="recipe-info-serves">{size}</p>
+    {size && <p className="recipe-info-serves">{size}</p>}
   </Fragment>
 );
 

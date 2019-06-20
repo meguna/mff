@@ -23,9 +23,37 @@ class RecipeInfo extends Component {
   }
 
   componentDidMount() {
+    const {
+      match,
+      setSelectedRecipe,
+      selectedId,
+      fetchSelectedRecipe,
+    } = this.props;
+    if (selectedId !== +match.params.id) {
+      setSelectedRecipe(+match.params.id);
+    }
+    const { selected } = this.props;
+    if (selected.id === -1 || !selected.id) {
+      fetchSelectedRecipe(+match.params.id);
+    }
     this.fetchIngredients();
     this.fetchGroups();
     this.fetchImages();
+  }
+
+  shouldComponentUpdate(prevProps) {
+    const { selectedId, loading } = this.props;
+    const { loadingIngredients, loadingGroups, loadingImages } = this.state;
+    if (selectedId !== prevProps.selectedId) {
+      return true;
+    }
+    if (loading) {
+      return true;
+    }
+    if (loadingIngredients || loadingGroups || loadingImages) {
+      return true;
+    }
+    return false;
   }
 
   componentDidUpdate(prevProps) {
@@ -90,7 +118,7 @@ class RecipeInfo extends Component {
   }
 
   render() {
-    const { selectedId, loading, error, selected } = this.props;
+    const { selectedId, error, selected } = this.props;
     const {
       loadingGroups,
       groups,
@@ -109,9 +137,11 @@ class RecipeInfo extends Component {
         </p>
       );
     }
-    if (loading || error || fetchError) {
+
+    if (error || fetchError) {
       return null;
     }
+
     return (
       <Fragment>
         <AddRecipeButton />
@@ -143,12 +173,15 @@ RecipeInfo.propTypes = {
   error: PropTypes.bool,
   loading: PropTypes.bool,
   selectedId: PropTypes.number,
+  match: PropTypes.object.isRequired,
+  setSelectedRecipe: PropTypes.func,
+  fetchSelectedRecipe: PropTypes.func,
 };
 
 RecipeInfo.defaultProps = {
   selected: {
     create_date: '',
-    id: 1,
+    id: -1,
     name: '',
     notes: '',
     size: '',
@@ -156,7 +189,9 @@ RecipeInfo.defaultProps = {
   },
   error: false,
   loading: false,
-  selectedId: 1,
+  selectedId: -1,
+  setSelectedRecipe: () => {},
+  fetchSelectedRecipe: () => {},
 };
 
 export default RecipeInfo;

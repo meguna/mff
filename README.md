@@ -182,6 +182,7 @@ Documenting my progress as I move through the project.
   the main form
 * remove ingredient with button
 * use Feather Icons by Cole Bemis for UI icons
+* add little triangle next to sort button to show that it's a dropdown list
 * form validation! require the 'name' field to not be empty
 * add fields for group metadata (notes & name)
 
@@ -223,7 +224,11 @@ Documenting my progress as I move through the project.
 ## June 18
 * update main createrecipe API endpoint to upload image paths to database
 * add image table to database
+* fix bug where tabbing through the form causes buggy undefined behavior.
+  it was because the "delete ingredient" button had an activated tabIndex
 * fix bug that allowed unvalidated form to send
+* clear input fields on successful submit, including image input
+* after adding new recipe, re-fetch & update the RecipeList!
 * fix bug that sent empty groups/ingredients to DB if recipes.name existed
 * add status (success/fail) to create recipe form.
 * fix bug in API where sort order wasn't applying correctly (hadn't been
@@ -231,24 +236,42 @@ Documenting my progress as I move through the project.
 * optimizing selective loading in RecipeInfo
 * RecipeInfo image loading!!!!!!!!!!!!
 * change -70- to ~~70~~!! cute hidden feature
+* fetch selectedRecipe if it's not already in the list
+* fix buggy behavior: when you change sort method, sometimes RecipeInfo panel
+  hides the recipe name title.
 
 #### Lessons
 * as always, setState() gotchas with multiple calls and its async nature
+* it's really fun to get to this point in a project. There is so much to do,
+  so many little things to tweak. It's the first time I get to really
+  interact with such a big project and it is genuinely exciting to look at
+  what I've done so far and what I've got left to do. I love that I never stop
+  find little things I want to change and add and improve.
+
+## June 19
+
+* fix a huge bug that was causing lots of related problems when selectedRecipe
+  was updated for various reasons. for some reason when changing the
+  sortMethod, the selectedRecipe tended to change unpredictably. Fixed the
+  problems by checking the parts of the code that were changing selectedId
+  and selected, and replacing them with redux functions that interacted with
+  the store instead (as it should have been from the start). also added
+  a quick change to shouldComponentUpdate in RecipeInfo and set it up so that
+  there isn't any annoying flashing when the sortMethod is changed.
+
+#### Lessons
+* don't mix update logic for redux store and component state. if you're using
+  redux state in a component and need to update it even for a second, always
+  always make reducers/actions for that instead of leaving it in component
+  state. In particular, my big mistake was updating some parameters inside
+  `index.js`'s `mapStateToProps()`. I wanted to update selectedId (a redux
+  variable) using the url parameters, and had done that inside that function.
+  Big mistake. Call dispatch functions inside the actual component to do
+  that work instead.
 
 ## To Do Notes - Immediate
 
-* ~~clear input fields on successful submit~~
-* ~~reset 'choose recipes' image input on load~~
-* ~~after adding new recipe, re-fetch & update the RecipeList!~~
-* ~~add status & error messages to image upload - "uploading...", "uploaded!",
-  "error - one of your files is too big. please check again.", "error - you
-  selected more than five images. only the first five have been uploaded."~~
-* buggy behavior when you change sort method on RecipeList - sometimes
-  RecipeInfo panel hides the recipe name title, sometimes it doesn't change.
-* ~~RecipeInfo `shouldComponentUpdate()` causing buggy behavior - commented out
-  for now~~
 * "add new recipe" button only active around text, not colored div
-* ~~tabbing through the form causes buggy undefined behavior. investigate~~
 * routing - when loading an url for a recipe that's not in the "most recent"
   list (and thus not loaded yet), what to do? make new View for this?
 * change document titles according to page
@@ -259,11 +282,7 @@ Documenting my progress as I move through the project.
 * drag to change ingredient order
 * imperial / customary change! --> is this really necessary?
 * favicon
-* ~~add little triangle next to sort button to show that it's a dropdown list~~
-* ~~sort~~
-* ~~group Names & labels.~~
-* ~~"load more" ingredients list~~
-* ~~MOVE INGREDIENT FETCH FUNCTION - DONT RE-RENDER MULTIPLE TIMES~~
+* add maximum number of ingredients & ingredient groups (just in case)
 * FUN feature: color picker to choose a theme (replace --key-red in CSS) -
   forest green! etc.
 
@@ -287,6 +306,7 @@ Documenting my progress as I move through the project.
 * set up demo page 
 * mobile dev with React Mobile
 * deploy to iOS App Store
+* AI/OCR to scan in handwritten notes & automatically input them
 
 ## List of Potential Graphics
 * something under the "add a new recipe" header in /addRecipe

@@ -6,6 +6,9 @@ import {
   FETCH_MORE_RECIPES_SUCCESS,
   FETCH_MORE_RECIPES_FAILURE,
   SET_SELECTED_RECIPE,
+  FETCH_SELECTED_RECIPE_START,
+  FETCH_SELECTED_RECIPE_SUCCESS,
+  FETCH_SELECTED_RECIPE_FAILURE,
 } from '../Actions/ActionTypes';
 
 const INITIAL_STATE = {
@@ -19,53 +22,88 @@ const INITIAL_STATE = {
 
 const reducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case FETCH_MORE_RECIPES_SUCCESS:
-      if (action.payload.length === 0) {
-        return state;
-      }
-      return {
-        ...state,
-        recipes: [...state.recipes, ...action.payload],
-        error: null,
-        loading: false,
-        listOffset: state.recipes.length + action.payload.length,
-      };
-    case FETCH_RECIPES_START:
-      return {
-        ...state,
-        error: null,
-        loading: true,
-      };
-    case FETCH_RECIPES_SUCCESS:
-      return {
-        ...state,
-        recipes: [...action.payload],
-        error: null,
-        loading: false,
-        listOffset: action.payload.length,
-        selectedId: -1,
-      };
-    case FETCH_RECIPES_FAILURE:
-    case FETCH_MORE_RECIPES_FAILURE:
-      return {
-        ...state,
-        error: action.payload,
-        loading: false,
-      };
-    case SET_SELECTED_RECIPE:
-      return {
-        ...state,
-        selectedId: action.payload,
-      };
-    case FETCH_MORE_RECIPES_START:
-      return {
-        ...state,
-        error: null,
-        loading: true,
-        sortMethod: action.payload,
-      };
-    default:
+  case FETCH_RECIPES_START: {
+    return {
+      ...state,
+      error: null,
+      loading: true,
+    };
+  }
+  case FETCH_RECIPES_SUCCESS: {
+    let selectedRecipeFiltered = null;
+    if (state.selected.length === 0 && state.recipes) {
+      selectedRecipeFiltered = action.payload.filter(rec => state.selectedId === rec.id);
+    }
+    return {
+      ...state,
+      recipes: [...action.payload],
+      selected: state.selected.length === 0 ? selectedRecipeFiltered[0] : state.selected,
+      error: null,
+      loading: false,
+      listOffset: action.payload.length,
+    };
+  }
+  case FETCH_MORE_RECIPES_START: {
+    return {
+      ...state,
+      error: null,
+      loading: true,
+      sortMethod: action.payload,
+    };
+  }
+  case FETCH_MORE_RECIPES_SUCCESS: {
+    let selectedRecipeFiltered = null;
+    if (state.recipes) {
+      selectedRecipeFiltered = action.payload.filter(rec => state.selectedId === rec.id);
+    }
+    if (action.payload.length === 0) {
       return state;
+    }
+    return {
+      ...state,
+      recipes: [...state.recipes, ...action.payload],
+      error: null,
+      loading: false,
+      listOffset: state.recipes.length + action.payload.length,
+      selected: state.selected.length === 0 ? selectedRecipeFiltered[0] : state.selected,
+    };
+  }
+  case SET_SELECTED_RECIPE: {
+    let selectedRecipeFiltered = null;
+    if (state.recipes) {
+      selectedRecipeFiltered = state.recipes.filter(rec => action.payload === rec.id);
+    }
+    return {
+      ...state,
+      selectedId: action.payload,
+      selected: selectedRecipeFiltered[0],
+    };
+  }
+  case FETCH_SELECTED_RECIPE_START: {
+    return {
+      ...state,
+      error: null,
+      loading: true,
+      selectedId: action.payload,
+    };
+  }
+  case FETCH_SELECTED_RECIPE_SUCCESS: {
+    return {
+      ...state,
+      loading: false,
+      selected: { ...action.payload },
+    };
+  }
+  case FETCH_RECIPES_FAILURE:
+  case FETCH_MORE_RECIPES_FAILURE:
+  case FETCH_SELECTED_RECIPE_FAILURE:
+    return {
+      ...state,
+      error: action.payload,
+      loading: false,
+    };
+  default:
+    return state;
   }
 };
 

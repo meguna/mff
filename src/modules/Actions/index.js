@@ -5,6 +5,9 @@ import {
   FETCH_MORE_RECIPES_START,
   FETCH_MORE_RECIPES_SUCCESS,
   FETCH_MORE_RECIPES_FAILURE,
+  FETCH_SELECTED_RECIPE_START,
+  FETCH_SELECTED_RECIPE_SUCCESS,
+  FETCH_SELECTED_RECIPE_FAILURE,
   SET_SELECTED_RECIPE,
 } from './ActionTypes';
 
@@ -75,4 +78,28 @@ const setRecipe = id => ({
 
 export const setSelectedRecipe = id => (dispatch) => {
   dispatch(setRecipe(id));
+};
+
+
+const fetchSelectedStart = id => ({
+  type: FETCH_SELECTED_RECIPE_START,
+  payload: id,
+});
+
+const fetchSelectedSuccess = recipes => ({
+  type: FETCH_SELECTED_RECIPE_SUCCESS,
+  payload: recipes,
+});
+
+const fetchSelectedFailure = error => ({
+  type: FETCH_SELECTED_RECIPE_FAILURE,
+  payload: error,
+});
+
+export const fetchSelectedRecipe = id => (dispatch) => {
+  dispatch(fetchSelectedStart(id));
+  fetch(`http://localhost:3005/api/getrecipe/${id}`)
+    .then(res => res.json())
+    .then(res => dispatch(fetchSelectedSuccess(res[0])))
+    .catch(err => dispatch(fetchSelectedFailure(err)));
 };

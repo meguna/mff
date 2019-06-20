@@ -88,6 +88,18 @@ app.get('/api/getrecipes/sort=:sort', (req, res) => {
   });
 });
 
+app.get('/api/getrecipe/:id', (req, res) => {
+  const query = `
+    SELECT * FROM recipes
+    WHERE id = ?
+    `;
+  connection.query(
+    query, [+req.params.id], (error, results) => {
+      if (error) throw error;
+      res.end(JSON.stringify(results));
+    });
+});
+
 app.get('/api/getingredients', (req, res) => {
   connection.query(`
     SELECT * FROM recipe_ingredients
