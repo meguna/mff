@@ -17,9 +17,14 @@ class IngGroup extends Component {
     this.addIngField = this.addIngField.bind(this);
     this.onFieldChange = this.onFieldChange.bind(this);
 
+    const ings = props.ingredients;
+    for (let i = 0; i < ings.length; i++) {
+      ings[i].groupId = props.groupId;
+    }
+
     this.state = {
-      ingredients: [{ ...ING_FIELD_BLANK, groupId: props.groupId }],
-      groupInfo: { name: '', notes: '' },
+      ingredients: ings,
+      groupInfo: { name: props.group.name, notes: props.group.notes },
     };
   }
 
@@ -57,7 +62,7 @@ class IngGroup extends Component {
     const { groupId } = this.props;
     if (id === ingredients.length - 1) {
       this.setState(prevState => ({
-        ingredients: [...prevState.ingredients, { ...ING_FIELD_BLANK, groupId }],
+        ingredients: [...prevState.ingredients, { name: '', amount: '', notes: '', groupId }],
       }));
     }
   };
@@ -158,15 +163,16 @@ class IngGroup extends Component {
   }
 }
 
-
 IngGroup.propTypes = {
   groupId: PropTypes.number,
   onIngGroupUpdate: PropTypes.func,
+  ingredients: PropTypes.arrayOf(PropTypes.object),
 };
 
 IngGroup.defaultProps = {
   groupId: 1,
   onIngGroupUpdate: () => {},
+  ingredients: [ING_FIELD_BLANK],
 };
 
 export default IngGroup;

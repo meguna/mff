@@ -69,6 +69,8 @@ class IngField extends Component {
       ingId,
       groupId,
     } = this.props;
+    console.log(value);
+
     return (
       <div className="new-ing-fields form-group">
         <input

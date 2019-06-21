@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import RecipeInfo from '../RecipeInfo';
 import RecipeList from '../RecipeList';
 import NewRecipeForm from '../NewRecipeForm';
+import EditRecipeForm from '../EditRecipeForm';
 import './styles.css';
 
 class RecipeIndex extends Component {
@@ -21,6 +22,7 @@ class RecipeIndex extends Component {
         <div id="recipe-info">
           <Switch>
             <Route exact path="/addRecipe" component={NewRecipeForm} />
+            <Route exact path="/editRecipe/:id" component={EditRecipeForm} />
             <Route path="/recipe/:id" component={RecipeInfo} />
           </Switch>
         </div>

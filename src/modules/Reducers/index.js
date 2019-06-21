@@ -18,6 +18,7 @@ const INITIAL_STATE = {
   loading: false,
   listOffset: 0,
   sortMethod: 'update_date',
+  selected: {},
 };
 
 const reducer = (state = INITIAL_STATE, action) => {
