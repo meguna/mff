@@ -17,44 +17,56 @@ class RecipeForm extends Component {
 
     const { initialFormState } = this.props;
     this.state = initialFormState;
-    this.state = { ...this.state, group: props.group };
+    this.state = { ...this.state, groups: props.groups, ingredients: props.ingredients };
   }
 
   onFieldChange = (param, val) => {
+    console.log('RecipeForm onFieldChange, param:', param, 'val:', val);
     this.setState({ [param]: val });
     this.validate();
   };
 
   onAddGroup = () => {
-    this.setState(prevProps => ({
+    const { ingredients, groups } = this.state;
+    console.log('RecipeForm onAddGroup(), ingredients:', ingredients, 'groups: ', groups);
+    console.log([
+        ...groups,
+        { name: '', notes: '', groupId: groups.length + 1 },
+      ]);
+
+    const g = JSON.parse(JSON.stringify(groups));
+    this.setState(prevState => ({
       groups: [
-        ...prevProps.groups,
-        { name: '', notes: '', groupId: 1, groupId: prevProps.groups.length + 1 },
+        ...g,
+        { name: '', notes: '', groupId: g.length + 1 },
       ],
     }));
   };
 
   onIngGroupUpdate = (ingredients, groupId, groupInfo) => {
+    console.log('RecipeForm onIngGroupUpdate, ingredients:', ingredients, 'groupId:', groupId, 'groupInfo:', groupInfo);
     const newIng = ingredients.filter(ing => (
       !(ing.name === '' && ing.amount === '' && ing.notes === '')
     ));
-    this.setState(prevProps => ({
+    this.setState(prevState => ({
       ingredients: Object.assign(
-        [], prevProps.ingredients,
+        [], prevState.ingredients,
         { [groupId - 1]: newIng },
       ),
       groups: Object.assign(
-        [], prevProps.groups,
+        [], prevState.groups,
         { [groupId - 1]: { groupId, ...groupInfo } },
       ),
-    }));
+    }), () => { console.log(this.state.groups, this.state.ingredients) });
   };
 
   updateImageState = (images) => {
+    console.log(`RecipeForm updateImageState(images: ${images})`);
     this.setState({ images });
   }
 
   validate = () => {
+    console.log(`RecipeForm validate()`);
     const { name } = this.state;
     if (name === '') {
       this.setState(prevProps => ({
@@ -69,6 +81,7 @@ class RecipeForm extends Component {
   };
 
   onSubmit = (e) => {
+    console.log(`RecipeForm onSubmit(e: ${e})`);
     e.preventDefault();
     const {
       ingredients,
@@ -140,7 +153,7 @@ class RecipeForm extends Component {
       ingredients,
     } = this.props;
 
-    console.log(ingredients);
+    console.log('RecipeForm render(), ingredients:', ingredients, 'groups:', groups);
 
     const groupFields = [];
     for (let i = 0; i < groups.length; i++) {
@@ -231,6 +244,7 @@ RecipeForm.propTypes = {
   sortMethod: PropTypes.string,
   ingredients: PropTypes.arrayOf(PropTypes.array),
   groups: PropTypes.arrayOf(PropTypes.object),
+  title: PropTypes.string.isRequired,
 };
 
 RecipeForm.defaultProps = {
