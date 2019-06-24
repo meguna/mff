@@ -23,8 +23,9 @@ class RecipeForm extends Component {
       size: props.size,
       groups: props.initialGroups,
       ingredients: props.initialIngredients,
-      submitError: false,
-      submitStatus: '',
+      images: [],
+      submitError: props.submitError,
+      submitStatus: props.submitStatus,
       invalid: { name: false, ingCount: false },
     };
   }
@@ -113,12 +114,12 @@ class RecipeForm extends Component {
       groups,
       ingredients,
       invalid,
-      submitError,
-      submitStatus,
     } = this.state;
 
     const {
       title,
+      submitError,
+      submitStatus,
     } = this.props;
 
     const groupFields = [];
@@ -213,6 +214,8 @@ RecipeForm.propTypes = {
   notes: PropTypes.string,
   name: PropTypes.string,
   size: PropTypes.string,
+  submitError: PropTypes.bool,
+  submitStatus: PropTypes.string,
 };
 
 RecipeForm.defaultProps = {
@@ -222,6 +225,8 @@ RecipeForm.defaultProps = {
   notes: '',
   name: '',
   size: '',
+  submitError: false,
+  submitStatus: '',
 };
 
 export default RecipeForm;

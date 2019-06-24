@@ -10,8 +10,6 @@ const recipeInfo = {
   groups: [{ ...ING_GROUP_BLANK }],
   notes: '',
   invalid: { name: false, ingCount: false },
-  submitError: false,
-  submitStatus: '',
   images: [],
 };
 
@@ -19,6 +17,10 @@ class NewRecipeForm extends Component {
   constructor(props) {
     super(props);
     this.submitForm = this.submitForm.bind(this);
+    this.state = {
+      submitError: false,
+      submitStatus: '',
+    };
   }
 
   submitForm = (ingredients, groups, name, notes, size, images) => {
@@ -44,11 +46,15 @@ class NewRecipeForm extends Component {
         images,
       }),
     })
-      .then(() => {
-        this.setState({ ...recipeInfo, submitStatus: 'success' });
-        window.scrollTo(0, 0);
-        const { fetchRecipes, sortMethod } = this.props;
-        fetchRecipes(sortMethod);
+      .then((res, err) => {
+        if (res.ok) {
+          this.setState({ ...recipeInfo, submitStatus: 'success' });
+          window.scrollTo(0, 0);
+          const { fetchRecipes, sortMethod } = this.props;
+          fetchRecipes(sortMethod);
+        } else {
+          throw new Error(err);
+        }
       })
       .catch((err) => {
         this.setState({ submitStatus: 'fail' });
@@ -58,6 +64,7 @@ class NewRecipeForm extends Component {
   }
 
   render() {
+    const { submitError, submitStatus } = this.state;
     return (
       <Fragment>
         <RecipeForm
@@ -69,6 +76,8 @@ class NewRecipeForm extends Component {
           name=""
           size=""
           submitForm={this.submitForm}
+          submitStatus={submitStatus}
+          submitError={submitError}
         />
       </Fragment>
     );
