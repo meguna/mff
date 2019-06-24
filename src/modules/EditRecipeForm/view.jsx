@@ -142,7 +142,7 @@ class EditRecipeForm extends Component {
       <Fragment>
         <RecipeForm
           initialFormState={recipeInfo}
-          title="Edit Recipe"
+          title={`Edit Recipe: ${recipeInfo.name}`}
           initialIngredients={recipeInfo.ingredients}
           initialGroups={recipeInfo.groups}
           notes={recipeInfo.notes}

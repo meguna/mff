@@ -106,3 +106,18 @@ span.recipe-info-group-letter-label {
 .strikethrough {
 	text-decoration: line-through;
 }
+
+
+.ri-top-buttons {
+	background-color: var(--faint-grey);
+	border: 1px solid var(--light-grey);
+    border-radius: 2px;
+    padding: 20px;
+    display: inline-block;
+    color: black;
+    text-decoration: none;
+    font-weight: 500;
+    margin-bottom: 50px;
+    font-size: 1.5rem;
+    margin-right: 20px;
+}
