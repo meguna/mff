@@ -17,25 +17,18 @@ class IngGroup extends Component {
     this.addIngField = this.addIngField.bind(this);
     this.onFieldChange = this.onFieldChange.bind(this);
 
-    const ings = props.ingredients;
-    console.log(props.groupId, props.ingredients);
-    for (let i = 0; i < ings.length; i++) {
-      ings[i].groupId = props.groupId;
-    }
+    const { ingredients, group } = props;
 
     this.state = {
-      ingredients: ings,
-      groupInfo: { name: props.group.name, notes: props.group.notes },
+      ingredients,
+      groupInfo: { name: group.name, notes: group.notes },
     };
   }
 
   onIngFieldChange = (param, id, val) => {
-    console.log('IngGroup onIngFieldChange, param:', param, 'id:', id, 'val:', val);
     const { ingredients, groupInfo } = this.state;
     const { onIngGroupUpdate, groupId } = this.props;
-    console.log(groupId + JSON.stringify(ingredients));
     ingredients[id][param] = val;
-    console.log(groupId + JSON.stringify(ingredients));
     this.setState({ ingredients });
     const ing = JSON.parse(JSON.stringify(ingredients));
     if (onIngGroupUpdate) {
@@ -44,7 +37,6 @@ class IngGroup extends Component {
   };
 
   onFieldChange = (param, val) => {
-    console.log('IngGroup onFieldChange, param:', param, 'val:', val);
     this.setState(prevState => ({
       groupInfo: { ...prevState.groupInfo, [param]: val },
     }), () => {
@@ -64,18 +56,19 @@ class IngGroup extends Component {
  */
 
   addIngField = (id) => {
-    console.log('IngGroup addIngField, id:', id);
     const { ingredients } = this.state;
     const { groupId } = this.props;
     if (id === ingredients.length - 1) {
       this.setState(prevState => ({
-        ingredients: [...prevState.ingredients, { name: '', amount: '', notes: '', groupId }],
+        ingredients: [
+          ...prevState.ingredients, 
+          { name: '', amount: '', notes: '', groupId },
+        ],
       }));
     }
   };
 
   removeEmptyIngField = (id) => {
-    console.log('IngGroup removeEmptyIngField, id:', id);
     const { ingredients } = this.state;
     if (
       ingredients.length > 1
@@ -96,7 +89,6 @@ class IngGroup extends Component {
   };
 
   removeSelectedIngField = (id) => {
-    console.log('IngGroup removeSelectedIngField, id:', id);
     const { onIngGroupUpdate, groupId } = this.props;
     this.setState((prevState) => {
       const newIng = [...prevState.ingredients];
@@ -122,9 +114,6 @@ class IngGroup extends Component {
     if (ingredients.length === 0) {
       return null;
     }
-
-    console.log('IngGroup render(), ingredients:', ingredients, 'groupInfo:', groupInfo);
-
 
     const ingFields = [];
     for (let i = 0; i < ingredients.length; i++) {

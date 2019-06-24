@@ -77,7 +77,7 @@ class IngField extends Component {
           className="new-ing-field-left field-label"
           id="nr-ing-name-input"
           type="text"
-          value={value.name}
+          value={value.name || ''}
           onFocus={this.handleFocus}
           onChange={this.handleNameChange}
         />
@@ -86,7 +86,7 @@ class IngField extends Component {
           className="new-ing-field-ctr field-label"
           id="nr-ing-amount-input"
           type="text"
-          value={value.amount}
+          value={value.amount || ''}
           onChange={this.handleAmtChange}
         />
         <input
@@ -94,7 +94,7 @@ class IngField extends Component {
           className="new-ing-field-right field-label"
           id="nr-ing-notes-input"
           type="text"
-          value={value.notes}
+          value={value.notes || ''}
           onChange={this.handleNotesChange}
           onBlur={this.handleBlur}
         />

@@ -269,6 +269,25 @@ Documenting my progress as I move through the project.
   Big mistake. Call dispatch functions inside the actual component to do
   that work instead.
 
+## June 20 - 23
+
+* partial fix for bug where first ingredient of all of but the first ingGroups
+  were being tied logically (changing one also changes the other) in 
+  NewRecipeForm. Fixed a lot of state/props that hadn't been properly 
+  reassigned after the modularization of RecipeForm - making sure props were
+  only being used to initialize component-managed state, making sure component
+  state was being maintained, etc. The fixes didn't solve the huge bug, but
+  they definitely were necessarily fixes that would have caused other problems
+  down the line
+* looked into adding testing suites to the project. 
+
+## June 24
+
+* fixed huge bug. Turns out it was caused by not properly updating the 
+  ingredients[] state inside RecipeForm's `onAddGroup()`. So basically this was
+  an exercise in walking through all the teeny parts of the codebase. Fun. 
+
+
 ## To Do Notes - Immediate
 
 * "add new recipe" button only active around text, not colored div

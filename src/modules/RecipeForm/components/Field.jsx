@@ -46,7 +46,7 @@ class Field extends PureComponent {
           className={`${className}${validClass}`}
           id={id}
           type="text"
-          value={value}
+          value={value || ''}
           onChange={this.handleChange}
           onBlur={onBlur}
         />

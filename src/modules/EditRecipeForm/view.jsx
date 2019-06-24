@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import RecipeForm from '../RecipeForm';
+import { ING_FIELD_BLANK, ING_GROUP_BLANK } from '../common/initial';
 import './styles.css';
 
 class EditRecipeForm extends Component {
@@ -10,17 +11,8 @@ class EditRecipeForm extends Component {
       form: {
         name: '',
         size: '',
-        ingredients: [[{
-          name: '',
-          amount: '',
-          notes: '',
-          groupId: 1,
-        }]],
-        groups: [{
-          name: '',
-          notes: '',
-          groupId: 1,
-        }],
+        ingredients: [[{ ...ING_FIELD_BLANK }]],
+        groups: [{ ...ING_GROUP_BLANK }],
         notes: '',
         invalid: { name: false, ingCount: false },
         submitError: false,
@@ -32,22 +24,20 @@ class EditRecipeForm extends Component {
 
   componentDidMount() {
     const { match } = this.props;
-
     this.setState({ loadingImages: true }, () => {
       fetch(`http://localhost:3005/api/getrecipe/${+match.params.id}`)
         .then(res => res.json())
         .then(res => res[0])
         .then((res) => {
-          console.log(res);
-          this.setState({
+          this.setState(prevState => ({
             form: {
-              ...this.state.form,
+              ...prevState.form,
               name: res.name,
               notes: res.notes,
               size: res.size,
             },
             selectedId: res.id,
-          }, () => {
+          }), () => {
             this.fetchIngredients();
             this.fetchGroups();
             this.fetchImages();
@@ -84,7 +74,6 @@ class EditRecipeForm extends Component {
   fetchIngredients() {
     const { selectedId } = this.state;
     this.setState({ loadingIngredients: true }, () => {
-      console.log(selectedId);
       fetch(`http://localhost:3005/api/getingredients/${selectedId}`)
         .then(res => res.json())
         .then((res) => {
@@ -106,6 +95,7 @@ class EditRecipeForm extends Component {
         })
         .catch((err) => {
           this.setState({ fetchError: true });
+          console.error(err);
         });
     });
   }
@@ -137,21 +127,27 @@ class EditRecipeForm extends Component {
       loadingGroups,
       loadingIngredients,
       loadingImages,
+      fetchError,
     } = this.state;
 
     if (loadingGroups || loadingIngredients || loadingImages) {
       return <p>Loading...</p>;
     }
 
-    console.log(recipeInfo.groups);
+    if (fetchError) {
+      return <p>We&apos;re having trouble connecting to our server.</p>;
+    }
 
     return (
       <Fragment>
         <RecipeForm
           initialFormState={recipeInfo}
           title="Edit Recipe"
-          ingredients={recipeInfo.ingredients}
-          groups={recipeInfo.groups}
+          initialIngredients={recipeInfo.ingredients}
+          initialGroups={recipeInfo.groups}
+          notes={recipeInfo.notes}
+          name={recipeInfo.name}
+          size={recipeInfo.size}
         />
       </Fragment>
     );
