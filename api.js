@@ -2,7 +2,7 @@ require('http');
 require('fs');
 require('dotenv').config();
 const express = require('express');
-const mysql = require('mysql');
+const mysql = require('mysql2');
 const path = require('path');
 const cors = require('cors');
 const formidable = require('formidable');
@@ -64,9 +64,9 @@ app.get('/api/getrecipes/offset=:offset-sort=:sort', (req, res) => {
   connection.query(`
     SELECT * FROM recipes
     ORDER BY recipes.${req.params.sort} ${order}
-    LIMIT ?,5
+    LIMIT ${+req.params.offset},5
     `,
-  [+req.params.offset], (error, results) => {
+  (error, results) => {
     if (error) throw error;
     res.end(JSON.stringify(results));
   });
@@ -89,15 +89,14 @@ app.get('/api/getrecipes/sort=:sort', (req, res) => {
 });
 
 app.get('/api/getrecipe/:id', (req, res) => {
-  const query = `
+  connection.query(`
     SELECT * FROM recipes
-    WHERE id = ?
-    `;
-  connection.query(
-    query, [+req.params.id], (error, results) => {
-      if (error) throw error;
-      res.end(JSON.stringify(results));
-    });
+    WHERE id = ${+req.params.id}
+    `,
+  (error, results) => {
+    if (error) throw error;
+    res.end(JSON.stringify(results));
+  });
 });
 
 app.get('/api/getingredients', (req, res) => {
@@ -114,9 +113,9 @@ app.get('/api/getingredients', (req, res) => {
 app.get('/api/getingredients/:id', (req, res) => {
   connection.query(`
     SELECT * FROM recipe_ingredients 
-    WHERE recipe_ingredients.recipe_id = ?
+    WHERE recipe_ingredients.recipe_id = ${mysql.escape(req.params.id)}
     `,
-  [req.params.id], (error, results) => {
+  (error, results) => {
     if (error) throw error;
     res.end(JSON.stringify(results));
   });
@@ -125,10 +124,10 @@ app.get('/api/getingredients/:id', (req, res) => {
 app.get('/api/getingredientgroups/:id', (req, res) => {
   connection.query(`
     SELECT * FROM ingredient_groups 
-    WHERE ingredient_groups.recipe_id = ?
+    WHERE ingredient_groups.recipe_id = ${mysql.escape(req.params.id)}
     ORDER BY ingredient_groups.group_id
     `,
-  [req.params.id], (error, results) => {
+  (error, results) => {
     if (error) throw error;
     res.end(JSON.stringify(results));
   });
@@ -137,10 +136,10 @@ app.get('/api/getingredientgroups/:id', (req, res) => {
 app.get('/api/getrecipeimages/:id', (req, res) => {
   connection.query(`
     SELECT * FROM recipe_images
-    WHERE recipe_images.recipe_id = ?
+    WHERE recipe_images.recipe_id = ${mysql.escape(req.params.id)}
     ORDER BY recipe_images.order
     `,
-  [req.params.id], (error, results) => {
+  (error, results) => {
     if (error) throw error;
     res.end(JSON.stringify(results));
   });
@@ -231,11 +230,11 @@ app.post('/api/createnewrecipe', (req, res) => {
     VALUES (@recid, ${i}, ${imagePath});
     `;
   });
-
   connection.query(
-    query, [req.params.id], (error, results) => {
+    query, (error, results) => {
       if (error) throw error;
       res.end(JSON.stringify(results));
     }
   )
 });
+
