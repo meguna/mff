@@ -6,7 +6,6 @@ import './styles.css';
 class EditRecipeForm extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       form: {
         name: '',
@@ -15,8 +14,6 @@ class EditRecipeForm extends Component {
         groups: [{ ...ING_GROUP_BLANK }],
         notes: '',
         invalid: { name: false, ingCount: false },
-        submitError: false,
-        submitStatus: '',
         images: [],
       },
     };
@@ -76,14 +73,20 @@ class EditRecipeForm extends Component {
     this.setState({ loadingIngredients: true }, () => {
       fetch(`http://localhost:3005/api/getingredients/${selectedId}`)
         .then(res => res.json())
+        /**
+         * group ingredients into a 2D array, grouped by groupId.
+         */
         .then((res) => {
           const ingGroups = [];
-          res.forEach((ing) => {
-            if (ingGroups.length <= +ing.group_id) {
+          ingGroups.push([]);
+          let counter = 0;
+          for (let i = 0; i < res.length; i++) {
+            if (i !== 0 && res[i].groupId !== res[i - 1].groupId) {
               ingGroups.push([]);
+              counter++;
             }
-            ingGroups[+ing.group_id - 1].push(ing);
-          });
+            ingGroups[counter].push(res[i]);
+          }
           this.setState(prevState => ({
             form: {
               ...prevState.form,
@@ -128,6 +131,7 @@ class EditRecipeForm extends Component {
       loadingIngredients,
       loadingImages,
       fetchError,
+      selectedId,
     } = this.state;
 
     if (loadingGroups || loadingIngredients || loadingImages) {
@@ -148,6 +152,7 @@ class EditRecipeForm extends Component {
           notes={recipeInfo.notes}
           name={recipeInfo.name}
           size={recipeInfo.size}
+          fetchUrl={`http://localhost:3005/api/updateRecipe/${selectedId}`}
         />
       </Fragment>
     );

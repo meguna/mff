@@ -16,18 +16,24 @@ class RecipeForm extends Component {
     this.onSubmit = this.onSubmit.bind(this);
     this.onFieldChange = this.onFieldChange.bind(this);
 
-    this.state = {
-      ...this.state,
+    const initialState = {
       notes: props.notes,
       name: props.name,
       size: props.size,
       groups: props.initialGroups,
       ingredients: props.initialIngredients,
       images: [],
-      submitError: props.submitError,
-      submitStatus: props.submitStatus,
+      submitError: false,
+      submitStatus: '',
       invalid: { name: false, ingCount: false },
     };
+
+    this.state = {
+      ...initialState,
+      stateOnSubmit: initialState,
+    };
+
+    console.log(initialState.ingredients);
   }
 
   onFieldChange = (param, val) => {
@@ -93,17 +99,75 @@ class RecipeForm extends Component {
       images,
     } = this.state;
 
-    const { submitForm } = this.props;
+    const { fetchUrl } = this.props;
 
-    // directly using the 'invalid' state parameter after calling
-    // validate() can be buggy because the function is asynchronous.
-    // Thus we directly take the return value of the function instead
+    console.log(ingredients, groups, name, notes, size, images);
+
+    /**
+     * directly using the 'invalid' state parameter after calling
+     * validate() can be buggy because the function is asynchronous.
+     * Thus we directly take the return value of the function instead
+    */
     if (this.validate()) {
       this.setState({ submitError: true });
       return;
     }
 
-    submitForm(ingredients, groups, name, notes, size, images);
+    /**
+     * Reindex group numbers, starting with 1. Group numbers can skip values
+     * if the user deletes groups or adds them later.
+     * Mostly a precautionary move, but allows other code to expect that
+     * the number of groups is equivalent to the group ID of the last group.
+     */
+
+    const ingReindex = ingredients.map((ingGroup, i) => {
+      const group = [];
+      for (let j = 0; j < ingGroup.length; j++) {
+        group.push({ ...ingGroup[j], groupId: i + 1 });
+      }
+      return group;
+    });
+    const ingCollect = [].concat(...ingReindex).filter((ing) => {
+      return !(ing.name === '' && ing.amount === '' && ing.notes === '');
+    });
+    const groupReindex = groups.map((group, i) => (
+      { ...group, groupId: i + 1 }
+    ));
+    const nonEmptyGroups = groupReindex.filter(group => (
+      !(group.length === 0)
+    ));
+    const groupCollect = (ingCollect.length === 0) ? [] : nonEmptyGroups;
+
+    fetch(fetchUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        name,
+        notes,
+        size,
+        ingredients: ingReindex,
+        groups: groupCollect,
+        images,
+      }),
+    })
+      .then((res, err) => {
+        if (res.ok) {
+          const { stateOnSubmit } = this.state;
+          this.setState({ ...stateOnSubmit, submitStatus: 'success' });
+          window.scrollTo(0, 0);
+          const { fetchRecipes, sortMethod } = this.props;
+          fetchRecipes(sortMethod);
+        } else {
+          throw new Error(err);
+        }
+      })
+      .catch((err) => {
+        this.setState({ submitStatus: 'fail' });
+        window.scrollTo(0, 0);
+        console.error(err);
+      });
   };
 
   render() {
@@ -114,12 +178,12 @@ class RecipeForm extends Component {
       groups,
       ingredients,
       invalid,
+      submitError,
+      submitStatus,
     } = this.state;
 
     const {
       title,
-      submitError,
-      submitStatus,
     } = this.props;
 
     const groupFields = [];
@@ -207,7 +271,6 @@ class RecipeForm extends Component {
 }
 
 RecipeForm.propTypes = {
-  submitForm: PropTypes.func,
   initialIngredients: PropTypes.arrayOf(PropTypes.array),
   initialGroups: PropTypes.arrayOf(PropTypes.object),
   title: PropTypes.string.isRequired,
@@ -216,10 +279,10 @@ RecipeForm.propTypes = {
   size: PropTypes.string,
   submitError: PropTypes.bool,
   submitStatus: PropTypes.string,
+  fetchUrl: PropTypes.string.isRequired,
 };
 
 RecipeForm.defaultProps = {
-  submitForm: () => {},
   initialIngredients: [[{ ...ING_FIELD_BLANK }]],
   initialGroups: [{ ...ING_GROUP_BLANK }],
   notes: '',

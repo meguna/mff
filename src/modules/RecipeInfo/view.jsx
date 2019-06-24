@@ -73,7 +73,7 @@ class RecipeInfo extends Component {
         .then(res => res.json())
         .then((res) => {
           this.setState({ groups: res });
-          this.setState({ groupCount: res[res.length - 1].group_id });
+          this.setState({ groupCount: res[res.length - 1].groupId });
           this.setState({ loadingGroups: false, fetchError: false });
         })
         .catch(() => {

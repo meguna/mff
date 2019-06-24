@@ -38,27 +38,19 @@ const Ingredient = ({ ingredient }) => {
 
 Ingredient.propTypes = {
   ingredient: PropTypes.shape({
-    id: PropTypes.number,
-    recipe_id: PropTypes.number,
     name: PropTypes.string,
     amount: PropTypes.string,
-    amount_unit: PropTypes.string,
-    order: PropTypes.number,
     notes: PropTypes.string,
-    group_id: PropTypes.number,
+    groupId: PropTypes.number,
   }),
 };
 
 Ingredient.defaultProps = {
   ingredient: {
-    id: 0,
-    recipe_id: 0,
     name: '',
     amount: '',
-    amount_unit: '',
-    order: 0,
     notes: '',
-    group_id: 0,
+    groupId: 0,
   },
 };
 

@@ -16,14 +16,14 @@ const groupLetterLabel = (int, groupCount) => {
 const IngredientGroup = ({ ingredients, groups, groupCount }) => {
   const ingredientGroups = [];
   for (let i = 1; i < groupCount + 1; i++) {
-    ingredientGroups.push(ingredients.filter(item => item.group_id === i));
+    ingredientGroups.push(ingredients.filter(item => item.groupId === i));
   }
   return (
     <Fragment>
       {ingredients.length !== 0 && <p className="recipe-info-label">ingredients</p>}
       <div className="recipe-info-ing-list">
         {ingredientGroups.map((group, i) => (
-          <div className="recipe-info-ing-list-group" key={groups[i].id}>
+          <div className="recipe-info-ing-list-group" key={groups[i].groupId}>
             {groups[i].notes && (
               <p className="recipe-info-group-note">
                 {groups[i].notes}
@@ -31,8 +31,8 @@ const IngredientGroup = ({ ingredients, groups, groupCount }) => {
             )}
             {groupLetterLabel(i, groupCount)}
             <div className="recipe-info-ing-item-parent">
-              {group.map(ingredient => (
-                <Ingredient ingredient={ingredient} key={ingredient.id} />
+              {group.map((ingredient, j) => (
+                <Ingredient ingredient={ingredient} key={j} />
               ))}
             </div>
           </div>

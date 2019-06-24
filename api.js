@@ -30,6 +30,21 @@ app.use(cors());
 const server = app.listen(3005, '127.0.0.1');
 server.timeout = 1000 * 60 * 10;
 
+/**
+   * function to check for empty strings and replace them with some value.
+   * default value is 'NULL', the null value in mysql.
+   * if a second parameter is passed, it is used as the replacement value.
+   * otherwise, the given input is sanitized for mysql.
+   */
+const sanitize = (input, replaceVal) => {
+  let defaultOnNull = 'NULL';
+  if (replaceVal) defaultOnNull = replaceVal;
+  if (!input || input.length === 0) {
+    return defaultOnNull;
+  }
+  return mysql.escape(input);
+};
+
 app.get('/api/static/:folder/:file', (req, res) => {
   const options = {
     root: path.join(__dirname, '/assets/'),
@@ -117,7 +132,14 @@ app.get('/api/getingredients/:id', (req, res) => {
     `,
   (error, results) => {
     if (error) throw error;
-    res.end(JSON.stringify(results));
+    const modified = results.map(ing => ({
+      name: ing.name,
+      amount: ing.amount,
+      notes: ing.notes,
+      groupId: ing.group_id,
+    }));
+    console.log(results);
+    res.end(JSON.stringify(modified));
   });
 });
 
@@ -129,7 +151,12 @@ app.get('/api/getingredientgroups/:id', (req, res) => {
     `,
   (error, results) => {
     if (error) throw error;
-    res.end(JSON.stringify(results));
+    const modified = results.map(group => ({
+      name: group.name,
+      notes: group.notes,
+      groupId: group.group_id,
+    }));
+    res.end(JSON.stringify(modified));
   });
 });
 
@@ -177,21 +204,6 @@ app.post('/api/addimage', (req, res) => {
  *        ingredients (array of objects), groups (array of objects)
  */
 app.post('/api/createnewrecipe', (req, res) => {
-  /**
-   * function to check for empty strings and replace them with some value.
-   * default value is 'NULL', the null value in mysql.
-   * if a second parameter is passed, it is used as the replacement value.
-   * otherwise, the given input is sanitized for mysql.
-   */
-  const sanitize = (input, replaceVal) => {
-    let defaultOnNull = 'NULL';
-    if (replaceVal) defaultOnNull = replaceVal;
-    if (!input || input.length === 0) {
-      return defaultOnNull;
-    }
-    return mysql.escape(input);
-  };
-
   const recipeName = mysql.escape(req.body.name);
   const recipeSize = sanitize(req.body.size);
   const recipeNotes = sanitize(req.body.notes);
@@ -230,6 +242,7 @@ app.post('/api/createnewrecipe', (req, res) => {
     VALUES (@recid, ${i}, ${imagePath});
     `;
   });
+
   connection.query(
     query, (error, results) => {
       if (error) throw error;
@@ -238,3 +251,73 @@ app.post('/api/createnewrecipe', (req, res) => {
   )
 });
 
+app.post('/api/updateRecipe/:id', (req, res) => {
+  const recipeId = +req.params.id;
+  const recipeName = sanitize(req.body.name);
+  const recipeSize = sanitize(req.body.size);
+  const recipeNotes = sanitize(req.body.notes);
+  let query = `
+    UPDATE recipes
+    SET \`name\` = ${recipeName},
+        notes = ${recipeNotes},
+        size = ${recipeSize},
+        update_date = NOW()
+    WHERE id = ${recipeId}
+    ;`;
+
+  query += `
+    DELETE FROM recipe_ingredients
+    WHERE recipe_id = ${recipeId};
+  `;
+
+  req.body.ingredients.forEach((ing, i) => {
+    const ingName = sanitize(ing.name);
+    const ingNotes = sanitize(ing.notes);
+    const ingAmt = sanitize(ing.amount);
+    const ingGroup = sanitize(ing.groupId, 1);
+
+    query += `
+    INSERT INTO recipe_ingredients
+    (recipe_id, \`name\`, amount, notes, \`order\`, group_id)
+    VALUES (
+      ${recipeId}, ${ingName}, ${ingAmt}, ${ingNotes}, ${i}, ${ingGroup});
+    `;
+  });
+
+  query += `
+    DELETE FROM ingredient_groups
+    WHERE recipe_id = ${recipeId};
+  `;
+
+  req.body.groups.forEach((group) => {
+    const groupName = sanitize(group.name);
+    const groupNotes = sanitize(group.notes);
+    const groupId = sanitize(group.groupId, 1);
+    query += `
+    INSERT INTO ingredient_groups (recipe_id, \`name\`, notes, group_id)
+    VALUES (${recipeId}, ${groupName}, ${groupNotes}, ${groupId});
+    `;
+  });
+
+  query += `
+    DELETE FROM recipe_images
+    WHERE recipe_id = ${recipeId};
+  `;
+
+  req.body.images.forEach((image, i) => {
+    const imagePath = sanitize(image);
+    query += `
+    INSERT INTO recipe_images (recipe_id, \`order\`, image_path)
+    VALUES (${recipeId}, ${i}, ${imagePath});
+    `;
+  });
+
+  console.log(query);
+
+  connection.query(
+    query, (error, results) => {
+      if (error) throw error;
+      res.end(JSON.stringify(results));
+    }
+  )
+});

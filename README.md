@@ -281,16 +281,29 @@ Documenting my progress as I move through the project.
   down the line
 * looked into adding testing suites to the project. 
 
+#### Lessons
+* Good practice: Don't set state using props unless you're only initializing
+  state using props.
+
 ## June 24
 
 * fixed huge bug. Turns out it was caused by not properly updating the 
   ingredients[] state inside RecipeForm's `onAddGroup()`. So basically this was
   an exercise in walking through all the teeny parts of the codebase. Fun. 
-
+* switch nodejs mysql package from `mysql` to `mysql2` because the former
+  will unconditionally replace all ?'s with query parameters (or a big fat
+  NULL if you don't provide one) regardless of whether the ?'s are inside
+  string literals. Really annoying!
+* add an "edit this recipe" button above RecipeInfo's main content
+* fix - "add new recipe" button only active around text, not colored div
+* add API endpoint for updating recipe records
+* update structure & fetch logic for the forms. some bugs remain in the
+  update logic.
+* all of the React logic uses camelCase 'groupId' instead of snake-case.
+  Consolidated since things were super messy - bAd!!
 
 ## To Do Notes - Immediate
 
-* "add new recipe" button only active around text, not colored div
 * routing - when loading an url for a recipe that's not in the "most recent"
   list (and thus not loaded yet), what to do? make new View for this?
 * change document titles according to page

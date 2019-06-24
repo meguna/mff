@@ -16,55 +16,9 @@ const recipeInfo = {
 class NewRecipeForm extends Component {
   constructor(props) {
     super(props);
-    this.submitForm = this.submitForm.bind(this);
-    this.state = {
-      submitError: false,
-      submitStatus: '',
-    };
-  }
-
-  submitForm = (ingredients, groups, name, notes, size, images) => {
-    // `ingredients` is a nested array, with individual elements
-    // grouped by ingredient groups. get all nested elements in `ingCollect`.
-    // then remove groups & ingredients that are empty
-    const ingCollect = [].concat(...ingredients).filter((ing) => {
-      return !(ing.name === '' && ing.amount === '' && ing.notes === '');
-    });
-    const groupCollect = (ingCollect.length === 0) ? [] : groups;
-
-    fetch('http://localhost:3005/api/createnewrecipe', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        name,
-        notes,
-        size,
-        ingredients: ingCollect,
-        groups: groupCollect,
-        images,
-      }),
-    })
-      .then((res, err) => {
-        if (res.ok) {
-          this.setState({ ...recipeInfo, submitStatus: 'success' });
-          window.scrollTo(0, 0);
-          const { fetchRecipes, sortMethod } = this.props;
-          fetchRecipes(sortMethod);
-        } else {
-          throw new Error(err);
-        }
-      })
-      .catch((err) => {
-        this.setState({ submitStatus: 'fail' });
-        window.scrollTo(0, 0);
-        console.error(err);
-      });
   }
 
   render() {
-    const { submitError, submitStatus } = this.state;
     return (
       <Fragment>
         <RecipeForm
@@ -75,9 +29,7 @@ class NewRecipeForm extends Component {
           notes=""
           name=""
           size=""
-          submitForm={this.submitForm}
-          submitStatus={submitStatus}
-          submitError={submitError}
+          fetchUrl="http://localhost:3005/api/createnewrecipe"
         />
       </Fragment>
     );
