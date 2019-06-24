@@ -92,7 +92,7 @@ class RecipeForm extends Component {
       images,
     } = this.state;
 
-    const { fetchRecipes, sortMethod } = this.props;
+    const { submitForm } = this.props;
 
     // directly using the 'invalid' state parameter after calling
     // validate() can be buggy because the function is asynchronous.
@@ -102,39 +102,7 @@ class RecipeForm extends Component {
       return;
     }
 
-    // `ingredients` is a nested array, with individual elements
-    // grouped by ingredient groups. get all nested elements in `ingCollect`.
-    // then remove groups & ingredients that are empty
-    const ingCollect = [].concat(...ingredients).filter((ing) => {
-      return !(ing.name === '' && ing.amount === '' && ing.notes === '');
-    });
-    const groupCollect = (ingCollect.length === 0) ? [] : groups;
-
-    fetch('http://localhost:3005/api/createnewrecipe', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        name,
-        notes,
-        size,
-        ingredients: ingCollect,
-        groups: groupCollect,
-        images,
-      }),
-    })
-      .then(() => {
-        const { initialFormState } = this.props;
-        this.setState({ ...initialFormState, submitStatus: 'success' });
-        window.scrollTo(0, 0);
-        fetchRecipes(sortMethod);
-      })
-      .catch((err) => {
-        this.setState({ submitStatus: 'fail' });
-        window.scrollTo(0, 0);
-        console.error(err);
-      });
+    submitForm(ingredients, groups, name, notes, size, images);
   };
 
   render() {
@@ -238,8 +206,7 @@ class RecipeForm extends Component {
 }
 
 RecipeForm.propTypes = {
-  fetchRecipes: PropTypes.func,
-  sortMethod: PropTypes.string,
+  submitForm: PropTypes.func,
   initialIngredients: PropTypes.arrayOf(PropTypes.array),
   initialGroups: PropTypes.arrayOf(PropTypes.object),
   title: PropTypes.string.isRequired,
@@ -249,8 +216,7 @@ RecipeForm.propTypes = {
 };
 
 RecipeForm.defaultProps = {
-  fetchRecipes: () => {},
-  sortMethod: 'update_date',
+  submitForm: () => {},
   initialIngredients: [[{ ...ING_FIELD_BLANK }]],
   initialGroups: [{ ...ING_GROUP_BLANK }],
   notes: '',
