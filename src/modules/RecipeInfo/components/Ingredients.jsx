@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { ING_FIELD_BLANK } from '../../common/initial';
 
 const Ingredient = ({ ingredient }) => {
   let amount = [ingredient.amount];
@@ -37,21 +38,11 @@ const Ingredient = ({ ingredient }) => {
 };
 
 Ingredient.propTypes = {
-  ingredient: PropTypes.shape({
-    name: PropTypes.string,
-    amount: PropTypes.string,
-    notes: PropTypes.string,
-    groupId: PropTypes.number,
-  }),
+  ingredient: PropTypes.object,
 };
 
 Ingredient.defaultProps = {
-  ingredient: {
-    name: '',
-    amount: '',
-    notes: '',
-    groupId: 0,
-  },
+  ingredient: { ...ING_FIELD_BLANK },
 };
 
 export default Ingredient;

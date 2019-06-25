@@ -137,8 +137,8 @@ app.get('/api/getingredients/:id', (req, res) => {
       amount: ing.amount,
       notes: ing.notes,
       groupId: ing.group_id,
+      elemId: ing.id,
     }));
-    console.log(results);
     res.end(JSON.stringify(modified));
   });
 });
@@ -155,6 +155,7 @@ app.get('/api/getingredientgroups/:id', (req, res) => {
       name: group.name,
       notes: group.notes,
       groupId: group.group_id,
+      elemId: group.id,
     }));
     res.end(JSON.stringify(modified));
   });
@@ -274,7 +275,7 @@ app.post('/api/updateRecipe/:id', (req, res) => {
     const ingName = sanitize(ing.name);
     const ingNotes = sanitize(ing.notes);
     const ingAmt = sanitize(ing.amount);
-    const ingGroup = sanitize(ing.groupId, 1);
+    const ingGroup = sanitize(ing.groupId);
 
     query += `
     INSERT INTO recipe_ingredients

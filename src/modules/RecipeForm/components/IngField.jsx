@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { X } from 'react-feather';
+import { ING_FIELD_BLANK } from '../../common/initial';
 
 class IngField extends Component {
   constructor(props) {
@@ -121,11 +122,7 @@ IngField.propTypes = {
   onBlur: PropTypes.func,
   onFocus: PropTypes.func,
   onRemoveSelected: PropTypes.func,
-  value: PropTypes.shape({
-    name: PropTypes.string,
-    amount: PropTypes.string,
-    notes: PropTypes.string,
-  }),
+  value: PropTypes.object,
   ingId: PropTypes.number,
   groupId: PropTypes.number,
 };
@@ -135,7 +132,7 @@ IngField.defaultProps = {
   onBlur: () => {},
   onFocus: () => {},
   onRemoveSelected: () => {},
-  value: { name: '', amount: '', notes: '' },
+  value: { ...ING_FIELD_BLANK },
   ingId: 0,
   groupId: 1,
 };

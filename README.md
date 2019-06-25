@@ -302,6 +302,31 @@ Documenting my progress as I move through the project.
 * all of the React logic uses camelCase 'groupId' instead of snake-case.
   Consolidated since things were super messy - bAd!!
 
+## June 25
+
+* fixed bug that caused lots of unexpected behavior when, in EditRecipeForm,
+  a user deleted all ingredients of a group. Fixed it by adding a new method
+  `onRemoveGroup()` and making sure that groupIds are renumbered whenever that
+  happens.
+
+#### Lessons
+* watch out for when using indices as keys in lists! Obviously, very important
+  (since React uses them in its reconcillation algorithm). I had used indices
+  for the IngGroup collection previously, but since I'm now reindicing the
+  groups, I needed to keep a separate index (`elemId`) that live and die with
+  each group to use as the keys. `groupId`, on the other hand, is used to tie
+  the groups and ingredients together.
+* This whole project is becoming more and more complex. The data structures
+  are starting to feel hard to manage. If this project has taught me anything,
+  it's that there are very real reasons why people go on about modularity and
+  single point of truth. And why some people are so eager to use Typescript
+  with their React projects. I've obviously had to chase through miles of code
+  looking for bugs before, particularly in comp40, but it's just another thing
+  with this codebase. So many places where information changes hands, and gets
+  mutated one way or another, recommunicated to other pieces, and on and on.
+  The bug search just gets extended by days and days without having strong
+  PropType declarations and all that.
+
 ## To Do Notes - Immediate
 
 * routing - when loading an url for a recipe that's not in the "most recent"

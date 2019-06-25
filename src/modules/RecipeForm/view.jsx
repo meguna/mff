@@ -32,8 +32,6 @@ class RecipeForm extends Component {
       ...initialState,
       stateOnSubmit: initialState,
     };
-
-    console.log(initialState.ingredients);
   }
 
   onFieldChange = (param, val) => {
@@ -45,13 +43,56 @@ class RecipeForm extends Component {
     this.setState(prevState => ({
       groups: [
         ...prevState.groups,
-        { ...ING_GROUP_BLANK, groupId: prevState.groups.length + 1 },
+        {
+          ...ING_GROUP_BLANK,
+          groupId: prevState.groups.length + 1,
+          elemId: prevState.groups[prevState.groups.length - 1].elemId + 1,
+        },
       ],
       ingredients: [
         ...prevState.ingredients,
-        [{ ...ING_FIELD_BLANK, groupId: prevState.groups.length + 1 }],
+        [{
+          ...ING_FIELD_BLANK,
+          groupId: prevState.groups.length + 1,
+        }],
       ],
     }));
+  };
+
+  onRemoveGroup = (groupId) => {
+    const groupIndex = groupId - 1;
+    const { ingredients, groups } = this.state;
+
+    const ingRemoved = [
+      ...ingredients.slice(0, groupIndex),
+      ...ingredients.slice(groupIndex + 1),
+    ];
+    const groupRemoved = [
+      ...groups.slice(0, groupIndex),
+      ...groups.slice(groupIndex + 1),
+    ];
+
+    /**
+     * If a user deletes a group by removing all of the ingredients in it,
+     * then the groupIds will skip around. This reindexes group numbers,
+     * starting with 1.
+     */
+    const ingReindex = ingRemoved.map((ingGroup, i) => {
+      const group = [];
+      for (let j = 0; j < ingGroup.length; j++) {
+        group.push({ ...ingGroup[j], groupId: i + 1 });
+      }
+      return group;
+    });
+
+    const groupReindex = groupRemoved.map((group, i) => (
+      { ...group, groupId: i + 1 }
+    ));
+
+    this.setState({
+      ingredients: ingReindex,
+      groups: groupReindex,
+    });
   };
 
   onIngGroupUpdate = (ingredients, groupId, groupInfo) => {
@@ -101,8 +142,6 @@ class RecipeForm extends Component {
 
     const { fetchUrl } = this.props;
 
-    console.log(ingredients, groups, name, notes, size, images);
-
     /**
      * directly using the 'invalid' state parameter after calling
      * validate() can be buggy because the function is asynchronous.
@@ -113,31 +152,6 @@ class RecipeForm extends Component {
       return;
     }
 
-    /**
-     * Reindex group numbers, starting with 1. Group numbers can skip values
-     * if the user deletes groups or adds them later.
-     * Mostly a precautionary move, but allows other code to expect that
-     * the number of groups is equivalent to the group ID of the last group.
-     */
-
-    const ingReindex = ingredients.map((ingGroup, i) => {
-      const group = [];
-      for (let j = 0; j < ingGroup.length; j++) {
-        group.push({ ...ingGroup[j], groupId: i + 1 });
-      }
-      return group;
-    });
-    const ingCollect = [].concat(...ingReindex).filter((ing) => {
-      return !(ing.name === '' && ing.amount === '' && ing.notes === '');
-    });
-    const groupReindex = groups.map((group, i) => (
-      { ...group, groupId: i + 1 }
-    ));
-    const nonEmptyGroups = groupReindex.filter(group => (
-      !(group.length === 0)
-    ));
-    const groupCollect = (ingCollect.length === 0) ? [] : nonEmptyGroups;
-
     fetch(fetchUrl, {
       method: 'POST',
       headers: {
@@ -147,8 +161,8 @@ class RecipeForm extends Component {
         name,
         notes,
         size,
-        ingredients: ingReindex,
-        groups: groupCollect,
+        ingredients,
+        groups,
         images,
       }),
     })
@@ -189,10 +203,11 @@ class RecipeForm extends Component {
     const groupFields = [];
     for (let i = 0; i < groups.length; i++) {
       groupFields.push(
-        <div key={i}>
+        <div key={groups[i].elemId}>
           <IngGroup
             groupId={i + 1}
             onIngGroupUpdate={this.onIngGroupUpdate}
+            onRemoveGroup={this.onRemoveGroup}
             ingredients={ingredients[i]}
             group={groups[i]}
           />
@@ -277,9 +292,9 @@ RecipeForm.propTypes = {
   notes: PropTypes.string,
   name: PropTypes.string,
   size: PropTypes.string,
-  submitError: PropTypes.bool,
-  submitStatus: PropTypes.string,
   fetchUrl: PropTypes.string.isRequired,
+  fetchRecipes: PropTypes.func,
+  sortMethod: PropTypes.string,
 };
 
 RecipeForm.defaultProps = {
@@ -288,8 +303,8 @@ RecipeForm.defaultProps = {
   notes: '',
   name: '',
   size: '',
-  submitError: false,
-  submitStatus: '',
+  fetchRecipes: () => {},
+  sortMethod: 'update_date',
 };
 
 export default RecipeForm;

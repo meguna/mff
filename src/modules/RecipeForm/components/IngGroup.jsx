@@ -2,13 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import IngField from './IngField';
 import Field from './Field';
-
-const ING_FIELD_BLANK = {
-  name: '',
-  amount: '',
-  notes: '',
-  groupId: 1,
-};
+import { ING_FIELD_BLANK, ING_GROUP_BLANK } from '../../common/initial';
 
 class IngGroup extends Component {
   constructor(props) {
@@ -16,12 +10,10 @@ class IngGroup extends Component {
     this.onIngFieldChange = this.onIngFieldChange.bind(this);
     this.addIngField = this.addIngField.bind(this);
     this.onFieldChange = this.onFieldChange.bind(this);
-
     const { ingredients, group } = props;
-
     this.state = {
       ingredients,
-      groupInfo: { name: group.name, notes: group.notes },
+      groupInfo: { ...group },
     };
   }
 
@@ -61,7 +53,7 @@ class IngGroup extends Component {
     if (id === ingredients.length - 1) {
       this.setState(prevState => ({
         ingredients: [
-          ...prevState.ingredients, 
+          ...prevState.ingredients,
           { name: '', amount: '', notes: '', groupId },
         ],
       }));
@@ -89,7 +81,7 @@ class IngGroup extends Component {
   };
 
   removeSelectedIngField = (id) => {
-    const { onIngGroupUpdate, groupId } = this.props;
+    const { onRemoveGroup, onIngGroupUpdate, groupId } = this.props;
     this.setState((prevState) => {
       const newIng = [...prevState.ingredients];
       newIng.splice(id, 1);
@@ -97,9 +89,11 @@ class IngGroup extends Component {
         ingredients: newIng,
       };
     }, () => {
-      if (onIngGroupUpdate) {
-        const { ingredients } = this.state;
-        onIngGroupUpdate(ingredients, groupId);
+      const { ingredients, groupInfo } = this.state;
+      if (ingredients.length === 0) {
+        onRemoveGroup(groupId);
+      } else {
+        onIngGroupUpdate(ingredients, groupId, groupInfo);
       }
     });
   };
@@ -168,12 +162,16 @@ IngGroup.propTypes = {
   groupId: PropTypes.number,
   onIngGroupUpdate: PropTypes.func,
   ingredients: PropTypes.arrayOf(PropTypes.object),
+  group: PropTypes.object,
+  onRemoveGroup: PropTypes.func,
 };
 
 IngGroup.defaultProps = {
   groupId: 1,
   onIngGroupUpdate: () => {},
   ingredients: [ING_FIELD_BLANK],
+  group: { ...ING_GROUP_BLANK },
+  onRemoveGroup: () => {},
 };
 
 export default IngGroup;
