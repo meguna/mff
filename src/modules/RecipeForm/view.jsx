@@ -203,6 +203,7 @@ class RecipeForm extends Component {
 
     const {
       title,
+      messages,
     } = this.props;
 
     const groupFields = [];
@@ -224,9 +225,8 @@ class RecipeForm extends Component {
       <Fragment>
         <StatusInfo
           status={submitStatus}
-          failMessage={`Oops! There was an error adding your recipe. 
-            Please try again!`}
-          successMessage="The recipe was added successfully!"
+          failMessage={messages.failMessage}
+          successMessage={messages.successMessage}
         />
         <h1 className="title">{title}</h1>
         <FormSubHeader subtitle="info" />
@@ -277,7 +277,7 @@ class RecipeForm extends Component {
           <ImageUpload onDone={this.updateImageState} />
 
           <FormSubHeader />
-          <input type="submit" value="Add this recipe!" />
+          <input type="submit" value={messages.buttonAction} />
           {submitError && (
             <p className="error-msg">
               <AlertCircle />
@@ -300,6 +300,11 @@ RecipeForm.propTypes = {
   fetchUrl: PropTypes.string.isRequired,
   fetchRecipes: PropTypes.func,
   sortMethod: PropTypes.string,
+  messages: PropTypes.shape({
+    buttonAction: PropTypes.string,
+    failMessage: PropTypes.string,
+    successMessage: PropTypes.string,
+  }).isRequired,
 };
 
 RecipeForm.defaultProps = {

@@ -1,5 +1,4 @@
-import React, { Component, Fragment } from 'react';
-import PropTypes from 'prop-types';
+import React, { Fragment } from 'react';
 import RecipeForm from '../RecipeForm';
 import { ING_FIELD_BLANK, ING_GROUP_BLANK } from '../common/initial';
 
@@ -13,37 +12,27 @@ const recipeInfo = {
   images: [],
 };
 
-class NewRecipeForm extends Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    return (
-      <Fragment>
-        <RecipeForm
-          initialFormState={recipeInfo}
-          initialIngredients={recipeInfo.ingredients}
-          title="Add A New Recipe"
-          initialGroups={recipeInfo.groups}
-          notes=""
-          name=""
-          size=""
-          fetchUrl="http://localhost:3005/api/createnewrecipe"
-        />
-      </Fragment>
-    );
-  }
+const messages = {
+  buttonAction: "Add this recipe!",
+  failMessage: `Oops! There was an error adding your recipe. 
+    Please try again!`,
+  successMessage: "The recipe was added successfully!",
 }
 
-NewRecipeForm.propTypes = {
-  fetchRecipes: PropTypes.func,
-  sortMethod: PropTypes.string,
-};
-
-NewRecipeForm.defaultProps = {
-  fetchRecipes: () => {},
-  sortMethod: 'update_date',
-};
+const NewRecipeForm = () => (
+  <Fragment>
+    <RecipeForm
+      initialFormState={recipeInfo}
+      initialIngredients={recipeInfo.ingredients}
+      title="Add A New Recipe"
+      initialGroups={recipeInfo.groups}
+      notes=""
+      name=""
+      size=""
+      fetchUrl="http://localhost:3005/api/createnewrecipe"
+      messages={messages}
+    />
+  </Fragment>
+);
 
 export default NewRecipeForm;

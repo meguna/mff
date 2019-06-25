@@ -134,6 +134,13 @@ class EditRecipeForm extends Component {
       selectedId,
     } = this.state;
 
+    const messages = {
+      buttonAction: "Update recipe!",
+      failMessage: `Oops! There was an error updating your recipe. 
+        Please try again!`,
+      successMessage: "The recipe was updated successfully!",
+    }
+
     if (loadingGroups || loadingIngredients || loadingImages) {
       return <p>Loading...</p>;
     }
@@ -153,6 +160,7 @@ class EditRecipeForm extends Component {
           name={recipeInfo.name}
           size={recipeInfo.size}
           fetchUrl={`http://localhost:3005/api/updateRecipe/${selectedId}`}
+          messages={messages}
         />
       </Fragment>
     );
