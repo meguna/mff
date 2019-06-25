@@ -152,6 +152,11 @@ class RecipeForm extends Component {
       return;
     }
 
+    const ingCollect = [].concat(...ingredients).filter((ing) => {
+      return !(ing.name === '' && ing.amount === '' && ing.notes === '');
+    });
+    const groupCollect = (ingCollect.length === 0) ? [] : groups;
+
     fetch(fetchUrl, {
       method: 'POST',
       headers: {
@@ -161,8 +166,8 @@ class RecipeForm extends Component {
         name,
         notes,
         size,
-        ingredients,
-        groups,
+        ingredients: ingCollect,
+        groups: groupCollect,
         images,
       }),
     })
