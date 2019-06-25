@@ -32,13 +32,13 @@ const reducer = (state = INITIAL_STATE, action) => {
   }
   case FETCH_RECIPES_SUCCESS: {
     let selectedRecipeFiltered = null;
-    if (state.selected.length === 0 && state.recipes) {
+    if (state.selected && state.selected.length === 0 && state.recipes) {
       selectedRecipeFiltered = action.payload.filter(rec => state.selectedId === rec.id);
     }
     return {
       ...state,
       recipes: [...action.payload],
-      selected: state.selected.length === 0 ? selectedRecipeFiltered[0] : state.selected,
+      selected: state.selected && state.selected.length === 0 ? selectedRecipeFiltered[0] : state.selected,
       error: null,
       loading: false,
       listOffset: action.payload.length,
@@ -98,9 +98,10 @@ const reducer = (state = INITIAL_STATE, action) => {
   case FETCH_RECIPES_FAILURE:
   case FETCH_MORE_RECIPES_FAILURE:
   case FETCH_SELECTED_RECIPE_FAILURE:
+    console.error(action.payload);
     return {
       ...state,
-      error: action.payload,
+      error: true,
       loading: false,
     };
   default:

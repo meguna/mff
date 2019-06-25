@@ -6,7 +6,7 @@ import IngGroup from './components/IngGroup';
 import IngFieldsHeader from './components/IngFieldsHeader';
 import ImageUpload from './components/ImageUpload';
 import FormSubHeader from './components/FormSubHeader';
-import StatusInfo from './components/StatusInfo';
+import StatusInfo from '../common/StatusInfo';
 import { ING_FIELD_BLANK, ING_GROUP_BLANK } from '../common/initial';
 import './styles.css';
 

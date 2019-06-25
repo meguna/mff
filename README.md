@@ -308,6 +308,19 @@ Documenting my progress as I move through the project.
   a user deleted all ingredients of a group. Fixed it by adding a new method
   `onRemoveGroup()` and making sure that groupIds are renumbered whenever that
   happens.
+* make sure that each form gets custom status messages ("your recipe has been
+  updated" / "your recipe has been added").
+* add new API endpoint: deleteRecipe.
+* add new component: deleteRecipe. add nav buttons to the component. UI colors
+  on cancel/delete buttons to guide user action. entire thing successfully
+  implemented.
+
+#### Notes
+* "the recipe has been deleted successfully" notification doesn't really
+  display at the moment because right after deleting, the window redirects
+  to the home page, and the status messages only show up within the Delete
+  component right now. Fix would be to add status message to redux so that
+  any component can go and change it, but I haven't done it yet.
 
 #### Lessons
 * watch out for when using indices as keys in lists! Obviously, very important

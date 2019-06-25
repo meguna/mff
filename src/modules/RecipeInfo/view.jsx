@@ -5,6 +5,7 @@ import RecipeNotes from './components/RecipeNotes';
 import RecipeSize from './components/RecipeSize';
 import AddRecipeButton from './components/AddRecipeButton';
 import EditRecipeButton from './components/EditRecipeButton';
+import DeleteRecipeButton from './components/DeleteRecipeButton';
 import RecipeImages from './components/RecipeImages';
 import './styles.css';
 
@@ -147,6 +148,7 @@ class RecipeInfo extends Component {
       <Fragment>
         <AddRecipeButton />
         <EditRecipeButton id={selectedId} />
+        <DeleteRecipeButton id={selectedId} />
         <p className="recipe-info-name">{selected.name}</p>
         <RecipeSize size={selected.size} />
         {!loadingIngredients && !loadingGroups && (

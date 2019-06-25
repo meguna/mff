@@ -322,3 +322,30 @@ app.post('/api/updateRecipe/:id', (req, res) => {
     }
   )
 });
+
+app.delete('/api/deleteRecipe/:id', (req, res) => {
+  const recipeId = +req.params.id;
+  const query = `
+    DELETE FROM recipe_ingredients
+    WHERE recipe_id = ${recipeId};
+  
+    DELETE FROM ingredient_groups
+    WHERE recipe_id = ${recipeId};
+  
+    DELETE FROM recipe_images
+    WHERE recipe_id = ${recipeId};
+
+    DELETE FROM recipes
+    WHERE id = ${recipeId};
+  `;
+
+  console.log(query);
+
+  connection.query(
+    query, (error, results) => {
+      if (error) throw error;
+      res.end(JSON.stringify(results));
+    }
+  )
+});
+

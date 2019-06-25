@@ -5,6 +5,7 @@ import RecipeInfo from '../RecipeInfo';
 import RecipeList from '../RecipeList';
 import NewRecipeForm from '../NewRecipeForm';
 import EditRecipeForm from '../EditRecipeForm';
+import DeleteRecipe from '../DeleteRecipe';
 import './styles.css';
 
 class RecipeIndex extends Component {
@@ -24,6 +25,7 @@ class RecipeIndex extends Component {
             <Route exact path="/addRecipe" component={NewRecipeForm} />
             <Route exact path="/editRecipe/:id" component={EditRecipeForm} />
             <Route path="/recipe/:id" component={RecipeInfo} />
+            <Route path="/deleteRecipe/:id" component={DeleteRecipe} />
           </Switch>
         </div>
       </div>

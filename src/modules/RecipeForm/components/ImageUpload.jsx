@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import StatusInfo from './StatusInfo';
+import StatusInfo from '../../common/StatusInfo';
 
 class ImageUpload extends Component {
   constructor(props) {
