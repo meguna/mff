@@ -12,6 +12,9 @@ header.app-main-header {
   box-sizing: border-box;
   margin: 0;
   background-color: var(--key-red);
+}
+
+header.app-main-header a {
   color: #fff;
 }
 

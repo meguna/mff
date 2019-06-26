@@ -249,7 +249,7 @@ app.post('/api/createnewrecipe', (req, res) => {
       if (error) throw error;
       res.end(JSON.stringify(results));
     }
-  )
+  );
 });
 
 app.post('/api/updateRecipe/:id', (req, res) => {
@@ -313,14 +313,12 @@ app.post('/api/updateRecipe/:id', (req, res) => {
     `;
   });
 
-  console.log(query);
-
   connection.query(
     query, (error, results) => {
       if (error) throw error;
       res.end(JSON.stringify(results));
     }
-  )
+  );
 });
 
 app.delete('/api/deleteRecipe/:id', (req, res) => {
@@ -357,7 +355,6 @@ app.delete('/api/deleteRecipe/:id', (req, res) => {
     DELETE FROM recipes
     WHERE id = ${recipeId};
   `;
-  console.log(query);
   connection.query(
     query, (recDbDelError, finalResults) => {
       if (recDbDelError) throw recDbDelError;

@@ -271,19 +271,32 @@ Documenting my progress as I move through the project.
 
 ## June 20 - 23
 
-* partial fix for bug where first ingredient of all of but the first ingGroups
-  were being tied logically (changing one also changes the other) in 
-  NewRecipeForm. Fixed a lot of state/props that hadn't been properly 
-  reassigned after the modularization of RecipeForm - making sure props were
-  only being used to initialize component-managed state, making sure component
-  state was being maintained, etc. The fixes didn't solve the huge bug, but
-  they definitely were necessarily fixes that would have caused other problems
-  down the line
+* spent three whole days trying to fix this ridiculous bug where first 
+  ingredient of all of but the first ingGroups were being tied logically
+  (changing one also changes the other) in NewRecipeForm. Fixed a lot of
+  state/props that hadn't been properly reassigned after the modularization of
+  RecipeForm - making sure props were only being used to initialize
+  component-managed state, making sure component state was being maintained,
+  etc. The fixes didn't solve the huge bug, but they definitely were
+  necessarily fixes that would have caused other problems down the line.
 * looked into adding testing suites to the project. 
 
 #### Lessons
 * Good practice: Don't set state using props unless you're only initializing
   state using props.
+* The huge bugs were caused by trying to reform an already fully functional
+  NewRecipeForm into a base form component, RecipeForm, and change the
+  NewRecipeForm into a parent component that gives props to RecipeForm. This
+  was so that I could reuse the form component for EditRecipeForm, since
+  a lot of the functionality - particularly, state management within IngGroups
+  and IngFields etc - would stay the same. But the reorganization/refactoring
+  process caused a lot of little errors and a lot of big errors. Obviously
+  as abstraction was increased the data structures became a lot more complex,
+  which would have been true regardless of whether I started with the
+  structure or reorganized it the way I did. So the added reorganization
+  process just introduced a lot more problems to an already complex issue.
+  Looking forward, more thorough planning and sketching out could have helped
+  avoid this issue.
 
 ## June 24
 
@@ -328,7 +341,9 @@ Documenting my progress as I move through the project.
   for the IngGroup collection previously, but since I'm now reindicing the
   groups, I needed to keep a separate index (`elemId`) that live and die with
   each group to use as the keys. `groupId`, on the other hand, is used to tie
-  the groups and ingredients together.
+  the groups and ingredients together. Also, needless to say, unstable keys
+  like `Math.random()` is really bad for things like input fields, since
+  the fields end up re-rendering after every keyDown.
 * This whole project is becoming more and more complex. The data structures
   are starting to feel hard to manage. If this project has taught me anything,
   it's that there are very real reasons why people go on about modularity and
@@ -345,6 +360,11 @@ Documenting my progress as I move through the project.
 
 ## To Do Notes - Immediate
 
+* show uploaded images as thumbnails on EditRecipeForm (and NewRecipeForm?)
+  & allow user to mark them for deletion
+* recipeInfo redesign
+* clickable title link to '/'
+* editRecipe warning on navigating away from unsaved changes
 * show 404 whenever a user navigates to /anypath/:nonexistentId.
 * add page for index
 * add page for selectedId == -1.
@@ -371,7 +391,7 @@ Documenting my progress as I move through the project.
 * ~~view details about recipe~~
 * ~~form to add new recipe~~
 * UPDATE form to edit pre-existing recipe
-* DELETE api routes & interface within UPDATE form
+* ~~DELETE api routes & interface within UPDATE form~~
 * image handling (CRUD for images per recipe)
 * search functionality
 * ~~routing~~
