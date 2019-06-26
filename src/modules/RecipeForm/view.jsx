@@ -113,6 +113,7 @@ class RecipeForm extends Component {
 
   updateImageState = (images) => {
     this.setState({ images });
+    return false;
   }
 
   validate = () => {

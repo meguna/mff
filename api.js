@@ -1,5 +1,5 @@
 require('http');
-require('fs');
+const fs = require('fs');
 require('dotenv').config();
 const express = require('express');
 const mysql = require('mysql2');
@@ -325,27 +325,43 @@ app.post('/api/updateRecipe/:id', (req, res) => {
 
 app.delete('/api/deleteRecipe/:id', (req, res) => {
   const recipeId = +req.params.id;
+  let images = [];
+  connection.query(`
+    SELECT * FROM recipe_images
+    WHERE recipe_images.recipe_id = ${recipeId}
+    ORDER BY recipe_images.order
+    `,
+  (imgDbDelError, imgArray) => {
+    if (imgDbDelError) throw imgDbDelError;
+    images = imgArray;
+    if (images.length !== 0) {
+      images.forEach((img) => {
+        try {
+          fs.unlinkSync(`${__dirname}/static/userImages/${img.image_path}`);
+        } catch (err) {
+          throw err;
+        }
+      });
+    }
+  });
   const query = `
     DELETE FROM recipe_ingredients
     WHERE recipe_id = ${recipeId};
   
     DELETE FROM ingredient_groups
     WHERE recipe_id = ${recipeId};
-  
+
     DELETE FROM recipe_images
     WHERE recipe_id = ${recipeId};
 
     DELETE FROM recipes
     WHERE id = ${recipeId};
   `;
-
   console.log(query);
-
   connection.query(
-    query, (error, results) => {
-      if (error) throw error;
-      res.end(JSON.stringify(results));
+    query, (recDbDelError, finalResults) => {
+      if (recDbDelError) throw recDbDelError;
+      res.end(JSON.stringify(finalResults));
     }
-  )
+  );
 });
-

@@ -25,7 +25,6 @@ class DeleteRecipe extends Component {
     fetch(`http://localhost:3005/api/deleteRecipe/${selectedId}`, {
       method: 'DELETE',
     })
-      .then(res => res.json())
       .then(() => {
         this.setState({
           deleteStatus: 'success',

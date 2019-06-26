@@ -340,8 +340,15 @@ Documenting my progress as I move through the project.
   The bug search just gets extended by days and days without having strong
   PropType declarations and all that.
 
+## June 26
+* added filesystem image deletion into API DELETE recipe endpoint.
+
 ## To Do Notes - Immediate
 
+* show 404 whenever a user navigates to /anypath/:nonexistentId.
+* add page for index
+* add page for selectedId == -1.
+* (elaborated in Jul 25 Notes) - add notification field to Redux Store
 * routing - when loading an url for a recipe that's not in the "most recent"
   list (and thus not loaded yet), what to do? make new View for this?
 * change document titles according to page

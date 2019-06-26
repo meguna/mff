@@ -26,6 +26,16 @@ class ImageUpload extends Component {
     // FileList is not an array but array-list, so
     // create array from it then iterate
     Array.from(e.target.files).forEach((file, i) => {
+      // 255: maximum filename size in DB
+      // 18: total characters of 4 letter filename & datecode
+      if (file.name.length > 255 - 18) {
+        fail = true;
+        this.setState({
+          status: 'fail',
+          statusMessage: `One or more of your files has a filename that exceeds
+          the character limit of ${255 - 18} and could not be uploaded.`,
+        });
+      }
       if (i >= maxNumFiles) {
         this.setState({
           warn: 'warn',
