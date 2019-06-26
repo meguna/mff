@@ -1,6 +1,6 @@
 .recipe-info-name {
-	font-weight: 500;
-	font-size: 4rem;
+	font-weight: 700;
+	font-size: 4.5rem;
 	text-transform: capitalize;
 	margin: 0;
 }
@@ -23,7 +23,7 @@
 }
 
 .recipe-info-ing-list {
-	font-size: 1.5rem;
+	font-size: 1.7rem;
 	list-style: none;
 	display: inline-block;
 	margin-right:20px;
@@ -31,9 +31,9 @@
 
 .recipe-info-label {
 	text-transform: uppercase;
-	font-size: 1.5rem;
+	font-size: 2rem;
 	font-weight: 500;
-	color: var(--medium-brown);
+	color: var(--key-red);
 	margin: 30px 0 10px 0;
 	font-weight: 500;
 	font-family: 'Styrene', sans-serif;
@@ -49,33 +49,30 @@ span.recipe-info-group-letter-label {
 }
 
 .recipe-info-ingredient-note {
-	color: var(--darker-medium-brown);
+	color: var(--medium-red);
 	font-size: 1.1rem;
 	display: block;
+	margin-left: 1.1rem;
+}
+.recipe-group-wrapper {
+	display: flex;
+	flex-direction: row;
+	margin: 10px 0;	
 }
 
 .recipe-info-ing-list-group {
-	border-top: 1px solid var(--medium-brown);
+	background-image: linear-gradient(to right, var(--medium-red) 20%, rgba(255,255,255,0) 0%);
+	background-position: top;
+	background-size: 10px 2px;
+	background-repeat: repeat-x;
 	position: relative;
-}
-
-.recipe-info-ing-list-group div:first-of-type {
-	margin-top: 0;
-}
-
-.recipe-info-ing-list div:first-of-type {
-	border-top: none;
-	padding-top: 0;
+	padding: 20px 0;
+	width: 25vw;
 }
 
 .recipe-info-ing-item {
 	margin: 0;
 }
-
-.recipe-info-ing-list-group, span.recipe-info-group-letter-label {
-	padding: 1rem 0;
-}
-
 
 .recipe-info-error-message {
 	font-size: 2em;
@@ -86,13 +83,24 @@ span.recipe-info-group-letter-label {
 	margin: 0.5rem 0 0.5rem 0;
 }
 
-.recipe-info-group-note {
-	position: absolute;
-	color: var(--darker-medium-brown);
-	font-size: 1.1rem;
-	right: 0;
-	transform: translateX(100%);
+.recipe-info-group-name {
+	font-family: 'Styrene', sans-serif;
+	text-transform: uppercase;
+	color: var(--key-red);
+	font-size: 1.2rem;
 	padding-left: 10px;
+}
+
+.recipe-info-group-note {
+	color: var(--medium-red);
+	font-size: 1.1rem;
+	padding-left: 10px;
+}
+
+.recipe-group-info-box {
+	border-left: 1px solid var(--key-red);
+	height: fit-content;
+	padding-bottom: 15px;
 }
 
 .recipe-info-ingredients-item-parent {

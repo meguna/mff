@@ -357,13 +357,15 @@ Documenting my progress as I move through the project.
 
 ## June 26
 * added filesystem image deletion into API DELETE recipe endpoint.
+* link up delete images endpoint with delete component.
+* clickable title links to index ('/')
+* recipeInfo redesign - cleaner, more consistent styles with really nice
+  display for group notes & group name! :)
 
 ## To Do Notes - Immediate
 
 * show uploaded images as thumbnails on EditRecipeForm (and NewRecipeForm?)
   & allow user to mark them for deletion
-* recipeInfo redesign
-* clickable title link to '/'
 * editRecipe warning on navigating away from unsaved changes
 * show 404 whenever a user navigates to /anypath/:nonexistentId.
 * add page for index
