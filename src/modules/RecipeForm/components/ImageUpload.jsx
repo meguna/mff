@@ -105,7 +105,6 @@ class ImageUpload extends Component {
           type="file"
           accept="image/*"
           onChange={this.onImageChosen}
-          value=""
           multiple
         />
         <StatusInfo

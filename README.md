@@ -362,8 +362,13 @@ Documenting my progress as I move through the project.
 * recipeInfo redesign - cleaner, more consistent styles with really nice
   display for group notes & group name! :)
 
+## June 27
+* fix bug that caused page reload on image upload
+
 ## To Do Notes - Immediate
 
+* reload selectedRecipe on update - notes, name, & size won't update since
+  it is "cached"
 * show uploaded images as thumbnails on EditRecipeForm (and NewRecipeForm?)
   & allow user to mark them for deletion
 * editRecipe warning on navigating away from unsaved changes
