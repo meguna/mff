@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import StatusInfo from '../../common/StatusInfo';
+import RecipeImages from '../../common/RecipeImages';
 
 class ImageUpload extends Component {
   constructor(props) {
@@ -87,6 +88,7 @@ class ImageUpload extends Component {
 
   render() {
     const { status, statusMessage, warn, warnMessage } = this.state;
+    const { images } = this.props;
 
     return (
       <div className="form-group">
@@ -115,6 +117,7 @@ class ImageUpload extends Component {
           status={status}
           dynamicMessage={statusMessage}
         />
+        <RecipeImages images={images} />
       </div>
     );
   }

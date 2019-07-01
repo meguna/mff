@@ -126,7 +126,7 @@ class EditRecipeForm extends Component {
 
   render() {
     const {
-      form: recipeInfo,
+      form,
       loadingGroups,
       loadingIngredients,
       loadingImages,
@@ -135,11 +135,11 @@ class EditRecipeForm extends Component {
     } = this.state;
 
     const messages = {
-      buttonAction: "Update recipe!",
+      buttonAction: 'Update recipe!',
       failMessage: `Oops! There was an error updating your recipe. 
         Please try again!`,
-      successMessage: "The recipe was updated successfully!",
-    }
+      successMessage: 'The recipe was updated successfully!',
+    };
 
     if (loadingGroups || loadingIngredients || loadingImages) {
       return <p>Loading...</p>;
@@ -152,13 +152,14 @@ class EditRecipeForm extends Component {
     return (
       <Fragment>
         <RecipeForm
-          initialFormState={recipeInfo}
-          title={`Edit Recipe: ${recipeInfo.name}`}
-          initialIngredients={recipeInfo.ingredients}
-          initialGroups={recipeInfo.groups}
-          notes={recipeInfo.notes}
-          name={recipeInfo.name}
-          size={recipeInfo.size}
+          initialFormState={form}
+          title={`Edit Recipe: ${form.name}`}
+          initialIngredients={form.ingredients}
+          initialGroups={form.groups}
+          initialImages={form.images}
+          notes={form.notes}
+          name={form.name}
+          size={form.size}
           fetchUrl={`http://localhost:3005/api/updateRecipe/${selectedId}`}
           messages={messages}
         />

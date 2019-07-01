@@ -205,6 +205,7 @@ class RecipeForm extends Component {
     const {
       title,
       messages,
+      initialImages,
     } = this.props;
 
     const groupFields = [];
@@ -275,7 +276,7 @@ class RecipeForm extends Component {
           </fieldset>
 
           <FormSubHeader subtitle="Images" />
-          <ImageUpload onDone={this.updateImageState} />
+          <ImageUpload onDone={this.updateImageState} images={initialImages} />
 
           <FormSubHeader />
           <input type="submit" value={messages.buttonAction} />
