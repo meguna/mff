@@ -390,6 +390,10 @@ Documenting my progress as I move through the project.
 * FUN feature: color picker to choose a theme (replace --key-red in CSS) -
   forest green! etc.
 
+## June 28 - June 30
+
+* break to work on essay for scholarship foundation
+
 ## General Workflow Plan
 
 * ~~planning~~
