@@ -4,7 +4,7 @@ import { Plus, AlertCircle } from 'react-feather';
 import Field from './components/Field';
 import IngGroup from './components/IngGroup';
 import IngFieldsHeader from './components/IngFieldsHeader';
-import ImageUpload from './components/ImageUpload';
+import RecipeImages from './components/RecipeImages';
 import FormSubHeader from './components/FormSubHeader';
 import StatusInfo from '../common/StatusInfo';
 import { ING_FIELD_BLANK, ING_GROUP_BLANK } from '../common/initial';
@@ -22,7 +22,7 @@ class RecipeForm extends Component {
       size: props.size,
       groups: props.initialGroups,
       ingredients: props.initialIngredients,
-      images: [],
+      images: props.initialImages,
       submitError: false,
       submitStatus: '',
       invalid: { name: false, ingCount: false },
@@ -197,6 +197,7 @@ class RecipeForm extends Component {
       notes,
       groups,
       ingredients,
+      images,
       invalid,
       submitError,
       submitStatus,
@@ -275,7 +276,8 @@ class RecipeForm extends Component {
           </fieldset>
 
           <FormSubHeader subtitle="Images" />
-          <ImageUpload onDone={this.updateImageState} />
+
+          <RecipeImages images={images} onDone={this.updateImageState} />
 
           <FormSubHeader />
           <input type="submit" value={messages.buttonAction} />

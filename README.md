@@ -365,8 +365,30 @@ Documenting my progress as I move through the project.
 ## June 27
 * fix bug that caused page reload on image upload
 
+## June 28 - July 1
+
+* break to work on essay for scholarship foundation
+
+## July 3
+
+* new branch to try to solve issue with the page reloading when I upload
+  an image.
+
+## July 4
+* Big breakthrough: I've been doing the image module all wrong. I need to 
+  set up a folder to store the `userImages` that's independent of the React
+  project and have `express.static` serve the images. I don't know why I was
+  trying to serve the images by linking them through React (either by
+  using ES6 dynamic imports or using the Public folder hack), since I did
+  it correctly the other way around (when uploading images, I let express
+  handle it..). I figured it out from hints [here](https://github.com/
+  facebook/create-react-app/issues/2541) and [here](https://stackoverflow.com/questions/51488646/why-does-my-webpage-refresh-after-a-nodejs-post-request).
+  God, this took so long for me to untangle. Another day, another lesson, I
+  guess.
+
 ## To Do Notes - Immediate
 
+* bug where trying to add an ingredient to a recipe that was saved without any
 * reload selectedRecipe on update - notes, name, & size won't update since
   it is "cached"
 * show uploaded images as thumbnails on EditRecipeForm (and NewRecipeForm?)
@@ -399,10 +421,12 @@ Documenting my progress as I move through the project.
 * ~~form to add new recipe~~
 * UPDATE form to edit pre-existing recipe
 * ~~DELETE api routes & interface within UPDATE form~~
+* set up error boundary components for: RecipeInfo, RecipeForm, RecipeList,
+  and general fallback for entire app
 * image handling (CRUD for images per recipe)
 * search functionality
 * ~~routing~~
-* login / auth
+* authentication with auth0
 * i18n with i18next & react-i18next
 * responsive styling for mobile screens
 * graphics / illustrations

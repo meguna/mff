@@ -1,6 +1,12 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import StatusInfo from '../../common/StatusInfo';
+
+const MAX_FILE_SIZE = 1024 * 1024 * 2; // 2MB
+const MAX_FILE_COUNT = 5;
+// 255: maximum filename size in DB
+// 18: total characters of 4 letter filename & datecode
+const MAX_FILE_NAME_LENGTH = 255 - 18;
+
 
 class ImageUpload extends Component {
   constructor(props) {
@@ -15,34 +21,32 @@ class ImageUpload extends Component {
   }
 
   onImageChosen = (e) => {
+    console.log('inage chosen');
     e.preventDefault();
+    e.stopPropagation();
 
     const { onDone } = this.props;
     const data = new FormData();
-    const maxFileSize = 1024 * 1024 * 2; // 2MB
-    const maxNumFiles = 5;
     let fail = false;
 
     // FileList is not an array but array-list, so
     // create array from it then iterate
     Array.from(e.target.files).forEach((file, i) => {
-      // 255: maximum filename size in DB
-      // 18: total characters of 4 letter filename & datecode
-      if (file.name.length > 255 - 18) {
+      if (file.name.length > MAX_FILE_NAME_LENGTH) {
         fail = true;
         this.setState({
           status: 'fail',
           statusMessage: `One or more of your files has a filename that exceeds
-          the character limit of ${255 - 18} and could not be uploaded.`,
+          the character limit of ${MAX_FILE_NAME_LENGTH} and could not be uploaded.`,
         });
       }
-      if (i >= maxNumFiles) {
+      if (i >= MAX_FILE_COUNT) {
         this.setState({
           warn: 'warn',
           warnMessage: `You selected over five files.
           Only the first five will be uploaded.`,
         });
-      } else if (file.size > maxFileSize) {
+      } else if (file.size > MAX_FILE_SIZE) {
         fail = true;
         this.setState({
           status: 'fail',
@@ -87,7 +91,6 @@ class ImageUpload extends Component {
 
   render() {
     const { status, statusMessage, warn, warnMessage } = this.state;
-
     return (
       <div className="form-group">
         <p className="form-description">
@@ -105,6 +108,7 @@ class ImageUpload extends Component {
           type="file"
           accept="image/*"
           onChange={this.onImageChosen}
+          value=""
           multiple
         />
         <StatusInfo
@@ -119,13 +123,5 @@ class ImageUpload extends Component {
     );
   }
 }
-
-ImageUpload.propTypes = {
-  onDone: PropTypes.func,
-};
-
-ImageUpload.defaultProps = {
-  onDone: () => {},
-};
 
 export default ImageUpload;

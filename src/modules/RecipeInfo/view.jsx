@@ -6,7 +6,6 @@ import RecipeSize from './components/RecipeSize';
 import AddRecipeButton from './components/AddRecipeButton';
 import EditRecipeButton from './components/EditRecipeButton';
 import DeleteRecipeButton from './components/DeleteRecipeButton';
-import RecipeImages from './components/RecipeImages';
 import './styles.css';
 
 class RecipeInfo extends Component {
@@ -159,7 +158,6 @@ class RecipeInfo extends Component {
           />
         )}
         <RecipeNotes notes={selected.notes} />
-        {!loadingImages && <RecipeImages images={images} name={selected.name} />}
       </Fragment>
     );
   }

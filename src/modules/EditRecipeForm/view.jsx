@@ -156,6 +156,7 @@ class EditRecipeForm extends Component {
           title={`Edit Recipe: ${recipeInfo.name}`}
           initialIngredients={recipeInfo.ingredients}
           initialGroups={recipeInfo.groups}
+          initialImages={recipeInfo.images}
           notes={recipeInfo.notes}
           name={recipeInfo.name}
           size={recipeInfo.size}

@@ -45,24 +45,7 @@ const sanitize = (input, replaceVal) => {
   return mysql.escape(input);
 };
 
-app.get('/api/static/:folder/:file', (req, res) => {
-  const options = {
-    root: path.join(__dirname, '/assets/'),
-    dotfiles: 'deny',
-    headers: {
-      'x-timestamp': Date.now(),
-      'x-sent': true,
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Credentials': true,
-      'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
-      'Access-Control-Allow-Methods': 'PUT,POST,GET,DELETE,OPTIONS',
-    },
-  };
-
-  const fileName = req.params.file;
-  const folderName = req.params.folder;
-  res.sendFile(`${folderName}/${fileName}`, options);
-});
+app.use('/static', express.static('static'));
 
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
