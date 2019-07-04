@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import StatusInfo from '../../common/StatusInfo';
+import RecipeImages from '../../common/RecipeImages';
 
 const MAX_FILE_SIZE = 1024 * 1024 * 2; // 2MB
 const MAX_FILE_COUNT = 5;
@@ -91,6 +92,7 @@ class ImageUpload extends Component {
 
   render() {
     const { status, statusMessage, warn, warnMessage } = this.state;
+    const { images } = this.props;
     return (
       <div className="form-group">
         <p className="form-description">
@@ -119,6 +121,7 @@ class ImageUpload extends Component {
           status={status}
           dynamicMessage={statusMessage}
         />
+        <RecipeImages images={images} />
       </div>
     );
   }

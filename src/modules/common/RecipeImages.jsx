@@ -13,7 +13,7 @@ class RecipeImages extends Component {
     const { images } = this.props;
 
     images.forEach((image) => {
-      import(`../../../../static/userImages/${image.image_path}`)
+      import(`../../../static/userImages/${image.image_path}`)
         .then((importedImage) => {
           this.setState(prevState => ({
             imagesLoaded: [...prevState.imagesLoaded, importedImage],

@@ -365,26 +365,29 @@ Documenting my progress as I move through the project.
 ## June 27
 * fix bug that caused page reload on image upload
 
+
 ## June 28 - July 1
 
 * break to work on essay for scholarship foundation
 
 ## July 3
 
-* new branch to try to solve issue with the page reloading when I upload
-  an image.
+* started a new branch to try and fix huge bug - page keeps reloading on
+  image upload, despite using preventDefault()
 
 ## July 4
-* Big breakthrough: I've been doing the image module all wrong. I need to 
-  set up a folder to store the `userImages` that's independent of the React
-  project and have `express.static` serve the images. I don't know why I was
-  trying to serve the images by linking them through React (either by
-  using ES6 dynamic imports or using the Public folder hack), since I did
-  it correctly the other way around (when uploading images, I let express
-  handle it..). I figured it out from hints [here](https://github.com/
-  facebook/create-react-app/issues/2541) and [here](https://stackoverflow.com/questions/51488646/why-does-my-webpage-refresh-after-a-nodejs-post-request).
-  God, this took so long for me to untangle. Another day, another lesson, I
-  guess.
+
+* finally figured out the bug! It took me a while but it was right there
+  all along. For some reason, I had been choosing to fetch/dynamically import
+  the images in React using the local paths where Express was uploading the
+  images.... instead of making Express serve the images. Very dumb! And I
+  was wondering why React kept "live reloading" the page. Using hints from
+  [here](https://github.com/facebook/create-react-app/issues/2541) and
+  [here](https://stackoverflow.com/questions/51488646/why-does-my-webpage-refresh-after-a-nodejs-post-request)
+  I finally figured it out. Man, it took me days! And I had been doing it
+  super wrong since before this project - even with meguna.co, I was struggling
+  to figure out the right way to handle images with a tech stack like this.
+  Another day, another lesson.
 
 ## To Do Notes - Immediate
 
