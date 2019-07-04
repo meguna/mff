@@ -402,9 +402,11 @@ Documenting my progress as I move through the project.
 * don't show dotted line above first group if there is only one group or
   if there are no ingredients
 * show message if no ingredients are saved for a recipe.
+* add landing page / `selectedId == -1` component called NoSelectedRecipe.
 
 ## To Do Notes - Immediate
 
+* wire up NoSelectedRecipe component with `selectedId == -1` scenarios.
 * does `loading...` message take a little too long on RecipeForm? Investigate
 * reload selectedRecipe on update - notes, name, & size won't update since
   it is "cached"
@@ -412,8 +414,6 @@ Documenting my progress as I move through the project.
   & allow user to mark them for deletion
 * editRecipe warning on navigating away from unsaved changes
 * show 404 whenever a user navigates to /anypath/:nonexistentId.
-* add page for index
-* add page for `selectedId == -1`.
 * (elaborated in Jul 25 Notes) - add notification field to Redux Store
 * routing - when loading an url for a recipe that's not in the "most recent"
   list (and thus not loaded yet), what to do? make new View for this?

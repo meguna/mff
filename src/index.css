@@ -18,6 +18,12 @@
 
 @font-face {
   font-family: 'Styrene';
+  src: url('./assets/fonts/StyreneAWeb-Bold.otf');
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: 'Styrene';
   src: url('./assets/fonts/StyreneAWeb-Regular.otf');
   font-weight: 300;
 }

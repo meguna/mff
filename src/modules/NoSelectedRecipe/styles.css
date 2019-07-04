@@ -1,0 +1,19 @@
+h1.nsr-title {
+    font-family: 'Styrene', sans-serif;
+    color: var(--key-red);
+    text-transform: uppercase;
+    font-size: 7rem;
+    margin: 0;
+    margin-bottom: 30px;
+    font-weight: 500;
+    padding: 0;
+}
+
+h2.nsr-subtitle {
+    font-size: 2.4rem;
+    font-weight: 500;
+}
+
+p.nsr-description {
+    font-size: 1.6rem;
+}

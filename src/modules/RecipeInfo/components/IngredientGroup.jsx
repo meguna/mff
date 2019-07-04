@@ -16,8 +16,6 @@ const IngredientGroup = ({ ingredients, groups, groupCount }) => {
     dottedBorderClass = 'recipe-info-ing-list-group';
   }
 
-  console.log(ingredients);
-
   return (
     <Fragment>
       <p className="recipe-info-label">ingredients</p>
