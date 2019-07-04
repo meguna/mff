@@ -162,9 +162,12 @@ RecipeInfo.propTypes = {
     update_date: PropTypes.string,
   }),
   error: PropTypes.bool,
-  loading: PropTypes.bool,
   selectedId: PropTypes.number,
-  match: PropTypes.object.isRequired,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string,
+    }).isRequired,
+  }).isRequired,
   setSelectedRecipe: PropTypes.func,
   fetchSelectedRecipe: PropTypes.func,
 };
@@ -179,7 +182,6 @@ RecipeInfo.defaultProps = {
     update_date: '',
   },
   error: false,
-  loading: false,
   selectedId: -1,
   setSelectedRecipe: () => {},
   fetchSelectedRecipe: () => {},

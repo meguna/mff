@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react';
+import PropTypes from 'prop-types';
 import RecipeForm from '../RecipeForm';
 import { ING_FIELD_BLANK, ING_GROUP_BLANK } from '../common/initial';
 import './styles.css';
@@ -174,5 +175,14 @@ class EditRecipeForm extends Component {
     );
   }
 }
+
+
+EditRecipeForm.propTypes = {
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string,
+    }).isRequired,
+  }).isRequired,
+};
 
 export default EditRecipeForm;

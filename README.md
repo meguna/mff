@@ -397,6 +397,8 @@ Documenting my progress as I move through the project.
   ingredients were empty arrays, they were replaced with initialgroups and
   initialingredient arrays instead.
 * add broken image fallback in the API (404 image)
+  (reference)[https://blog.imagekit.io/how-to-handle-loading-images-that-may-not-exist-on-your-website-92e6c3c6ea63]
+* add `match` to proptypes
 
 ## To Do Notes - Immediate
 
@@ -432,11 +434,11 @@ Documenting my progress as I move through the project.
 * ~~fetch list of recipes~~
 * ~~view details about recipe~~
 * ~~form to add new recipe~~
-* UPDATE form to edit pre-existing recipe
+* ~~UPDATE form to edit pre-existing recipe~~
 * ~~DELETE api routes & interface within UPDATE form~~
 * set up error boundary components for: RecipeInfo, RecipeForm, RecipeList,
   and general fallback for entire app
-* image handling (CRUD for images per recipe)
+* ~~image handling (CRUD for images per recipe)~~
 * search functionality
 * ~~routing~~
 * authentication with auth0

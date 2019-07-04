@@ -74,15 +74,17 @@ class DeleteRecipe extends Component {
 
 DeleteRecipe.propTypes = {
   selectedId: PropTypes.number.isRequired,
-  setSelectedRecipe: PropTypes.func,
-  match: PropTypes.object.isRequired,
-  fetchRecipes: PropTypes.func,
+  setSelectedRecipe: PropTypes.func.isRequired,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string,
+    }).isRequired,
+  }).isRequired,
+  fetchRecipes: PropTypes.func.isRequired,
   sortMethod: PropTypes.string,
 };
 
 DeleteRecipe.defaultProps = {
-  setSelectedRecipe: () => {},
-  fetchRecipes: () => {},
   sortMethod: 'update_date',
 };
 
