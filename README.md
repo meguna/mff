@@ -390,6 +390,7 @@ Documenting my progress as I move through the project.
   Another day, another lesson.
 * FULLY IMPLEMENTED image upload / image delete / image update in RecipeForm.
 * add new API endpoint - deleteimagewithpath
+* add image view to RecipeInfo
 
 ## To Do Notes - Immediate
 

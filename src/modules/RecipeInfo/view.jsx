@@ -6,6 +6,7 @@ import RecipeSize from './components/RecipeSize';
 import AddRecipeButton from './components/AddRecipeButton';
 import EditRecipeButton from './components/EditRecipeButton';
 import DeleteRecipeButton from './components/DeleteRecipeButton';
+import RecipeImages from './components/RecipeImages';
 import './styles.css';
 
 class RecipeInfo extends Component {
@@ -40,21 +41,6 @@ class RecipeInfo extends Component {
     this.fetchIngredients();
     this.fetchGroups();
     this.fetchImages();
-  }
-
-  shouldComponentUpdate(prevProps) {
-    const { selectedId, loading } = this.props;
-    const { loadingIngredients, loadingGroups, loadingImages } = this.state;
-    if (selectedId !== prevProps.selectedId) {
-      return true;
-    }
-    if (loading) {
-      return true;
-    }
-    if (loadingIngredients || loadingGroups || loadingImages) {
-      return true;
-    }
-    return false;
   }
 
   componentDidUpdate(prevProps) {
@@ -125,9 +111,13 @@ class RecipeInfo extends Component {
       groups,
       groupCount,
       ingredients,
+      images,
       loadingIngredients,
+      loadingImages,
       fetchError,
     } = this.state;
+
+    console.log(images);
 
     if (selectedId === -1) {
       return (
@@ -156,6 +146,9 @@ class RecipeInfo extends Component {
           />
         )}
         <RecipeNotes notes={selected.notes} />
+        {!loadingImages && (
+          <RecipeImages images={images} name={selected.name} />
+        )}
       </Fragment>
     );
   }

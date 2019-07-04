@@ -48,6 +48,7 @@ class RecipeImages extends Component {
     this.setState({ images: newImageState }, () => {
       onImageStateUpdate(newImageState);
     });
+    // API call to actually delete the images from the server
     fetch(`http://localhost:3005/api/deleteImageWithPath/${path}`, {
       method: 'DELETE',
     })
