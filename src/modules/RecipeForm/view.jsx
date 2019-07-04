@@ -112,9 +112,7 @@ class RecipeForm extends Component {
   };
 
   updateImageState = (images) => {
-    this.setState({ images }, () => {
-      console.log(this.state.images);
-    });
+    this.setState({ images });
   }
 
   validate = () => {

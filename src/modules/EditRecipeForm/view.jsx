@@ -52,10 +52,14 @@ class EditRecipeForm extends Component {
       fetch(`http://localhost:3005/api/getingredientgroups/${selectedId}`)
         .then(res => res.json())
         .then((res) => {
+          let groups = res;
+          if (res.length === 0) {
+            groups = [{ ...ING_GROUP_BLANK }];
+          }
           this.setState(prevState => ({
             form: {
               ...prevState.form,
-              groups: res,
+              groups,
               groupCount: res.length,
             },
             loadingGroups: false,
@@ -77,7 +81,7 @@ class EditRecipeForm extends Component {
          * group ingredients into a 2D array, grouped by groupId.
          */
         .then((res) => {
-          const ingGroups = [];
+          let ingGroups = [];
           ingGroups.push([]);
           let counter = 0;
           for (let i = 0; i < res.length; i++) {
@@ -86,6 +90,9 @@ class EditRecipeForm extends Component {
               counter++;
             }
             ingGroups[counter].push(res[i]);
+          }
+          if (res.length === 0) {
+            ingGroups = [[{ ...ING_FIELD_BLANK }]];
           }
           this.setState(prevState => ({
             form: {

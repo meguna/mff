@@ -391,11 +391,11 @@ Documenting my progress as I move through the project.
 * FULLY IMPLEMENTED image upload / image delete / image update in RecipeForm.
 * add new API endpoint - deleteimagewithpath
 * add image view to RecipeInfo
+* make sure max image count reflects # of images already uploaded (NOT TESTED)
 
 ## To Do Notes - Immediate
 
 * add broken image fallback with onError
-* make sure max image count reflects # of images already uploaded
 * bug where trying to add an ingredient to a recipe that was saved without any
 * reload selectedRecipe on update - notes, name, & size won't update since
   it is "cached"
