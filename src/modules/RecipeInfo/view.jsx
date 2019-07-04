@@ -7,6 +7,7 @@ import AddRecipeButton from './components/AddRecipeButton';
 import EditRecipeButton from './components/EditRecipeButton';
 import DeleteRecipeButton from './components/DeleteRecipeButton';
 import RecipeImages from './components/RecipeImages';
+import { ING_GROUP_BLANK } from '../common/initial';
 import './styles.css';
 
 class RecipeInfo extends Component {
@@ -58,11 +59,19 @@ class RecipeInfo extends Component {
       fetch(`http://localhost:3005/api/getingredientgroups/${selectedId}`)
         .then(res => res.json())
         .then((res) => {
-          this.setState({ groups: res });
-          this.setState({ groupCount: res[res.length - 1].groupId });
-          this.setState({ loadingGroups: false, fetchError: false });
+          let groups = res;
+          if (res.length === 0) {
+            groups = [{ ...ING_GROUP_BLANK }];
+          }
+          this.setState({
+            groups,
+            groupCount: res.length,
+            loadingGroups: false,
+            fetchError: false,
+          });
         })
-        .catch(() => {
+        .catch((err) => {
+          console.error(err);
           this.setState({ fetchError: true });
         });
     });
@@ -80,7 +89,8 @@ class RecipeInfo extends Component {
             fetchError: false,
           });
         })
-        .catch(() => {
+        .catch((err) => {
+          console.error(err);
           this.setState({ fetchError: true });
         });
     });
@@ -98,7 +108,8 @@ class RecipeInfo extends Component {
             fetchError: false,
           });
         })
-        .catch(() => {
+        .catch((err) => {
+          console.error(err);
           this.setState({ fetchError: true });
         });
     });

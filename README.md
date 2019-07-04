@@ -401,6 +401,7 @@ Documenting my progress as I move through the project.
 * add `match` to proptypes
 * don't show dotted line above first group if there is only one group or
   if there are no ingredients
+* show message if no ingredients are saved for a recipe.
 
 ## To Do Notes - Immediate
 

@@ -16,12 +16,14 @@ const IngredientGroup = ({ ingredients, groups, groupCount }) => {
     dottedBorderClass = 'recipe-info-ing-list-group';
   }
 
+  console.log(ingredients);
+
   return (
     <Fragment>
       <p className="recipe-info-label">ingredients</p>
       {ingredients.length === 0 && (
         <p className="form-description">
-          Looks like this recipe doesn't have any ingredients yet.
+          Looks like this recipe doesn&apos;t have any ingredients yet.
           <br />
           Use the Edit Recipe button to add some!
         </p>
