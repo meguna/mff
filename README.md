@@ -397,13 +397,14 @@ Documenting my progress as I move through the project.
   ingredients were empty arrays, they were replaced with initialgroups and
   initialingredient arrays instead.
 * add broken image fallback in the API (404 image)
-  (reference)[https://blog.imagekit.io/how-to-handle-loading-images-that-may-not-exist-on-your-website-92e6c3c6ea63]
+  [reference](https://blog.imagekit.io/how-to-handle-loading-images-that-may-not-exist-on-your-website-92e6c3c6ea63)
 * add `match` to proptypes
+* don't show dotted line above first group if there is only one group or
+  if there are no ingredients
 
 ## To Do Notes - Immediate
 
-* don't show dotted line above first group if none of the groups have
-  groupname / groupnotes
+* does `loading...` message take a little too long on RecipeForm? Investigate
 * reload selectedRecipe on update - notes, name, & size won't update since
   it is "cached"
 * show uploaded images as thumbnails on EditRecipeForm (and NewRecipeForm?)
@@ -411,7 +412,7 @@ Documenting my progress as I move through the project.
 * editRecipe warning on navigating away from unsaved changes
 * show 404 whenever a user navigates to /anypath/:nonexistentId.
 * add page for index
-* add page for selectedId == -1.
+* add page for `selectedId == -1`.
 * (elaborated in Jul 25 Notes) - add notification field to Redux Store
 * routing - when loading an url for a recipe that's not in the "most recent"
   list (and thus not loaded yet), what to do? make new View for this?

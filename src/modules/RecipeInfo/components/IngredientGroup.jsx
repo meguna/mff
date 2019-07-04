@@ -3,17 +3,33 @@ import PropTypes from 'prop-types';
 import Ingredient from './Ingredients';
 
 const IngredientGroup = ({ ingredients, groups, groupCount }) => {
+  /**
+   * From a 1D array of ingredient objects, form a 2D array with each the
+   * ingredients grouped by groupId
+   */
   const ingredientGroups = [];
   for (let i = 1; i < groupCount + 1; i++) {
     ingredientGroups.push(ingredients.filter(item => item.groupId === i));
   }
+  let dottedBorderClass = '';
+  if (ingredients.length !== 0 && groupCount > 1) {
+    dottedBorderClass = 'recipe-info-ing-list-group';
+  }
+
   return (
     <Fragment>
-      {ingredients.length !== 0 && <p className="recipe-info-label">ingredients</p>}
+      <p className="recipe-info-label">ingredients</p>
+      {ingredients.length === 0 && (
+        <p className="form-description">
+          Looks like this recipe doesn't have any ingredients yet.
+          <br />
+          Use the Edit Recipe button to add some!
+        </p>
+      )}
       <div className="recipe-info-ing-list">
         {ingredientGroups.map((group, i) => (
           <div className="recipe-group-wrapper" key={groups[i].groupId}>
-            <div className="recipe-info-ing-list-group">
+            <div className={dottedBorderClass}>
               <div className="recipe-info-ing-item-parent">
                 {group.map((ingredient, j) => (
                   <Ingredient ingredient={ingredient} key={j} />
