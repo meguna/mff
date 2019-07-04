@@ -3,7 +3,6 @@ import { Switch, Route } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import RecipeInfo from '../RecipeInfo';
 import RecipeList from '../RecipeList';
-import FormTest from '../FormTest';
 import NewRecipeForm from '../NewRecipeForm';
 import EditRecipeForm from '../EditRecipeForm';
 import DeleteRecipe from '../DeleteRecipe';
@@ -23,7 +22,6 @@ class RecipeIndex extends Component {
         </div>
         <div id="recipe-info">
           <Switch>
-            <Route exact path="/formtest" component={FormTest} />
             <Route exact path="/addRecipe" component={NewRecipeForm} />
             <Route exact path="/editRecipe/:id" component={EditRecipeForm} />
             <Route path="/recipe/:id" component={RecipeInfo} />

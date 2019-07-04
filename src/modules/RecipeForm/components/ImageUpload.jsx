@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import StatusInfo from '../../common/StatusInfo';
-import RecipeImages from '../../common/RecipeImages';
 
 const MAX_FILE_SIZE = 1024 * 1024 * 2; // 2MB
 const MAX_FILE_COUNT = 5;
@@ -22,11 +22,10 @@ class ImageUpload extends Component {
   }
 
   onImageChosen = (e) => {
-    console.log('inage chosen');
     e.preventDefault();
     e.stopPropagation();
 
-    const { onDone } = this.props;
+    const { onDone, imageCount } = this.props;
     const data = new FormData();
     let fail = false;
 
@@ -41,7 +40,7 @@ class ImageUpload extends Component {
           the character limit of ${MAX_FILE_NAME_LENGTH} and could not be uploaded.`,
         });
       }
-      if (i >= MAX_FILE_COUNT) {
+      if (i >= MAX_FILE_COUNT - imageCount) {
         this.setState({
           warn: 'warn',
           warnMessage: `You selected over five files.
@@ -73,6 +72,7 @@ class ImageUpload extends Component {
               status: 'success',
               statusMessage: 'Your images have been successfully uploaded.',
             });
+            console.log(res);
             if (onDone) {
               onDone(res);
             }
@@ -92,7 +92,6 @@ class ImageUpload extends Component {
 
   render() {
     const { status, statusMessage, warn, warnMessage } = this.state;
-    const { images } = this.props;
     return (
       <div className="form-group">
         <p className="form-description">
@@ -121,10 +120,18 @@ class ImageUpload extends Component {
           status={status}
           dynamicMessage={statusMessage}
         />
-        <RecipeImages images={images} />
       </div>
     );
   }
 }
+
+ImageUpload.propTypes = {
+  imageCount: PropTypes.number.isRequired,
+  onDone: PropTypes.func.isRequired,
+};
+
+ImageUpload.defaultProps = {
+};
+
 
 export default ImageUpload;

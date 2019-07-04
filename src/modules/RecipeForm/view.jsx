@@ -112,8 +112,9 @@ class RecipeForm extends Component {
   };
 
   updateImageState = (images) => {
-    this.setState({ images });
-    return false;
+    this.setState({ images }, () => {
+      console.log(this.state.images);
+    });
   }
 
   validate = () => {
@@ -206,7 +207,6 @@ class RecipeForm extends Component {
     const {
       title,
       messages,
-      initialImages,
     } = this.props;
 
     const groupFields = [];
@@ -277,8 +277,8 @@ class RecipeForm extends Component {
           </fieldset>
 
           <FormSubHeader subtitle="Images" />
-          <RecipeImages images={images} onDone={this.updateImageState} />
-          
+          <RecipeImages images={images} onImageStateUpdate={this.updateImageState} />
+
           <FormSubHeader />
           <input type="submit" value={messages.buttonAction} />
           {submitError && (
@@ -296,6 +296,7 @@ class RecipeForm extends Component {
 RecipeForm.propTypes = {
   initialIngredients: PropTypes.arrayOf(PropTypes.array),
   initialGroups: PropTypes.arrayOf(PropTypes.object),
+  initialImages: PropTypes.arrayOf(PropTypes.object),
   title: PropTypes.string.isRequired,
   notes: PropTypes.string,
   name: PropTypes.string,
@@ -313,6 +314,7 @@ RecipeForm.propTypes = {
 RecipeForm.defaultProps = {
   initialIngredients: [[{ ...ING_FIELD_BLANK }]],
   initialGroups: [{ ...ING_GROUP_BLANK }],
+  initialImages: [],
   notes: '',
   name: '',
   size: '',

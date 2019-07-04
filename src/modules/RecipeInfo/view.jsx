@@ -127,8 +127,6 @@ class RecipeInfo extends Component {
       ingredients,
       loadingIngredients,
       fetchError,
-      images,
-      loadingImages,
     } = this.state;
 
     if (selectedId === -1) {

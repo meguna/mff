@@ -12,3 +12,8 @@ export const ING_GROUP_BLANK = {
   groupId: 1,
   elemId: 0,
 };
+
+export const IMG_BLANK = {
+  imagePath: '',
+  id: 0,
+};

@@ -277,3 +277,26 @@ input[type="submit"], input[type="button"] {
     border-radius: 5px;
     border: 1px solid var(--notification-medium-yellow);
 }
+
+input.close-image-button {
+    height: fit-content;
+    font-size: 1.2rem;
+    margin-left: 20px;
+    background-color: var(--faint-grey);
+    border: 1px solid var(--light-grey);
+}
+
+.close-image-button:focus {
+    outline: none;
+}
+
+.form-image-wrapper {
+    display: flex;
+    flex-direction: row;
+    width: fit-content;
+    margin-bottom: 30px;
+}
+
+.recipe-form-image {
+    width: 25vw;
+}

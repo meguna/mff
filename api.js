@@ -3,7 +3,7 @@ const fs = require('fs');
 require('dotenv').config();
 const express = require('express');
 const mysql = require('mysql2');
-const path = require('path');
+require('path');
 const cors = require('cors');
 const formidable = require('formidable');
 
@@ -152,7 +152,11 @@ app.get('/api/getrecipeimages/:id', (req, res) => {
     `,
   (error, results) => {
     if (error) throw error;
-    res.end(JSON.stringify(results));
+    const modified = results.map(img => ({
+      imagePath: img.image_path,
+      elemId: img.id,
+    }));
+    res.end(JSON.stringify(modified));
   });
 });
 
@@ -220,7 +224,7 @@ app.post('/api/createnewrecipe', (req, res) => {
   });
 
   req.body.images.forEach((image, i) => {
-    const imagePath = sanitize(image);
+    const imagePath = sanitize(image.imagePath);
     query += `
     INSERT INTO recipe_images (recipe_id, \`order\`, image_path)
     VALUES (@recid, ${i}, ${imagePath});
@@ -289,7 +293,7 @@ app.post('/api/updateRecipe/:id', (req, res) => {
   `;
 
   req.body.images.forEach((image, i) => {
-    const imagePath = sanitize(image);
+    const imagePath = sanitize(image.imagePath);
     query += `
     INSERT INTO recipe_images (recipe_id, \`order\`, image_path)
     VALUES (${recipeId}, ${i}, ${imagePath});
@@ -302,6 +306,15 @@ app.post('/api/updateRecipe/:id', (req, res) => {
       res.end(JSON.stringify(results));
     }
   );
+});
+
+app.delete('/api/deleteImageWithPath/:path', (req, res) => {
+  try {
+    fs.unlinkSync(`${__dirname}/static/userImages/${req.params.path}`);
+  } catch (err) {
+    throw err;
+  }
+  res.end(JSON.stringify(req.params.path));
 });
 
 app.delete('/api/deleteRecipe/:id', (req, res) => {

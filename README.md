@@ -370,7 +370,7 @@ Documenting my progress as I move through the project.
 
 * break to work on essay for scholarship foundation
 
-## July 3
+## July 2 - 3
 
 * started a new branch to try and fix huge bug - page keeps reloading on
   image upload, despite using preventDefault()
@@ -388,9 +388,13 @@ Documenting my progress as I move through the project.
   super wrong since before this project - even with meguna.co, I was struggling
   to figure out the right way to handle images with a tech stack like this.
   Another day, another lesson.
+* FULLY IMPLEMENTED image upload / image delete / image update in RecipeForm.
+* add new API endpoint - deleteimagewithpath
 
 ## To Do Notes - Immediate
 
+* add broken image fallback with onError
+* make sure max image count reflects # of images already uploaded
 * bug where trying to add an ingredient to a recipe that was saved without any
 * reload selectedRecipe on update - notes, name, & size won't update since
   it is "cached"
