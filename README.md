@@ -392,11 +392,16 @@ Documenting my progress as I move through the project.
 * add new API endpoint - deleteimagewithpath
 * add image view to RecipeInfo
 * make sure max image count reflects # of images already uploaded (NOT TESTED)
+* fix bug where trying to add an ingredient to a recipe that was saved without
+  any breaks. fixed it by making sure that when fetched groups and fetched
+  ingredients were empty arrays, they were replaced with initialgroups and
+  initialingredient arrays instead.
+* add broken image fallback in the API (404 image)
 
 ## To Do Notes - Immediate
 
-* add broken image fallback with onError
-* bug where trying to add an ingredient to a recipe that was saved without any
+* don't show dotted line above first group if none of the groups have
+  groupname / groupnotes
 * reload selectedRecipe on update - notes, name, & size won't update since
   it is "cached"
 * show uploaded images as thumbnails on EditRecipeForm (and NewRecipeForm?)
@@ -449,3 +454,4 @@ Documenting my progress as I move through the project.
 * 404 page
 * landing page - demo / sign up / login buttons
 * select a recipe! view
+* 404 image

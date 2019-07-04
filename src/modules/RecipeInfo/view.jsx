@@ -117,8 +117,6 @@ class RecipeInfo extends Component {
       fetchError,
     } = this.state;
 
-    console.log(images);
-
     if (selectedId === -1) {
       return (
         <p className="housekeeping-message">
