@@ -142,6 +142,8 @@ class EditRecipeForm extends Component {
       selectedId,
     } = this.state;
 
+    const { fetchRecipes, sortMethod } = this.props;
+
     const messages = {
       buttonAction: 'Update recipe!',
       failMessage: `Oops! There was an error updating your recipe. 
@@ -170,6 +172,7 @@ class EditRecipeForm extends Component {
           size={form.size}
           fetchUrl={`http://localhost:3005/api/updateRecipe/${selectedId}`}
           messages={messages}
+          submitCallback={() => {fetchRecipes(sortMethod)}}
         />
       </Fragment>
     );
