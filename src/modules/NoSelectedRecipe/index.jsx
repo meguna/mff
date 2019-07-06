@@ -5,7 +5,7 @@ import DeleteRecipe from './view';
 const mapStateToProps = state => state;
 const mapDispatchToProps = {
   setSelectedRecipe,
-  fetchRecipes
+  fetchRecipes,
 };
 
 export default connect(

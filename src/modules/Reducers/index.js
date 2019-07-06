@@ -39,6 +39,9 @@ const reducer = (state = INITIAL_STATE, action) => {
     let selectedRecipeFiltered = state.selected;
     if (state.selected.length === 0 && state.recipes) {
       selectedRecipeFiltered = action.payload.filter(rec => state.selectedId === rec.id)[0];
+      if (selectedRecipeFiltered === undefined) {
+        selectedRecipeFiltered = {};
+      }
     }
     return {
       ...state,
@@ -61,6 +64,9 @@ const reducer = (state = INITIAL_STATE, action) => {
     let selectedRecipeFiltered = state.selected;
     if (state.selected.length === 0 && state.recipes) {
       selectedRecipeFiltered = action.payload.filter(rec => state.selectedId === rec.id)[0];
+      if (selectedRecipeFiltered === undefined) {
+        selectedRecipeFiltered = {};
+      }
     }
     if (action.payload.length === 0) {
       return state;
@@ -78,6 +84,9 @@ const reducer = (state = INITIAL_STATE, action) => {
     let selectedRecipeFiltered = state.selected;
     if (state.recipes) {
       selectedRecipeFiltered = state.recipes.filter(rec => action.payload === rec.id)[0];
+      if (selectedRecipeFiltered === undefined) {
+        selectedRecipeFiltered = {};
+      }
     }
     return {
       ...state,

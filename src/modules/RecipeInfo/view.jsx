@@ -1,4 +1,5 @@
 import React, { Fragment, Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import IngredientGroup from './components/IngredientGroup';
 import RecipeNotes from './components/RecipeNotes';
@@ -31,15 +32,19 @@ class RecipeInfo extends Component {
       setSelectedRecipe,
       selectedId,
       fetchSelectedRecipe,
+      history,
     } = this.props;
     if (selectedId !== +match.params.id) {
       setSelectedRecipe(+match.params.id);
     }
-    const { selected } = this.props;
     fetchSelectedRecipe(+match.params.id);
     this.fetchIngredients();
     this.fetchGroups();
     this.fetchImages();
+
+    if (selectedId === -1) {
+      history.push('/');
+    }
   }
 
   componentDidUpdate(prevProps) {
@@ -171,7 +176,7 @@ RecipeInfo.propTypes = {
     update_date: PropTypes.string,
   }),
   error: PropTypes.bool,
-  selectedId: PropTypes.number,
+  selectedId: PropTypes.number.isRequired,
   match: PropTypes.shape({
     params: PropTypes.shape({
       id: PropTypes.string,
@@ -191,9 +196,8 @@ RecipeInfo.defaultProps = {
     update_date: '',
   },
   error: false,
-  selectedId: -1,
   setSelectedRecipe: () => {},
   fetchSelectedRecipe: () => {},
 };
 
-export default RecipeInfo;
+export default withRouter(RecipeInfo);

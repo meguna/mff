@@ -15,7 +15,7 @@ class StatusInfo extends Component {
     if (decay) {
       this.timeout = setTimeout(() => {
         this.setState({ isHidden: true });
-      }, 8000);
+      }, 10000);
     }
   }
 

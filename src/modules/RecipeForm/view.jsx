@@ -189,7 +189,6 @@ class RecipeForm extends Component {
       })
       .then((res) => {
         this.setState({ ...stateOnSubmit });
-        setNotification('success', messages.successMessage);
         window.scrollTo(0, 0);
         fetchRecipes(sortMethod);
         if (selectedId === -1) {

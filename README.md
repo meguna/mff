@@ -389,6 +389,8 @@ Documenting my progress as I move through the project.
   to figure out the right way to handle images with a tech stack like this.
   Another day, another lesson.
 * FULLY IMPLEMENTED image upload / image delete / image update in RecipeForm.
+  As in, show uploaded images as thumbnails on both versions of RecipeForm
+  & allow user to mark them for deletion
 * add new API endpoint - `deleteImageWithPath`
 * add image view to RecipeInfo
 * make sure max image count reflects # of images already uploaded (NOT TESTED)
@@ -418,20 +420,37 @@ Documenting my progress as I move through the project.
 * set up a new StatusInfo that gets updated globally through redux variables
 * change location to correct page after update/create form
 * fix NewRecipeForm so that it sets selectedId === -1 when it mounts.
-* make sure that recipeInfo panel updates after a user edits a recipe
+* make sure that recipeInfo panel updates after an user edits a recipe
+* little fix - making sure page redirects to index if selectedId == 1.
+  Since NoSelectedRecipe is already wired up to the index, I just have
+  to redirect the page to display it.
+
+#### Notse
+* ...after all this I'm now thinking I don't need these notifications. 
+  I feel like if the user is shown the finished display of the recipe they
+  just edited or created, then it's pretty evident that it worked well.
+  I guess it would be more useful if the update failed.
+* So I've decided to keep the notification only for the fail case.
+
+#### Lessons
+* it is an anti-pattern to attempt to unmount a component on command. Instead,
+  control whether that component is created by its parent or not. Setting up
+  the notification div that disappears after a set interval was a little
+  tricky but what I ended up doing was: have two components, StatusInfo and
+  StatusInfoLogic. SI is the parent of SIL. SI only gets mounted whenever
+  it's passed props that are not empty strings. When SI mounts, it changes
+  a state variable after a delay. This variable toggles whether or not SIL
+  is mounted or not. I found that this was the cleanest way to handle this
+  timeout structure, outside of permanently having an empty place in the UI
+  to display notifications. Since I was going for a "flash on top of the
+  existing UI for a moment" look, this was probably the best way. 
 
 ## To Do Notes - Immediate
 
 * refactor reducers - divide into separate reducers & lint code
-* wire up NoSelectedRecipe component with `selectedId == -1` scenarios.
 * does `loading...` message take a little too long on RecipeForm? Investigate
-* show uploaded images as thumbnails on EditRecipeForm (and NewRecipeForm?)
-  & allow user to mark them for deletion
 * editRecipe warning on navigating away from unsaved changes
 * show 404 whenever a user navigates to /anypath/:nonexistentId.
-* (elaborated in Jul 25 Notes) - add notification field to Redux Store
-* routing - when loading an url for a recipe that's not in the "most recent"
-  list (and thus not loaded yet), what to do? make new View for this?
 * change document titles according to page
 * change error message for "load more" to "no more to load" when there 
   is no more to load
