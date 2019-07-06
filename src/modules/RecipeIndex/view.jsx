@@ -7,6 +7,7 @@ import NewRecipeForm from '../NewRecipeForm';
 import EditRecipeForm from '../EditRecipeForm';
 import DeleteRecipe from '../DeleteRecipe';
 import NoSelectedRecipe from '../NoSelectedRecipe';
+import StatusInfo from '../common/StatusInfo';
 import './styles.css';
 
 class RecipeIndex extends Component {
@@ -16,12 +17,15 @@ class RecipeIndex extends Component {
   }
 
   render() {
+    const { notification } = this.props;
+
     return (
       <div className="recipe-everything-wrapper">
         <div id="recipe-list">
           <RecipeList />
         </div>
         <div id="recipe-info">
+          <StatusInfo status={notification.status} message={notification.message} />
           <Switch>
             <Route exact path="/addRecipe" component={NewRecipeForm} />
             <Route exact path="/editRecipe/:id" component={EditRecipeForm} />
@@ -38,6 +42,10 @@ class RecipeIndex extends Component {
 RecipeIndex.propTypes = {
   fetchRecipes: PropTypes.func,
   sortMethod: PropTypes.string,
+  notification: PropTypes.shape({
+    status: PropTypes.string,
+    message: PropTypes.string,
+  }).isRequired,
 };
 
 RecipeIndex.defaultProps = {

@@ -1,11 +1,12 @@
 import { connect } from 'react-redux';
-import { setSelectedRecipe, fetchRecipes } from '../Actions/index';
+import { setSelectedRecipe, fetchRecipes, setNotification } from '../Actions/index';
 import DeleteRecipe from './view';
 
 const mapStateToProps = state => state;
 const mapDispatchToProps = {
   setSelectedRecipe,
-  fetchRecipes
+  fetchRecipes,
+  setNotification,
 };
 
 export default connect(

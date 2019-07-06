@@ -416,6 +416,9 @@ Documenting my progress as I move through the project.
 * change StatusInfo to a format where a message prop and a status prop is
   passed
 * set up a new StatusInfo that gets updated globally through redux variables
+* change location to correct page after update/create form
+* fix NewRecipeForm so that it sets selectedId === -1 when it mounts.
+* make sure that recipeInfo panel updates after a user edits a recipe
 
 ## To Do Notes - Immediate
 

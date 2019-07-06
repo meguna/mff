@@ -36,14 +36,14 @@ const reducer = (state = INITIAL_STATE, action) => {
     };
   }
   case FETCH_RECIPES_SUCCESS: {
-    let selectedRecipeFiltered = null;
-    if (state.selected && state.selected.length === 0 && state.recipes) {
-      selectedRecipeFiltered = action.payload.filter(rec => state.selectedId === rec.id);
+    let selectedRecipeFiltered = state.selected;
+    if (state.selected.length === 0 && state.recipes) {
+      selectedRecipeFiltered = action.payload.filter(rec => state.selectedId === rec.id)[0];
     }
     return {
       ...state,
       recipes: [...action.payload],
-      selected: state.selected && state.selected.length === 0 ? selectedRecipeFiltered[0] : state.selected,
+      selected: selectedRecipeFiltered,
       error: null,
       loading: false,
       listOffset: action.payload.length,
@@ -58,9 +58,9 @@ const reducer = (state = INITIAL_STATE, action) => {
     };
   }
   case FETCH_MORE_RECIPES_SUCCESS: {
-    let selectedRecipeFiltered = null;
-    if (state.recipes) {
-      selectedRecipeFiltered = action.payload.filter(rec => state.selectedId === rec.id);
+    let selectedRecipeFiltered = state.selected;
+    if (state.selected.length === 0 && state.recipes) {
+      selectedRecipeFiltered = action.payload.filter(rec => state.selectedId === rec.id)[0];
     }
     if (action.payload.length === 0) {
       return state;
@@ -71,18 +71,18 @@ const reducer = (state = INITIAL_STATE, action) => {
       error: null,
       loading: false,
       listOffset: state.recipes.length + action.payload.length,
-      selected: state.selected.length === 0 ? selectedRecipeFiltered[0] : state.selected,
+      selected: selectedRecipeFiltered,
     };
   }
   case SET_SELECTED_RECIPE: {
-    let selectedRecipeFiltered = null;
+    let selectedRecipeFiltered = state.selected;
     if (state.recipes) {
-      selectedRecipeFiltered = state.recipes.filter(rec => action.payload === rec.id);
+      selectedRecipeFiltered = state.recipes.filter(rec => action.payload === rec.id)[0];
     }
     return {
       ...state,
       selectedId: action.payload,
-      selected: selectedRecipeFiltered[0],
+      selected: selectedRecipeFiltered,
     };
   }
   case FETCH_SELECTED_RECIPE_START: {
@@ -114,7 +114,7 @@ const reducer = (state = INITIAL_STATE, action) => {
       ...state,
       notification: {
         message: action.payloadMessage,
-        status: action.payloadColor,
+        status: action.payloadStatus,
       },
     };
   default:

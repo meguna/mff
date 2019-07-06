@@ -1,6 +1,6 @@
 import React, { Fragment, Component } from 'react';
 import PropTypes from 'prop-types';
-import { Check, AlertCircle, Edit3 } from 'react-feather';
+import StatusInfoLogic from './StatusInfoLogic';
 
 class StatusInfo extends Component {
   constructor(props) {
@@ -15,7 +15,7 @@ class StatusInfo extends Component {
     if (decay) {
       this.timeout = setTimeout(() => {
         this.setState({ isHidden: true });
-      }, 10000);
+      }, 8000);
     }
   }
 
@@ -30,26 +30,12 @@ class StatusInfo extends Component {
     const { status, message } = this.props;
     const { isHidden } = this.state;
 
-    let statusClass = '';
     const hiddenClass = isHidden ? 'hidden' : 'not-hidden';
-
-    if (status === 'success') {
-      statusClass = 'notification-green';
-    } else if (status === 'fail') {
-      statusClass = 'notification-yellow';
-    } else if (status === 'warn') {
-      statusClass = 'notification-yellow';
-    }
 
     return (
       <Fragment>
-        {(status !== '') && (
-          <div className={`notification ${statusClass} ${hiddenClass}`}>
-            {status === 'success' && <Check />}
-            {(status === 'fail' || status === 'warn') && <AlertCircle />}
-            {status === 'load' && <Edit3 />}
-            {` ${message}`}
-          </div>
+        {!isHidden && (
+          <StatusInfoLogic status={status} message={message} hiddenClass={hiddenClass} />
         )}
       </Fragment>
     );

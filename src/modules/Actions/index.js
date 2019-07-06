@@ -105,12 +105,12 @@ export const fetchSelectedRecipe = id => (dispatch) => {
     .catch(err => dispatch(fetchSelectedFailure(err)));
 };
 
-const setNotificationDetails = (message, color) => ({
+const setNotificationDetails = (status, message) => ({
   type: SET_NOTIFICATION_DETAILS,
   payloadMessage: message,
-  payloadColor: color,
+  payloadStatus: status,
 });
 
-export const setNotification = (message, color) => (dispatch) => {
-  dispatch(setNotificationDetails(message, color));
+export const setNotification = (status, message) => (dispatch) => {
+  dispatch(setNotificationDetails(status, message));
 };

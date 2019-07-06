@@ -232,7 +232,7 @@ app.post('/api/createnewrecipe', (req, res) => {
   connection.query(
     query, (error, results) => {
       if (error) throw error;
-      res.end(JSON.stringify(results));
+      res.end(JSON.stringify(results[0].insertId));
     }
   );
 });

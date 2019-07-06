@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Plus, AlertCircle } from 'react-feather';
+import { withRouter } from 'react-router-dom';
 import Field from './components/Field';
 import IngGroup from './components/IngGroup';
 import IngFieldsHeader from './components/IngFieldsHeader';
@@ -137,9 +138,19 @@ class RecipeForm extends Component {
       notes,
       size,
       images,
+      stateOnSubmit,
     } = this.state;
 
-    const { fetchUrl, submitCallback } = this.props;
+    const {
+      fetchUrl,
+      setNotification,
+      messages,
+      fetchRecipes,
+      sortMethod,
+      selectedId,
+      setSelectedRecipe,
+      history,
+    } = this.props;
 
     /**
      * directly using the 'invalid' state parameter after calling
@@ -172,20 +183,24 @@ class RecipeForm extends Component {
     })
       .then((res, err) => {
         if (res.ok) {
-          const { stateOnSubmit } = this.state;
-          this.setState({ ...stateOnSubmit, submitStatus: 'success' });
-          window.scrollTo(0, 0);
-          const { fetchRecipes, sortMethod } = this.props;
-          fetchRecipes(sortMethod);
-          if (submitCallback) {
-            submitCallback();
-          }
+          return res.json();
+        }
+        throw new Error(err);
+      })
+      .then((res) => {
+        this.setState({ ...stateOnSubmit });
+        setNotification('success', messages.successMessage);
+        window.scrollTo(0, 0);
+        fetchRecipes(sortMethod);
+        if (selectedId === -1) {
+          setSelectedRecipe(+res);
+          history.push(`/recipe/${+res}`);
         } else {
-          throw new Error(err);
+          history.push(`/recipe/${selectedId}`);
         }
       })
       .catch((err) => {
-        this.setState({ submitStatus: 'fail' });
+        setNotification('fail', messages.failMessage);
         window.scrollTo(0, 0);
         console.error(err);
       });
@@ -201,7 +216,6 @@ class RecipeForm extends Component {
       images,
       invalid,
       submitError,
-      submitStatus,
     } = this.state;
 
     const {
@@ -297,9 +311,17 @@ RecipeForm.propTypes = {
   name: PropTypes.string,
   size: PropTypes.string,
   fetchUrl: PropTypes.string.isRequired,
-  fetchRecipes: PropTypes.func,
+  fetchRecipes: PropTypes.func.isRequired,
+  setNotification: PropTypes.func.isRequired,
+  selectedId: PropTypes.number.isRequired,
+  setSelectedRecipe: PropTypes.func.isRequired,
   sortMethod: PropTypes.string,
   submitCallback: PropTypes.func,
+  messages: PropTypes.shape({
+    buttonAction: PropTypes.string,
+    failMessage: PropTypes.string,
+    successMessage: PropTypes.string,
+  }).isRequired,
 };
 
 RecipeForm.defaultProps = {
@@ -309,9 +331,8 @@ RecipeForm.defaultProps = {
   notes: '',
   name: '',
   size: '',
-  fetchRecipes: () => {},
   sortMethod: 'update_date',
   submitCallback: () => {},
 };
 
-export default RecipeForm;
+export default withRouter(RecipeForm);

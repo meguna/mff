@@ -91,25 +91,23 @@ h1 {
 
 .notification {
   opacity: 1;
+  text-transform: none;
+  font-size: 1.2rem;
+  padding: 20px;
+  width: fit-content;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  position: absolute;
+  z-index: 10000;
 }
 
 .notification-green {
-    text-transform: none;
-    font-size: 1.2rem;
-    padding: 20px;
     background-color: var(--notification-green);
-    width: fit-content;
-    border-radius: 5px;
     border: 1px solid var(--notification-medium-green);
 }
 
 .notification-yellow {
-    text-transform: none;
-    font-size: 1.2rem;
-    padding: 20px;
     background-color: var(--notification-yellow);
-    width: fit-content;
-    border-radius: 5px;
     border: 1px solid var(--notification-medium-yellow);
 }
 

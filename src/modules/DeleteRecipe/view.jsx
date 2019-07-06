@@ -20,25 +20,29 @@ class DeleteRecipe extends Component {
   }
 
   deleteRecipe = (e) => {
-    const { selectedId, fetchRecipes, sortMethod, history } = this.props;
+    const {
+      selectedId,
+      fetchRecipes,
+      sortMethod,
+      history,
+      setNotification,
+    } = this.props;
+
     e.preventDefault();
     fetch(`http://localhost:3005/api/deleteRecipe/${selectedId}`, {
       method: 'DELETE',
     })
       .then(() => {
-        this.setState({
-          deleteStatus: 'success',
-          deleteMessage: 'Successfully deleted recipe.',
-        });
+        setNotification('success', 'Successfully deleted recipe.');
         fetchRecipes(sortMethod);
         history.push('/');
       })
       .catch((err) => {
         console.error(err);
-        this.setState({
-          deleteStatus: 'fail',
-          deleteMessage: 'Failed to delete recipe. Please try again later.',
-        });
+        setNotification(
+          'fail',
+          'Failed to delete recipe. Please try again later.',
+        );
       });
   }
 
@@ -58,7 +62,12 @@ class DeleteRecipe extends Component {
           You are about to delete this recipe. Are you sure?
         </p>
         <div className="confirm-buttons-wrapper">
-          <button type="button" className="confirm-buttons affirmative" onClick={this.deleteRecipe}>
+          <button
+            type="button"
+            className="confirm-buttons
+            affirmative"
+            onClick={this.deleteRecipe}
+          >
             Yes, I am sure.
           </button>
           <div>
@@ -75,6 +84,7 @@ class DeleteRecipe extends Component {
 DeleteRecipe.propTypes = {
   selectedId: PropTypes.number.isRequired,
   setSelectedRecipe: PropTypes.func.isRequired,
+  setNotification: PropTypes.func.isRequired,
   match: PropTypes.shape({
     params: PropTypes.shape({
       id: PropTypes.string,
