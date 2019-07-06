@@ -9,6 +9,7 @@ import {
   FETCH_SELECTED_RECIPE_SUCCESS,
   FETCH_SELECTED_RECIPE_FAILURE,
   SET_SELECTED_RECIPE,
+  SET_NOTIFICATION_DETAILS,
 } from './ActionTypes';
 
 /**
@@ -102,4 +103,14 @@ export const fetchSelectedRecipe = id => (dispatch) => {
     .then(res => res.json())
     .then(res => dispatch(fetchSelectedSuccess(res[0])))
     .catch(err => dispatch(fetchSelectedFailure(err)));
+};
+
+const setNotificationDetails = (message, color) => ({
+  type: SET_NOTIFICATION_DETAILS,
+  payloadMessage: message,
+  payloadColor: color,
+});
+
+export const setNotification = (message, color) => (dispatch) => {
+  dispatch(setNotificationDetails(message, color));
 };

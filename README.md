@@ -343,7 +343,7 @@ Documenting my progress as I move through the project.
   each group to use as the keys. `groupId`, on the other hand, is used to tie
   the groups and ingredients together. Also, needless to say, unstable keys
   like `Math.random()` is really bad for things like input fields, since
-  the fields end up re-rendering after every keyDown.
+  the fields end up re-rendering after every `keyDown`.
 * This whole project is becoming more and more complex. The data structures
   are starting to feel hard to manage. If this project has taught me anything,
   it's that there are very real reasons why people go on about modularity and
@@ -389,7 +389,7 @@ Documenting my progress as I move through the project.
   to figure out the right way to handle images with a tech stack like this.
   Another day, another lesson.
 * FULLY IMPLEMENTED image upload / image delete / image update in RecipeForm.
-* add new API endpoint - deleteimagewithpath
+* add new API endpoint - `deleteImageWithPath`
 * add image view to RecipeInfo
 * make sure max image count reflects # of images already uploaded (NOT TESTED)
 * fix bug where trying to add an ingredient to a recipe that was saved without
@@ -404,12 +404,24 @@ Documenting my progress as I move through the project.
 * show message if no ingredients are saved for a recipe.
 * add landing page / `selectedId == -1` component called NoSelectedRecipe.
 
-## To Do Notes - Immediate
+#### Lessons
 
-* wire up NoSelectedRecipe component with `selectedId == -1` scenarios.
-* does `loading...` message take a little too long on RecipeForm? Investigate
+* any time you're trying to dynamically import images in React, you're
+  probably doing it wrong. You probably need to serve the images from a server
+  instead.
+
+## July 6
 * reload selectedRecipe on update - notes, name, & size won't update since
   it is "cached"
+* change StatusInfo to a format where a message prop and a status prop is
+  passed
+* set up a new StatusInfo that gets updated globally through redux variables
+
+## To Do Notes - Immediate
+
+* refactor reducers - divide into separate reducers & lint code
+* wire up NoSelectedRecipe component with `selectedId == -1` scenarios.
+* does `loading...` message take a little too long on RecipeForm? Investigate
 * show uploaded images as thumbnails on EditRecipeForm (and NewRecipeForm?)
   & allow user to mark them for deletion
 * editRecipe warning on navigating away from unsaved changes

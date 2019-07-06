@@ -9,6 +9,7 @@ import {
   FETCH_SELECTED_RECIPE_START,
   FETCH_SELECTED_RECIPE_SUCCESS,
   FETCH_SELECTED_RECIPE_FAILURE,
+  SET_NOTIFICATION_DETAILS,
 } from '../Actions/ActionTypes';
 
 const INITIAL_STATE = {
@@ -19,6 +20,10 @@ const INITIAL_STATE = {
   listOffset: 0,
   sortMethod: 'update_date',
   selected: {},
+  notification: {
+    message: '',
+    status: '',
+  },
 };
 
 const reducer = (state = INITIAL_STATE, action) => {
@@ -103,6 +108,14 @@ const reducer = (state = INITIAL_STATE, action) => {
       ...state,
       error: true,
       loading: false,
+    };
+  case SET_NOTIFICATION_DETAILS:
+    return {
+      ...state,
+      notification: {
+        message: action.payloadMessage,
+        status: action.payloadColor,
+      },
     };
   default:
     return state;

@@ -114,11 +114,11 @@ class ImageUpload extends Component {
         />
         <StatusInfo
           status={warn}
-          dynamicMessage={warnMessage}
+          message={warnMessage}
         />
         <StatusInfo
           status={status}
-          dynamicMessage={statusMessage}
+          message={statusMessage}
         />
       </div>
     );

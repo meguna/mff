@@ -6,7 +6,6 @@ import IngGroup from './components/IngGroup';
 import IngFieldsHeader from './components/IngFieldsHeader';
 import RecipeImages from './components/RecipeImages';
 import FormSubHeader from './components/FormSubHeader';
-import StatusInfo from '../common/StatusInfo';
 import { ING_FIELD_BLANK, ING_GROUP_BLANK } from '../common/initial';
 import './styles.css';
 
@@ -140,7 +139,7 @@ class RecipeForm extends Component {
       images,
     } = this.state;
 
-    const { fetchUrl } = this.props;
+    const { fetchUrl, submitCallback } = this.props;
 
     /**
      * directly using the 'invalid' state parameter after calling
@@ -178,6 +177,9 @@ class RecipeForm extends Component {
           window.scrollTo(0, 0);
           const { fetchRecipes, sortMethod } = this.props;
           fetchRecipes(sortMethod);
+          if (submitCallback) {
+            submitCallback();
+          }
         } else {
           throw new Error(err);
         }
@@ -224,11 +226,6 @@ class RecipeForm extends Component {
 
     return (
       <Fragment>
-        <StatusInfo
-          status={submitStatus}
-          failMessage={messages.failMessage}
-          successMessage={messages.successMessage}
-        />
         <h1 className="title">{title}</h1>
         <FormSubHeader subtitle="info" />
         <form id="nr-form" onSubmit={this.onSubmit} autoComplete="off">
@@ -302,11 +299,7 @@ RecipeForm.propTypes = {
   fetchUrl: PropTypes.string.isRequired,
   fetchRecipes: PropTypes.func,
   sortMethod: PropTypes.string,
-  messages: PropTypes.shape({
-    buttonAction: PropTypes.string,
-    failMessage: PropTypes.string,
-    successMessage: PropTypes.string,
-  }).isRequired,
+  submitCallback: PropTypes.func,
 };
 
 RecipeForm.defaultProps = {
@@ -318,6 +311,7 @@ RecipeForm.defaultProps = {
   size: '',
   fetchRecipes: () => {},
   sortMethod: 'update_date',
+  submitCallback: () => {},
 };
 
 export default RecipeForm;

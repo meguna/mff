@@ -7,6 +7,7 @@ import AddRecipeButton from './components/AddRecipeButton';
 import EditRecipeButton from './components/EditRecipeButton';
 import DeleteRecipeButton from './components/DeleteRecipeButton';
 import RecipeImages from './components/RecipeImages';
+import StatusInfo from '../common/StatusInfo';
 import { ING_GROUP_BLANK } from '../common/initial';
 import './styles.css';
 
@@ -116,7 +117,7 @@ class RecipeInfo extends Component {
   }
 
   render() {
-    const { selectedId, error, selected } = this.props;
+    const { selectedId, error, selected, notification } = this.props;
     const {
       loadingGroups,
       groups,
@@ -142,6 +143,7 @@ class RecipeInfo extends Component {
 
     return (
       <Fragment>
+        <StatusInfo message="notification message!!!" color="green" />
         <AddRecipeButton />
         <EditRecipeButton id={selectedId} />
         <DeleteRecipeButton id={selectedId} />

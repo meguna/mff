@@ -1,67 +1,71 @@
-import React from 'react';
+import React, { Fragment, Component } from 'react';
 import PropTypes from 'prop-types';
 import { Check, AlertCircle, Edit3 } from 'react-feather';
 
-const StatusInfo = (
-  {
-    status,
-    successMessage,
-    failMessage,
-    loadMessage,
-    dynamicMessage,
-    warnMessage,
-  },
-) => {
-  let statusMessage = '';
-  let statusClass = '';
-
-  if (status === 'success') {
-    statusClass = 'notification-success';
-    statusMessage = successMessage;
-  } else if (status === 'fail') {
-    statusClass = 'notification-fail';
-    statusMessage = failMessage;
-  } else if (status === 'load') {
-    statusClass = 'notification-fail';
-    statusMessage = loadMessage;
-  } else if (status === 'warn') {
-    statusClass = 'notification-fail';
-    statusMessage = warnMessage;
+class StatusInfo extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isHidden: false,
+    };
   }
 
-  if (dynamicMessage) {
-    statusMessage = dynamicMessage;
+  componentDidMount() {
+    const { decay } = this.props;
+    if (decay) {
+      this.timeout = setTimeout(() => {
+        this.setState({ isHidden: true });
+      }, 10000);
+    }
   }
 
-  if (status !== '') {
+  componentWillUnmount() {
+    const { decay } = this.props;
+    if (decay) {
+      clearTimeout(this.timeout);
+    }
+  }
+
+  render() {
+    const { status, message } = this.props;
+    const { isHidden } = this.state;
+
+    let statusClass = '';
+    const hiddenClass = isHidden ? 'hidden' : 'not-hidden';
+
+    if (status === 'success') {
+      statusClass = 'notification-green';
+    } else if (status === 'fail') {
+      statusClass = 'notification-yellow';
+    } else if (status === 'warn') {
+      statusClass = 'notification-yellow';
+    }
+
     return (
-      <div className={statusClass}>
-        {status === 'success' && <Check />}
-        {status === 'fail' && <AlertCircle />}
-        {status === 'load' && <Edit3 />}
-        {` ${statusMessage}`}
-      </div>
+      <Fragment>
+        {(status !== '') && (
+          <div className={`notification ${statusClass} ${hiddenClass}`}>
+            {status === 'success' && <Check />}
+            {(status === 'fail' || status === 'warn') && <AlertCircle />}
+            {status === 'load' && <Edit3 />}
+            {` ${message}`}
+          </div>
+        )}
+      </Fragment>
     );
   }
-  return null;
-};
+}
 
 StatusInfo.propTypes = {
   status: PropTypes.string,
-  successMessage: PropTypes.string,
-  failMessage: PropTypes.string,
-  loadMessage: PropTypes.string,
-  warnMessage: PropTypes.string,
-  dynamicMessage: PropTypes.string,
+  message: PropTypes.string,
+  decay: PropTypes.bool,
 };
 
 StatusInfo.defaultProps = {
   status: '',
-  successMessage: '',
-  failMessage: '',
-  loadMessage: '',
-  warnMessage: '',
-  dynamicMessage: '',
+  message: '',
+  decay: true,
 };
 
 export default StatusInfo;
