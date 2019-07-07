@@ -383,7 +383,7 @@ Documenting my progress as I move through the project.
   images.... instead of making Express serve the images. Very dumb! And I
   was wondering why React kept "live reloading" the page. Using hints from
   [here](https://github.com/facebook/create-react-app/issues/2541) and
-  [here](https://stackoverflow.com/questions/51488646/why-does-my-webpage-refresh-after-a-nodejs-post-request)
+  [here](https://stackoverflow.com/questions/51488646)
   I finally figured it out. Man, it took me days! And I had been doing it
   super wrong since before this project - even with meguna.co, I was struggling
   to figure out the right way to handle images with a tech stack like this.
@@ -425,7 +425,7 @@ Documenting my progress as I move through the project.
   Since NoSelectedRecipe is already wired up to the index, I just have
   to redirect the page to display it.
 
-#### Notse
+#### Notes
 * ...after all this I'm now thinking I don't need these notifications. 
   I feel like if the user is shown the finished display of the recipe they
   just edited or created, then it's pretty evident that it worked well.
@@ -444,6 +444,14 @@ Documenting my progress as I move through the project.
   timeout structure, outside of permanently having an empty place in the UI
   to display notifications. Since I was going for a "flash on top of the
   existing UI for a moment" look, this was probably the best way. 
+
+## July 7
+
+* add Error Boundary component for RecipeInfo
+
+#### Lessons
+* how to write error boundaries & how to integrate them into 
+  [react-router](https://stackoverflow.com/questions/49130876)
 
 ## To Do Notes - Immediate
 
