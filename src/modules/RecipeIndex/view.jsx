@@ -32,11 +32,12 @@ class RecipeIndex extends Component {
             <Route exact path="/editRecipe/:id" component={EditRecipeForm} />
             <Route
               path="/recipe/:id"
-              render={() => (
+              render={props => (
                 <RecipeInfoErrorBoundary>
-                  <RecipeInfo />
+                  <RecipeInfo {...props} />
                 </RecipeInfoErrorBoundary>
-              )}/>
+              )}
+            />
             <Route path="/deleteRecipe/:id" component={DeleteRecipe} />
             <Route exact path="/" component={NoSelectedRecipe} />
           </Switch>

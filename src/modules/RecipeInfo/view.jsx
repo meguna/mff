@@ -34,6 +34,7 @@ class RecipeInfo extends Component {
       fetchSelectedRecipe,
       history,
     } = this.props;
+
     if (selectedId !== +match.params.id) {
       setSelectedRecipe(+match.params.id);
     }
@@ -42,17 +43,28 @@ class RecipeInfo extends Component {
     this.fetchGroups();
     this.fetchImages();
 
-    if (selectedId === -1) {
+    /* Redirect page if no recipe is selected or
+     * if no recipe id is passed as a route parameter
+     */
+    if (!(+match.params.id) && selectedId === -1) {
       history.push('/');
     }
   }
 
   componentDidUpdate(prevProps) {
-    const { selectedId } = this.props;
+    const { selectedId, error } = this.props;
+    const { fetchError } = this.state;
     if (selectedId !== prevProps.selectedId) {
       this.fetchIngredients();
       this.fetchGroups();
       this.fetchImages();
+    }
+
+    /* If above fetch calls causes a problem, throw error.
+     * RecipeInfoErrorBoundary component will catch it.
+     */
+    if (error || fetchError) {
+      throw Error();
     }
   }
 
@@ -60,6 +72,12 @@ class RecipeInfo extends Component {
     const { selectedId } = this.props;
     this.setState({ loadingGroups: true }, () => {
       fetch(`http://localhost:3005/api/getingredientgroups/${selectedId}`)
+        .then((res, err) => {
+          console.log(res.status);
+          if (!res.ok) {
+            throw Error(err);
+          }
+        })
         .then(res => res.json())
         .then((res) => {
           let groups = res;
@@ -84,6 +102,11 @@ class RecipeInfo extends Component {
     const { selectedId } = this.props;
     this.setState({ loadingIngredients: true }, () => {
       fetch(`http://localhost:3005/api/getingredients/${selectedId}`)
+        .then((res, err) => {
+          if (!res.ok) {
+            throw Error(err);
+          }
+        })
         .then(res => res.json())
         .then((res) => {
           this.setState({
@@ -103,6 +126,11 @@ class RecipeInfo extends Component {
     const { selectedId } = this.props;
     this.setState({ loadingImages: true }, () => {
       fetch(`http://localhost:3005/api/getrecipeimages/${selectedId}`)
+        .then((res, err) => {
+          if (!res.ok) {
+            throw Error(err);
+          }
+        })
         .then(res => res.json())
         .then((res) => {
           this.setState({
@@ -130,14 +158,6 @@ class RecipeInfo extends Component {
       loadingImages,
       fetchError,
     } = this.state;
-
-    if (selectedId === -1) {
-      return (
-        <p className="housekeeping-message">
-          Select a recipe to view it!
-        </p>
-      );
-    }
 
     if (error || fetchError) {
       return null;

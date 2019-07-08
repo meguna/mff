@@ -36,6 +36,11 @@ const fetchRecipesFailure = error => ({
 export const fetchRecipes = sortMethod => (dispatch) => {
   dispatch(fetchRecipesStart(sortMethod));
   fetch(`http://localhost:3005/api/getrecipes/sort=${sortMethod}`)
+    .then((res, err) => {
+      if (!res.ok) {
+        throw Error(err);
+      }
+    })
     .then(res => res.json())
     .then(res => dispatch(fetchRecipesSuccess(res)))
     .catch(err => dispatch(fetchRecipesFailure(err)));
@@ -65,6 +70,11 @@ const fetchMoreRecipesFailure = error => ({
 export const fetchMoreRecipes = (offset, sortMethod) => (dispatch) => {
   dispatch(fetchMoreRecipesStart);
   fetch(`http://localhost:3005/api/getrecipes/offset=${offset}-sort=${sortMethod}`)
+    .then((res, err) => {
+      if (!res.ok) {
+        throw Error(err);
+      }
+    })
     .then(res => res.json())
     .then(res => dispatch(fetchMoreRecipesSuccess(res)))
     .catch(err => dispatch(fetchMoreRecipesFailure(err)));
@@ -100,6 +110,11 @@ const fetchSelectedFailure = error => ({
 export const fetchSelectedRecipe = id => (dispatch) => {
   dispatch(fetchSelectedStart(id));
   fetch(`http://localhost:3005/api/getrecipe/${id}`)
+    .then((res, err) => {
+      if (!res.ok) {
+        throw Error(err);
+      }
+    })
     .then(res => res.json())
     .then(res => dispatch(fetchSelectedSuccess(res[0])))
     .catch(err => dispatch(fetchSelectedFailure(err)));
