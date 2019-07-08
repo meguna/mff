@@ -51,9 +51,8 @@ class RecipeInfo extends Component {
     }
   }
 
-  componentDidUpdate(prevProps) {
-    const { selectedId, error } = this.props;
-    const { fetchError } = this.state;
+  componentDidUpdate(prevProps, prevState) {
+    const { selectedId } = this.props;
     if (selectedId !== prevProps.selectedId) {
       this.fetchIngredients();
       this.fetchGroups();
@@ -63,7 +62,7 @@ class RecipeInfo extends Component {
     /* If above fetch calls causes a problem, throw error.
      * RecipeInfoErrorBoundary component will catch it.
      */
-    if (error || fetchError) {
+    if (prevProps.error || prevState.fetchError) {
       throw Error();
     }
   }
@@ -73,10 +72,10 @@ class RecipeInfo extends Component {
     this.setState({ loadingGroups: true }, () => {
       fetch(`http://localhost:3005/api/getingredientgroups/${selectedId}`)
         .then((res, err) => {
-          console.log(res.status);
           if (!res.ok) {
             throw Error(err);
           }
+          return res;
         })
         .then(res => res.json())
         .then((res) => {
@@ -106,6 +105,7 @@ class RecipeInfo extends Component {
           if (!res.ok) {
             throw Error(err);
           }
+          return res;
         })
         .then(res => res.json())
         .then((res) => {
@@ -130,6 +130,7 @@ class RecipeInfo extends Component {
           if (!res.ok) {
             throw Error(err);
           }
+          return res;
         })
         .then(res => res.json())
         .then((res) => {

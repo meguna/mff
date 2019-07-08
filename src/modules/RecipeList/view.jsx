@@ -18,7 +18,17 @@ class RecipeList extends Component {
     if (selectedId !== prevProps.selectedId) {
       return true;
     }
+    if (prevProps.error) {
+      return true;
+    }
     return false;
+  }
+
+  componentDidUpdate() {
+    const { error } = this.props;
+    if (error) {
+      throw Error();
+    }
   }
 
   onRecipeClick(id) {
@@ -89,9 +99,9 @@ RecipeList.propTypes = {
   loading: PropTypes.bool,
   selectedId: PropTypes.number,
   listOffset: PropTypes.number,
-  fetchRecipes: PropTypes.func,
-  fetchMoreRecipes: PropTypes.func,
-  setSelectedRecipe: PropTypes.func,
+  fetchRecipes: PropTypes.func.isRequired,
+  fetchMoreRecipes: PropTypes.func.isRequired,
+  setSelectedRecipe: PropTypes.func.isRequired,
 };
 
 RecipeList.defaultProps = {
@@ -100,9 +110,6 @@ RecipeList.defaultProps = {
   loading: false,
   selectedId: 1,
   listOffset: 0,
-  fetchRecipes: () => {},
-  fetchMoreRecipes: () => {},
-  setSelectedRecipe: () => {},
 };
 
 export default RecipeList;

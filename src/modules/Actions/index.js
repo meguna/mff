@@ -37,9 +37,11 @@ export const fetchRecipes = sortMethod => (dispatch) => {
   dispatch(fetchRecipesStart(sortMethod));
   fetch(`http://localhost:3005/api/getrecipes/sort=${sortMethod}`)
     .then((res, err) => {
+      console.log(res.status);
       if (!res.ok) {
         throw Error(err);
       }
+      return res;
     })
     .then(res => res.json())
     .then(res => dispatch(fetchRecipesSuccess(res)))
@@ -74,6 +76,7 @@ export const fetchMoreRecipes = (offset, sortMethod) => (dispatch) => {
       if (!res.ok) {
         throw Error(err);
       }
+      return res;
     })
     .then(res => res.json())
     .then(res => dispatch(fetchMoreRecipesSuccess(res)))
@@ -114,6 +117,7 @@ export const fetchSelectedRecipe = id => (dispatch) => {
       if (!res.ok) {
         throw Error(err);
       }
+      return res;
     })
     .then(res => res.json())
     .then(res => dispatch(fetchSelectedSuccess(res[0])))

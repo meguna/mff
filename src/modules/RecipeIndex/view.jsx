@@ -9,6 +9,7 @@ import DeleteRecipe from '../DeleteRecipe';
 import NoSelectedRecipe from '../NoSelectedRecipe';
 import StatusInfo from '../common/StatusInfo';
 import RecipeInfoErrorBoundary from '../errorBoundaries/RecipeInfoErrorBoundary';
+import RecipeListErrorBoundary from '../errorBoundaries/RecipeListErrorBoundary';
 import './styles.css';
 
 class RecipeIndex extends Component {
@@ -23,7 +24,9 @@ class RecipeIndex extends Component {
     return (
       <div className="recipe-everything-wrapper">
         <div id="recipe-list">
-          <RecipeList />
+          <RecipeListErrorBoundary>
+            <RecipeList />
+          </RecipeListErrorBoundary>
         </div>
         <div id="recipe-info">
           <StatusInfo status={notification.status} message={notification.message} />
