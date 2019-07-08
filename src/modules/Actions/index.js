@@ -37,7 +37,6 @@ export const fetchRecipes = sortMethod => (dispatch) => {
   dispatch(fetchRecipesStart(sortMethod));
   fetch(`http://localhost:3005/api/getrecipes/sort=${sortMethod}`)
     .then((res, err) => {
-      console.log(res.status);
       if (!res.ok) {
         throw Error(err);
       }

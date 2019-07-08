@@ -453,6 +453,10 @@ Documenting my progress as I move through the project.
 * how to write error boundaries & how to integrate them into 
   [react-router](https://stackoverflow.com/questions/49130876)
 
+## July 8
+* add Error Boundary component for RecipeList
+* more robust error handling with fetch requests - using response.ok
+
 ## To Do Notes - Immediate
 
 * refactor reducers - divide into separate reducers & lint code
