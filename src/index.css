@@ -119,3 +119,19 @@ h1 {
 .not-hidden {
   opacity: 1;
 }
+
+h1.title {
+    font-family: 'Souvenir', serif;
+    color: var(--key-red);
+    font-size: 4.5rem;
+    padding: 0;
+}
+
+h2.subtitle {
+    font-family: 'Styrene', sans-serif;
+    text-transform: uppercase;
+    font-size: 3.5rem;
+    margin: 0;
+    margin-bottom: 30px;
+    font-weight: 100;
+}

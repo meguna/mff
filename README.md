@@ -456,6 +456,7 @@ Documenting my progress as I move through the project.
 ## July 8
 * add Error Boundary component for RecipeList
 * more robust error handling with fetch requests - using response.ok
+* add Error Boundary for entire app
 
 ## To Do Notes - Immediate
 
@@ -466,12 +467,15 @@ Documenting my progress as I move through the project.
 * change document titles according to page
 * change error message for "load more" to "no more to load" when there 
   is no more to load
+* add maximum number of ingredients & ingredient groups (just in case)
+
+## Tasks to considers
+
 * testing with Jest
 * "baking" vs "cooking" filter
 * drag to change ingredient order
 * imperial / customary change! --> is this really necessary?
 * favicon
-* add maximum number of ingredients & ingredient groups (just in case)
 * FUN feature: color picker to choose a theme (replace --key-red in CSS) -
   forest green! etc.
 
@@ -484,8 +488,8 @@ Documenting my progress as I move through the project.
 * ~~form to add new recipe~~
 * ~~UPDATE form to edit pre-existing recipe~~
 * ~~DELETE api routes & interface within UPDATE form~~
-* set up error boundary components for: RecipeInfo, RecipeForm, RecipeList,
-  and general fallback for entire app
+* ~~set up error boundary components for: RecipeInfo, RecipeForm, RecipeList,
+  and general fallback for entire app~~
 * ~~image handling (CRUD for images per recipe)~~
 * search functionality
 * ~~routing~~
