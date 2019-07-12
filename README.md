@@ -458,7 +458,16 @@ Documenting my progress as I move through the project.
 * more robust error handling with fetch requests - using response.ok
 * add Error Boundary for entire app
 
-## To Do Notes - Immediate
+## July 12
+* initial Auth0 set up
+
+## To Do Notes - immediate task
+* add login page
+* style login/logout button on nav bar
+* add authentication to database
+* redirect non-authenticated users from protected paths (recipeInfo, etc)
+
+## To Do Notes - Medium
 
 * refactor reducers - divide into separate reducers & lint code
 * does `loading...` message take a little too long on RecipeForm? Investigate
@@ -469,7 +478,7 @@ Documenting my progress as I move through the project.
   is no more to load
 * add maximum number of ingredients & ingredient groups (just in case)
 
-## Tasks to considers
+## Tasks to consider
 
 * testing with Jest
 * "baking" vs "cooking" filter
@@ -505,7 +514,10 @@ Documenting my progress as I move through the project.
 
 ## List of Potential Graphics
 * something under the "add a new recipe" header in /addRecipe
-* 404 page
+* 404 page - sorry, recipe not found.
+* 404 page - sorry, page not found.
 * landing page - demo / sign up / login buttons
-* select a recipe! view
-* 404 image
+* select a recipe! view (NoSelectedRecipe)
+* error boundary images
+  * sorry, there's a technical problem (App)
+  * sorry, problem loading recipe (RecipeInfo)
