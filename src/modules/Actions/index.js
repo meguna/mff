@@ -1,3 +1,5 @@
+import Auth0Lock from 'auth0-lock';
+import auth0Config from '../../auth_config.json';
 import {
   FETCH_RECIPES_START,
   FETCH_RECIPES_SUCCESS,
@@ -10,6 +12,10 @@ import {
   FETCH_SELECTED_RECIPE_FAILURE,
   SET_SELECTED_RECIPE,
   SET_NOTIFICATION_DETAILS,
+  LOGIN_SUCCESS,
+  LOGIN_FAILURE,
+  LOGOUT_SUCCESS,
+  LOGOUT_FAILURE,
 } from './ActionTypes';
 
 /**
@@ -131,4 +137,40 @@ const setNotificationDetails = (status, message) => ({
 
 export const setNotification = (status, message) => (dispatch) => {
   dispatch(setNotificationDetails(status, message));
+};
+
+const loginSuccess = profile => ({
+  type: LOGIN_SUCCESS,
+  payload: profile,
+});
+
+const loginFailure = err => ({
+  type: LOGIN_FAILURE,
+  payload: err,
+});
+
+
+export const login = () => {
+  const lock = new Auth0Lock(auth0Config.clientId, auth0Config.domain);
+  return (dispatch) => {
+    lock.show((err, profile, token) => {
+      if (err) {
+        return dispatch(loginFailure(err));
+      }
+      localStorage.setItem('profile', JSON.stringify(profile));
+      localStorage.setItem('id_token', token);
+      return dispatch(loginSuccess(profile));
+    });
+  };
+};
+
+
+const logoutSuccess = () => ({
+  type: LOGOUT_SUCCESS,
+});
+
+export const logout = () => (dispatch) => {
+  localStorage.removeItem('id_token');
+  localStorage.removeItem('profile');
+  return dispatch(logoutSuccess());
 };

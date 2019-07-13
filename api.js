@@ -6,6 +6,7 @@ const mysql = require('mysql2');
 require('path');
 const cors = require('cors');
 const formidable = require('formidable');
+const jwt = require('express-jwt');
 
 const app = express();
 
@@ -45,6 +46,15 @@ const sanitize = (input, replaceVal) => {
   return mysql.escape(input);
 };
 
+
+// Authentication middleware provided by express-jwt.
+// This middleware will check incoming requests for a valid
+// JWT on any routes that it is applied to.
+const authCheck = jwt({
+  secret: process.env.AUTH0_SECRET,
+  audience: '7T5TkRWNMBtfhsSRJM5oli1yKog3DVXt',
+});
+
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
@@ -68,7 +78,7 @@ app.get('/api/getrecipes/offset=:offset-sort=:sort', (req, res) => {
   });
 });
 
-app.get('/api/getrecipes/sort=:sort', (req, res) => {
+app.get('/api/getrecipes/sort=:sort', authCheck, (req, res) => {
   let order = 'DESC';
   if (req.params.sort === 'name') {
     order = 'ASC';
