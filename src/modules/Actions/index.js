@@ -1,3 +1,4 @@
+import { browserHistory } from 'react-router';
 import Auth0Lock from 'auth0-lock';
 import auth0Config from '../../auth_config.json';
 import {
@@ -15,7 +16,6 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
   LOGOUT_SUCCESS,
-  LOGOUT_FAILURE,
 } from './ActionTypes';
 
 /**
@@ -150,20 +150,34 @@ const loginFailure = err => ({
 });
 
 
-export const login = () => {
-  const lock = new Auth0Lock(auth0Config.clientId, auth0Config.domain);
-  return (dispatch) => {
-    lock.show((err, profile, token) => {
+export const login = () => (dispatch) => {
+  console.log('login start');
+  const options = {
+    // auth: {
+    //   redirectUrl: 'http://localhost:3000',
+    //   redirect: true,
+    // },
+  };
+  const lock = new Auth0Lock(auth0Config.clientId, auth0Config.domain, options);
+  lock.show();
+  lock.on('authenticated', (authResult) => {
+    localStorage.setItem('id_token', authResult.idToken);
+    lock.getUserInfo(authResult.accessToken, (err, profile) => {
       if (err) {
-        return dispatch(loginFailure(err));
+        dispatch(loginFailure(err));
       }
       localStorage.setItem('profile', JSON.stringify(profile));
-      localStorage.setItem('id_token', token);
-      return dispatch(loginSuccess(profile));
+      dispatch(loginSuccess(profile));
+      lock.hide();
     });
-  };
+  });
+  lock.on('unrecoverable_error', (err) => {
+    dispatch(loginFailure(err));
+  });
+  lock.on('authorization_error', (err) => {
+    dispatch(loginFailure(err));
+  });
 };
-
 
 const logoutSuccess = () => ({
   type: LOGOUT_SUCCESS,
@@ -172,5 +186,5 @@ const logoutSuccess = () => ({
 export const logout = () => (dispatch) => {
   localStorage.removeItem('id_token');
   localStorage.removeItem('profile');
-  return dispatch(logoutSuccess());
+  dispatch(logoutSuccess());
 };

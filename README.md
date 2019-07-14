@@ -458,7 +458,20 @@ Documenting my progress as I move through the project.
 * more robust error handling with fetch requests - using response.ok
 * add Error Boundary for entire app
 
-## To Do Notes - Immediate
+## July 12
+* initial Auth0 set up
+* new branch to test auth stuff
+
+## July 13
+* working with Auth0's Lock.js
+
+## To Do Notes - immediate task
+* add login page
+* style login/logout button on nav bar
+* add authentication to database
+* redirect non-authenticated users from protected paths (recipeInfo, etc)
+
+## To Do Notes - Medium
 
 * refactor reducers - divide into separate reducers & lint code
 * does `loading...` message take a little too long on RecipeForm? Investigate

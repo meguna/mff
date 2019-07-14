@@ -10,6 +10,9 @@ import {
   FETCH_SELECTED_RECIPE_SUCCESS,
   FETCH_SELECTED_RECIPE_FAILURE,
   SET_NOTIFICATION_DETAILS,
+  LOGIN_SUCCESS,
+  LOGIN_FAILURE,
+  LOGOUT_SUCCESS,
 } from '../Actions/ActionTypes';
 
 const INITIAL_STATE = {
@@ -24,6 +27,7 @@ const INITIAL_STATE = {
     message: '',
     status: '',
   },
+  isAuthenticated: false,
 };
 
 const reducer = (state = INITIAL_STATE, action) => {
@@ -112,6 +116,7 @@ const reducer = (state = INITIAL_STATE, action) => {
   case FETCH_RECIPES_FAILURE:
   case FETCH_MORE_RECIPES_FAILURE:
   case FETCH_SELECTED_RECIPE_FAILURE:
+  case LOGIN_FAILURE:
     console.error(action.payload);
     return {
       ...state,
@@ -125,6 +130,19 @@ const reducer = (state = INITIAL_STATE, action) => {
         message: action.payloadMessage,
         status: action.payloadStatus,
       },
+    };
+  case LOGIN_SUCCESS:
+    return {
+      ...state,
+      isAuthenticated: true,
+      profile: action.payload,
+      error: null,
+    };
+  case LOGOUT_SUCCESS:
+    return {
+      ...state,
+      isAuthenticated: false,
+      error: null,
     };
   default:
     return state;

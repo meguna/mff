@@ -78,7 +78,7 @@ app.get('/api/getrecipes/offset=:offset-sort=:sort', (req, res) => {
   });
 });
 
-app.get('/api/getrecipes/sort=:sort', authCheck, (req, res) => {
+app.get('/api/getrecipes/sort=:sort', (req, res) => {
   let order = 'DESC';
   if (req.params.sort === 'name') {
     order = 'ASC';
