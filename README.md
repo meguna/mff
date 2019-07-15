@@ -465,8 +465,14 @@ Documenting my progress as I move through the project.
 ## July 13
 * working with Auth0's Lock.js
 
+## July 14
+* successfully set up login popup
+
+## July 15
+* 
+
 ## To Do Notes - immediate task
-* add login page
+* need to read in cookies on App mount
 * style login/logout button on nav bar
 * add authentication to database
 * redirect non-authenticated users from protected paths (recipeInfo, etc)
