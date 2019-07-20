@@ -500,6 +500,17 @@ Documenting my progress as I move through the project.
   This is something I did not realize when I started reading about auth.
 
 ## July 16-20
+* add Auth functions (login, logout, silentauth, getter/setter funcs) to
+  redux store
+  * make sure that once logged in, you stay logged in after navigating away
+* add Login component & route
+* add Logout component & route
+* add login.logout button
+* configure Auth0
+* add Auth component that communicates with Auth0
+* add ProtectedRoutes (routes that redirect to `/login` if not logged in)
+
+#### Notes
 * lots of testing, trial & error, shifting around code and reading docs.
 * final auth configuration that I've settled on:
   * Rely on both Lock.js and Auth0.js to handle most of the actual auth
@@ -526,17 +537,24 @@ Documenting my progress as I move through the project.
   a day or two just to realize that handling the API was a separate task from
   the general login/logout thing).
 
+#### Lessons
+* according to Dan Abramov: presentational components shouldn't be aware of
+  redux state and should instead have those params passed through by
+  container components. Makes sense.
+
 ## To Do Notes - immediate task
+* fix up route structure!
+  * option 1: set up welcome page. `/` redirects there if not logged in,
+    showing info about the website's services & forms for login/signup.
+  * option 2: rename current `/` to something like `dashboard` and have
+    everything point there. this seems a little too overly complicated.
 * modularize Express API - reference
   [here](http://catlau.co/how-to-modularize-routes-with-the-express-router/)
-* need to read in cookies on App mount
-* style login/logout button on nav bar
 * add authentication to database
-* redirect non-authenticated users from protected paths (recipeInfo, etc)
+* refactor reducers - divide into separate reducers & lint code
 
 ## To Do Notes - Medium
 
-* refactor reducers - divide into separate reducers & lint code
 * does `loading...` message take a little too long on RecipeForm? Investigate
 * editRecipe warning on navigating away from unsaved changes
 * show 404 whenever a user navigates to /anypath/:nonexistentId.
