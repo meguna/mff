@@ -469,9 +469,39 @@ Documenting my progress as I move through the project.
 * successfully set up login popup
 
 ## July 15
-* 
+* research and testing more auth stuff
+
+#### Notes
+* Although an Auth0 writer sets up 
+  [an example]](https://www.sitepoint.com/redux-authentication-auth0/)
+  where he saves `id_token`s in `localStorage`, it's discouraged practice
+  on the [Auth0 docs](https://auth0.com/docs/security/store-tokens). My
+  final decision is that it's better than the alternative, which would be to
+  [store](https://dzone.com/articles/cookies-vs-tokens-the-definitive-guide)
+  store the information as cookies. Since it seems like I only have to worry
+  about 
+* I still will be moving forward with the Lock.js implementation that I put
+  together last time. Although the Auth0 SDK - React set up guide seemed
+  pretty great, I felt like I didn't understand what was going on at all since
+  everything is wrapped up in the little prewritten functions. Also, I wanted
+  to use Lock.js intead of Universal Sign In.
+* new Plan: use Firebase Auth instead. I will still have to make and send
+  my own JWT cookies to the Express server (since I'm keeping that as is
+  instead of using Firebase's DB) but the firebase server keeps a track
+  of the sign in. I think. 
+* actually, new new plan: DON'T use lock at all, don't migrate to firebase.
+  Create a custom UI with Auth0.js (instead of lock) and provide the Auth
+  information using Context API or Redux or something like that. So in essence
+  it'll be what I was looking at doing with firebase, but with Auth0.
+  Took me a while to actually see what options I have and how a lot of those
+  options look similar regardless of the 3rd party service I choose to use.
+* persisting user login seems simple enough with any 3rd party service because
+  their internal servers manage the token expiration and things like that.
+  This is something I did not realize when I started reading about auth.
 
 ## To Do Notes - immediate task
+* modularize Express API - reference
+  [here](http://catlau.co/how-to-modularize-routes-with-the-express-router/)
 * need to read in cookies on App mount
 * style login/logout button on nav bar
 * add authentication to database

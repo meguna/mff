@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import {
   login,
 } from '../Actions/index';
+import './styles.css';
 
 class AuthButton extends Component {
   constructor(props) {
@@ -19,9 +20,9 @@ class AuthButton extends Component {
     const { isAuthenticated } = this.props;
 
     if (!isAuthenticated) {
-      return <Link to="/login">Log In</Link>;
+      return <div className="auth-button"><Link to="/login">Log In</Link></div>;
     }
-    return <Link to="/logout">Log Out</Link>;
+    return <div className="auth-button"><Link to="/logout">Log Out</Link></div>;
   }
 }
 

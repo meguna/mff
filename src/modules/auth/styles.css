@@ -1,0 +1,13 @@
+.auth-button {
+	padding: 10px;
+	border: 1px solid black;
+	border-radius: 5px;
+	color: black;
+	font-family: 'Apercu', sans-serif;
+	font-weight: 300;
+	width: fit-content;
+	display: inline-block;
+	font-size: 1.6rem;
+	position: absolute;
+	right: 5vw;
+}

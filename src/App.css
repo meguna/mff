@@ -14,7 +14,7 @@ header.app-main-header {
   background-color: var(--key-red);
 }
 
-header.app-main-header a {
+.app-main-header-title {
   color: #fff;
 }
 

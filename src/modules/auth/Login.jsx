@@ -11,11 +11,15 @@ class Login extends Component {
     super(props);
   }
 
+  componentDidMount() {
+    const { login } = this.props;
+    login();
+  }
+
+
   componentDidUpdate() {
-    const { login, isAuthenticated, history } = this.props;
-    if (!isAuthenticated) {
-      login();
-    } else {
+    const { isAuthenticated, history } = this.props;
+    if (isAuthenticated) {
       history.push('/');
     }
   }
@@ -28,6 +32,8 @@ class Login extends Component {
 }
 
 Login.propTypes = {
+  isAuthenticated: PropTypes.bool.isRequired,
+  login: PropTypes.func.isRequired,
 };
 
 Login.defaultProps = {

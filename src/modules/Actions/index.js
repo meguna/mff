@@ -1,4 +1,3 @@
-import { browserHistory } from 'react-router';
 import Auth0Lock from 'auth0-lock';
 import auth0Config from '../../auth_config.json';
 import {
@@ -17,6 +16,7 @@ import {
   LOGIN_FAILURE,
   LOGOUT_SUCCESS,
 } from './ActionTypes';
+import Auth0Client from '../auth/Auth';
 
 /**
  * fetch a list of recipes for the first time
@@ -149,16 +149,9 @@ const loginFailure = err => ({
   payload: err,
 });
 
-
 export const login = () => (dispatch) => {
   console.log('login start');
-  const options = {
-    // auth: {
-    //   redirectUrl: 'http://localhost:3000',
-    //   redirect: true,
-    // },
-  };
-  const lock = new Auth0Lock(auth0Config.clientId, auth0Config.domain, options);
+  const lock = new Auth0Lock(auth0Config.clientId, auth0Config.domain);
   lock.show();
   lock.on('authenticated', (authResult) => {
     localStorage.setItem('id_token', authResult.idToken);
@@ -187,4 +180,20 @@ export const logout = () => (dispatch) => {
   localStorage.removeItem('id_token');
   localStorage.removeItem('profile');
   dispatch(logoutSuccess());
+};
+
+export const checkAuthStatus = () => (dispatch) => {
+  Auth0Client.checkSession((err, authResult) => {
+    localStorage.setItem('id_token', authResult.idToken);
+    localStorage.setItem('profile', Auth0Client.getProfile());
+
+
+    lock.getUserInfo(authResult.accessToken, (err, profile) => {
+      if (err) {
+        dispatch(loginFailure(err));
+      }
+      
+      dispatch(loginSuccess(profile));
+    });
+  });
 };

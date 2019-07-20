@@ -7,6 +7,7 @@ require('path');
 const cors = require('cors');
 const formidable = require('formidable');
 const jwt = require('express-jwt');
+const jwksRsa = require('jwks-rsa');
 
 const app = express();
 
@@ -46,13 +47,18 @@ const sanitize = (input, replaceVal) => {
   return mysql.escape(input);
 };
 
+const checkJwt = jwt({
+  secret: jwksRsa.expressJwtSecret({
+    cache: true,
+    rateLimit: true,
+    jwksRequestsPerMinute: 5,
+    jwksUri: 'https://dev-jknyt6s8.auth0.com/.well-known/jwks.json',
+  }),
 
-// Authentication middleware provided by express-jwt.
-// This middleware will check incoming requests for a valid
-// JWT on any routes that it is applied to.
-const authCheck = jwt({
-  secret: process.env.AUTH0_SECRET,
-  audience: '7T5TkRWNMBtfhsSRJM5oli1yKog3DVXt',
+  // Validate the audience and the issuer.
+  audience: '<YOUR_AUTH0_CLIENT_ID>',
+  issuer: 'https://dev-jknyt6s8.auth0.com',
+  algorithms: ['RS256'],
 });
 
 app.use((req, res, next) => {
