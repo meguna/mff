@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import {
-  logout,
-} from '../Actions/index';
+import Auth0Client from './Auth';
 
 class Logout extends Component {
   componentDidMount() {
-    const { logout, history } = this.props;
-    logout();
+    const { history } = this.props;
+    Auth0Client.signOut();
     history.push('/');
   }
 
@@ -19,17 +16,4 @@ class Logout extends Component {
   }
 }
 
-Logout.propTypes = {
-  logout: PropTypes.func.isRequired,
-};
-
-Logout.defaultProps = {
-};
-
-const mapStateToProps = state => state;
-
-const mapDispatchToProps = {
-  logout,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Logout);
+export default Logout;

@@ -28,6 +28,7 @@ const INITIAL_STATE = {
     status: '',
   },
   isAuthenticated: false,
+  profile: null,
 };
 
 const reducer = (state = INITIAL_STATE, action) => {
@@ -143,6 +144,7 @@ const reducer = (state = INITIAL_STATE, action) => {
       ...state,
       isAuthenticated: false,
       error: null,
+      profile: null,
     };
   default:
     return state;

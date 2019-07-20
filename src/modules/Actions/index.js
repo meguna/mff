@@ -1,5 +1,3 @@
-import Auth0Lock from 'auth0-lock';
-import auth0Config from '../../auth_config.json';
 import {
   FETCH_RECIPES_START,
   FETCH_RECIPES_SUCCESS,
@@ -150,63 +148,29 @@ const loginFailure = err => ({
 });
 
 export const login = () => (dispatch) => {
-  const nonce = Math.floor(Math.random() * 100000);
-  console.log(nonce);
-  sessionStorage.setItem('stateid', nonce);
-  const options = {
-    auth: {
-      params: {
-        state: nonce,
-      },
-    },
-  };
-
-  const lock = new Auth0Lock(auth0Config.clientId, auth0Config.domain, options);
-
-  lock.show();
-  lock.on('authenticated', (authResult) => {
-    console.log(authResult);
-    if (authResult.state !== sessionStorage.getItem('stateid')) {
-      dispatch(loginFailure('login failure'));
-    } else {
-      localStorage.setItem('id_token', authResult.idToken);
-      lock.getUserInfo(authResult.accessToken, (err, profile) => {
-        if (err) {
-          dispatch(loginFailure(err));
-        }
-        localStorage.setItem('profile', JSON.stringify(profile));
-        dispatch(loginSuccess(profile));
-        lock.hide();
-        sessionStorage.removeItem('stateid');
-      });
-    }
-  });
-  lock.on('unrecoverable_error', (err) => {
-    dispatch(loginFailure(err));
-  });
-  lock.on('authorization_error', (err) => {
-    dispatch(loginFailure(err));
-  });
+  Auth0Client.signIn()
+    .then((res) => {
+      dispatch(loginSuccess(res));
+    })
+    .catch((err) => {
+      loginFailure(err);
+    });
 };
 
-const logoutSuccess = () => ({
-  type: LOGOUT_SUCCESS,
+const notLoggedInError = () => ({
+  type: 'NOTLOGGEDIN',
 });
 
-export const logout = () => (dispatch) => {
-  localStorage.removeItem('id_token');
-  localStorage.removeItem('profile');
-  dispatch(logoutSuccess());
-  Auth0Client.signOut();
-};
-
 export const checkAuthStatus = () => (dispatch) => {
-  Auth0Client.checkSession()
-    .then((authResult) => {
-      localStorage.setItem('id_token', authResult.idToken);
+  Auth0Client.silentAuth()
+    .then(() => {
       dispatch(loginSuccess(Auth0Client.getProfile()));
     })
     .catch((err) => {
-      dispatch(loginFailure(err));
+      if (err.error === 'login_required') {
+        dispatch(notLoggedInError);
+      } else {
+        dispatch(loginFailure(err));
+      }
     });
 };

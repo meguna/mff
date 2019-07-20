@@ -499,6 +499,26 @@ Documenting my progress as I move through the project.
   their internal servers manage the token expiration and things like that.
   This is something I did not realize when I started reading about auth.
 
+## July 16-20
+* lots of testing, trial & error, shifting around code and reading docs.
+* final auth configuration that I've settled on:
+  * Rely on both Lock.js and Auth0.js to handle most of the actual auth
+    heavylifting. I wanted to use solely Auth0.js and combine it with a custom
+    login UI, but doing this would be questionable security wise, according to
+    the docs. The one way would be to use "Resource Owner Password Grant" flow.
+    This requires that my UI implementation be absolutely foolproof so that
+    passwords don't get stolen and I figured it wouldn't be great to take the
+    chance. Whatever.
+  * Use both Redux and Authentication component that exports a singleton
+    instance of an auth0client. I didn't want to involve redux in the whole
+    thing because it would make the app more complex, but I realized that the
+    authentication functions I was writing were really editing things that
+    belong in global state (`isAuthenticated`, etc). So now my rule is that
+    the Redux functions remain the single source of truth for my React
+    components (with regards to authentication information), and the
+    Auth0Client singleton is the single source of truth for the Redux
+    functions.
+
 ## To Do Notes - immediate task
 * modularize Express API - reference
   [here](http://catlau.co/how-to-modularize-routes-with-the-express-router/)

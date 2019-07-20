@@ -6,7 +6,6 @@ import AppErrorBoundary from './modules/errorBoundaries/AppErrorBoundary';
 import Login from './modules/auth/Login';
 import Logout from './modules/auth/Logout';
 import Header from './modules/common/Header';
-import Auth0Client from './modules/auth/Auth';
 
 class App extends React.Component {
   componentDidMount() {
