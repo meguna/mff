@@ -513,11 +513,18 @@ Documenting my progress as I move through the project.
     instance of an auth0client. I didn't want to involve redux in the whole
     thing because it would make the app more complex, but I realized that the
     authentication functions I was writing were really editing things that
-    belong in global state (`isAuthenticated`, etc). So now my rule is that
+    belong in global state (`isAuthenticated`, etc). Another reason why
+    I need to buffer the functions through Redux is that the components don't
+    have a way to listen for changes in the `Auth0Client` object so displaying
+    dynamic UIs based on async functions is impossible. So now my rule is that
     the Redux functions remain the single source of truth for my React
     components (with regards to authentication information), and the
     Auth0Client singleton is the single source of truth for the Redux
     functions.
+* Looots and lots of headaches on this one. Took me days just to get through
+  the non-API part of this authentication journey (to be fair, it took me
+  a day or two just to realize that handling the API was a separate task from
+  the general login/logout thing).
 
 ## To Do Notes - immediate task
 * modularize Express API - reference
