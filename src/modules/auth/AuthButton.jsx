@@ -1,42 +1,32 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import Auth0Client from './Auth';
 import {
   login,
+  logout,
 } from '../Actions/index';
 import './styles.css';
 
 class AuthButton extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   componentDidMount() {
 
   }
 
   render() {
-    const { isAuthenticated } = this.props;
-
-    if (!isAuthenticated) {
+    const isAuth = Auth0Client.isAuthenticated();
+    if (!isAuth) {
       return <div className="auth-button"><Link to="/login">Log In</Link></div>;
     }
     return <div className="auth-button"><Link to="/logout">Log Out</Link></div>;
   }
 }
 
-AuthButton.propTypes = {
-  isAuthenticated: PropTypes.bool.isRequired,
-};
-
-AuthButton.defaultProps = {
-};
-
 const mapStateToProps = state => state;
 
 const mapDispatchToProps = {
   login,
+  logout,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AuthButton);

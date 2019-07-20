@@ -150,19 +150,36 @@ const loginFailure = err => ({
 });
 
 export const login = () => (dispatch) => {
-  console.log('login start');
-  const lock = new Auth0Lock(auth0Config.clientId, auth0Config.domain);
+  const nonce = Math.floor(Math.random() * 100000);
+  console.log(nonce);
+  sessionStorage.setItem('stateid', nonce);
+  const options = {
+    auth: {
+      params: {
+        state: nonce,
+      },
+    },
+  };
+
+  const lock = new Auth0Lock(auth0Config.clientId, auth0Config.domain, options);
+
   lock.show();
   lock.on('authenticated', (authResult) => {
-    localStorage.setItem('id_token', authResult.idToken);
-    lock.getUserInfo(authResult.accessToken, (err, profile) => {
-      if (err) {
-        dispatch(loginFailure(err));
-      }
-      localStorage.setItem('profile', JSON.stringify(profile));
-      dispatch(loginSuccess(profile));
-      lock.hide();
-    });
+    console.log(authResult);
+    if (authResult.state !== sessionStorage.getItem('stateid')) {
+      dispatch(loginFailure('login failure'));
+    } else {
+      localStorage.setItem('id_token', authResult.idToken);
+      lock.getUserInfo(authResult.accessToken, (err, profile) => {
+        if (err) {
+          dispatch(loginFailure(err));
+        }
+        localStorage.setItem('profile', JSON.stringify(profile));
+        dispatch(loginSuccess(profile));
+        lock.hide();
+        sessionStorage.removeItem('stateid');
+      });
+    }
   });
   lock.on('unrecoverable_error', (err) => {
     dispatch(loginFailure(err));
@@ -180,20 +197,16 @@ export const logout = () => (dispatch) => {
   localStorage.removeItem('id_token');
   localStorage.removeItem('profile');
   dispatch(logoutSuccess());
+  Auth0Client.signOut();
 };
 
 export const checkAuthStatus = () => (dispatch) => {
-  Auth0Client.checkSession((err, authResult) => {
-    localStorage.setItem('id_token', authResult.idToken);
-    localStorage.setItem('profile', Auth0Client.getProfile());
-
-
-    lock.getUserInfo(authResult.accessToken, (err, profile) => {
-      if (err) {
-        dispatch(loginFailure(err));
-      }
-      
-      dispatch(loginSuccess(profile));
+  Auth0Client.checkSession()
+    .then((authResult) => {
+      localStorage.setItem('id_token', authResult.idToken);
+      dispatch(loginSuccess(Auth0Client.getProfile()));
+    })
+    .catch((err) => {
+      dispatch(loginFailure(err));
     });
-  });
 };

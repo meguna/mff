@@ -6,10 +6,6 @@ import {
 } from '../Actions/index';
 
 class Logout extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   componentDidMount() {
     const { logout, history } = this.props;
     logout();

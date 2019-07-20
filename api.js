@@ -54,8 +54,6 @@ const checkJwt = jwt({
     jwksRequestsPerMinute: 5,
     jwksUri: 'https://dev-jknyt6s8.auth0.com/.well-known/jwks.json',
   }),
-
-  // Validate the audience and the issuer.
   audience: '<YOUR_AUTH0_CLIENT_ID>',
   issuer: 'https://dev-jknyt6s8.auth0.com',
   algorithms: ['RS256'],
