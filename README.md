@@ -541,6 +541,22 @@ Documenting my progress as I move through the project.
 * according to Dan Abramov: presentational components shouldn't be aware of
   redux state and should instead have those params passed through by
   container components. Makes sense.
+* I feel a lot more comfortable writing Promises now. I've used them a lot in
+  up until now but I didn't write them that often. Today I had a moment when
+  I was trying to write a Auth0Client class function that would take a
+  callback parameter and execute it after handling some async operations and
+  I was like... why didn't I immediately think to use a Promise?
+* After putting so many hours into this project, I have such a better 
+  appreciation for the broad coding principles that we were taught in class.
+  They really show their power when you have a big complicated thing in front
+  of you and you really wished that you had thorough testing so the debugging
+  would not be totally impossible. I mean, it already made sense in class, and
+  there were definitely times where combing through the code was really tough,
+  but it really does not compare with something like this. I'm really starting
+  to see their importance. I never thought of their role in real big apps
+  that big corporations provide, but if you put it that way they probably save
+  lives. Reminds me of that [article in the Atlantic](https://bit.ly/2nc3OkU)
+  about how programmers aren't really engineers.
 
 ## To Do Notes - immediate task
 * fix up route structure!
@@ -548,13 +564,17 @@ Documenting my progress as I move through the project.
     showing info about the website's services & forms for login/signup.
   * option 2: rename current `/` to something like `dashboard` and have
     everything point there. this seems a little too overly complicated.
+* make a Profile section where users can change passwords, emails, delete
+  their account, etc.
+* add bearer authorization to fetch calls & handle them in the Express API.
+* add user info to database columns so that only their recipes are retrieved.
+
+## To Do Notes - Medium
+
 * modularize Express API - reference
   [here](http://catlau.co/how-to-modularize-routes-with-the-express-router/)
 * add authentication to database
 * refactor reducers - divide into separate reducers & lint code
-
-## To Do Notes - Medium
-
 * does `loading...` message take a little too long on RecipeForm? Investigate
 * editRecipe warning on navigating away from unsaved changes
 * show 404 whenever a user navigates to /anypath/:nonexistentId.
