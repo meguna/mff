@@ -59,7 +59,6 @@ class Auth {
         if (authResult.state !== sessionStorage.getItem('stateid')) {
           reject('state mismatch error');
         } else {
-          console.log(authResult);
           this.setSession(authResult);
           sessionStorage.removeItem('stateid');
           lock.getUserInfo(authResult.accessToken, (err, profile) => {

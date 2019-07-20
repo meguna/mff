@@ -174,3 +174,12 @@ export const checkAuthStatus = () => (dispatch) => {
       }
     });
 };
+
+const logoutSuccess = () => ({
+  type: LOGOUT_SUCCESS,
+});
+
+export const logout = () => (dispatch) => {
+  dispatch(logoutSuccess());
+  Auth0Client.signOut();
+};
