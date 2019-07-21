@@ -167,7 +167,9 @@ export const checkAuthStatus = () => (dispatch) => {
       dispatch(loginSuccess(Auth0Client.getProfile()));
     })
     .catch((err) => {
-      if (err.error === 'login_required') {
+      if (err.error === 'consent_required') {
+        console.log('consent_required');
+      } else if (err.error === 'login_required') {
         dispatch(notLoggedInError);
       } else {
         dispatch(loginFailure(err));

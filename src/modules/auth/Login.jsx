@@ -7,8 +7,10 @@ import {
 
 class Login extends Component {
   componentDidMount() {
-    const { login } = this.props;
-    login();
+    const { isAuthenticated, login } = this.props;
+    if (!isAuthenticated) {
+      login();
+    }
   }
 
   componentDidUpdate() {

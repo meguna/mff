@@ -9,8 +9,8 @@ class Auth {
       audience: `https://${auth0Config.domain}/userinfo`,
       clientID: auth0Config.clientId,
       redirectUri: 'http://localhost:3000/',
-      responseType: 'id_token',
-      scope: 'openid profile',
+      responseType: 'id_token token',
+      scope: 'openid profile email',
     });
 
     this.getProfile = this.getProfile.bind(this);
@@ -34,19 +34,47 @@ class Auth {
   }
 
   signIn() {
+    return this.lockJs({
+      allowSignUp: false,
+      initialScreen: 'login',
+      
+    });
+  }
+
+  signUp() {
+    return this.lockJs({
+      allowLogin: false,
+      initialScreen: 'signUp',
+      allowShowPassword: true,
+    });
+  }
+
+  lockJs(additionalOptions) {
     if (sessionStorage.getItem('stateid') === null) {
       const nonce = Math.floor(Math.random() * 100000);
       sessionStorage.setItem('stateid', nonce);
     }
     const options = {
+      autoclose: true,
+      avatar: null,
+      allowedConnections: ['Username-Password-Authentication'],
+      loginAfterSignUp: true,
+      usernameStyle: 'email',
+      theme: {
+        primaryColor: '#FF320C',
+      },
+      languageDictionary: {
+        title: "Log In to Mood For Food",
+      },
       auth: {
-        responseType: 'token id_token',
-        redirect: false,
+        redirect: true,
+        redirectUrl: 'http://localhost:3000',
         params: {
           state: sessionStorage.getItem('stateid'),
         },
-      },
+      }
     };
+    const allOptions = Object.assign(options, additionalOptions);
     const lock = new Auth0Lock(
       auth0Config.clientId,
       auth0Config.domain,
@@ -71,13 +99,18 @@ class Auth {
         }
       });
       lock.on('unrecoverable_error', (err) => {
+        console.log('unrecov error');
+        console.error(err);
         reject(err);
       });
       lock.on('authorization_error', (err) => {
+        console.log('auth error');
+        console.error(err);
         reject(err);
       });
     });
   }
+
 
   handleAuthentication() {
     return new Promise((resolve, reject) => {

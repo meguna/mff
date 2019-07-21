@@ -571,6 +571,7 @@ Documenting my progress as I move through the project.
 
 ## To Do Notes - Medium
 
+* convert to styled-components?
 * modularize Express API - reference
   [here](http://catlau.co/how-to-modularize-routes-with-the-express-router/)
 * add authentication to database
