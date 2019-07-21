@@ -5,6 +5,7 @@ import RecipeIndex from './modules/RecipeIndex';
 import AppErrorBoundary from './modules/errorBoundaries/AppErrorBoundary';
 import Login from './modules/auth/Login';
 import Logout from './modules/auth/Logout';
+import Welcome from './modules/Welcome';
 import Header from './modules/common/Header';
 
 class App extends React.Component {
@@ -16,10 +17,12 @@ class App extends React.Component {
     return (
       <div className="app">
         <BrowserRouter>
-          <Header />
+          {/* Don't display header on welcome page */}
+          {window.location.pathname !== '/welcome' && <Header />}
           <Switch>
             <Route path="/login" component={Login} />
             <Route path="/logout" component={Logout} />
+            <Route path="/welcome" component={Welcome} />
             <AppErrorBoundary>
               <Route path="/" component={RecipeIndex} />
             </AppErrorBoundary>
