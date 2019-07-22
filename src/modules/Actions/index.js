@@ -42,7 +42,6 @@ const fetchRecipesFailure = error => ({
 export const fetchRecipes = sortMethod => (dispatch) => {
   dispatch(fetchRecipesStart(sortMethod));
   const token = Auth0Client.getToken();
-  console.log(token);
   fetch(`http://localhost:3005/api/getrecipes/sort=${sortMethod}`, {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -179,7 +178,6 @@ export const checkAuthStatus = () => (dispatch) => {
     dispatch(loginStart());
     Auth0Client.silentAuth()
       .then(() => {
-        console.log('done silent auth');
         dispatch(loginSuccess(Auth0Client.getProfile()));
         resolve();
       })

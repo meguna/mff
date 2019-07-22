@@ -473,7 +473,7 @@ Documenting my progress as I move through the project.
 
 #### Notes
 * Although an Auth0 writer sets up 
-  [an example]](https://www.sitepoint.com/redux-authentication-auth0/)
+  [an example](https://www.sitepoint.com/redux-authentication-auth0/)
   where he saves `id_token`s in `localStorage`, it's discouraged practice
   on the [Auth0 docs](https://auth0.com/docs/security/store-tokens). My
   final decision is that it's better than the alternative, which would be to

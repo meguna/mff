@@ -35,7 +35,6 @@ class Auth {
   }
 
   isAuthenticated() {
-    console.log(this.expiresAt);
     return new Date().getTime() < this.expiresAt;
   }
 
@@ -105,12 +104,10 @@ class Auth {
         }
       });
       lock.on('unrecoverable_error', (err) => {
-        console.log('unrecov error');
         console.error(err);
         reject(err);
       });
       lock.on('authorization_error', (err) => {
-        console.log('auth error');
         console.error(err);
         reject(err);
       });
