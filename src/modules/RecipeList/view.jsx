@@ -2,11 +2,14 @@ import React, { Component } from 'react';
 import './styles.css';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import LoadMoreButton from './components/LoadMoreButton';
 
 class RecipeList extends Component {
   constructor(props) {
     super(props);
-    this.state = { value: 'update_date' };
+    this.state = {
+      sortMethod: 'update_date',
+    };
     this.onSortSelect = this.onSortSelect.bind(this);
   }
 
@@ -24,8 +27,8 @@ class RecipeList extends Component {
     return false;
   }
 
-  componentDidUpdate() {
-    const { error } = this.props;
+  componentDidUpdate(prevProps) {
+    const { error, recipes } = this.props;
     if (error) {
       throw Error();
     }
@@ -40,22 +43,22 @@ class RecipeList extends Component {
 
   onSortSelect(event) {
     const { fetchRecipes } = this.props;
-    this.setState({ value: event.target.value }, () => {
-      const { value } = this.state;
-      fetchRecipes(value);
+    this.setState({ sortMethod: event.target.value }, () => {
+      const { sortMethod } = this.state;
+      fetchRecipes(sortMethod);
     });
   }
 
   render() {
     const {
-      recipes, selectedId, loading, error, fetchMoreRecipes, listOffset,
+      recipes, selectedId, loading, error, fetchMoreRecipes, listOffset, loadingAuth,
     } = this.props;
-    const { value } = this.state;
+    const { sortMethod, noMore } = this.state;
 
     return (
       <div>
         <form>
-          <select value={value} onChange={this.onSortSelect}>
+          <select value={sortMethod} onChange={this.onSortSelect}>
             <option value="name">name</option>
             <option value="update_date">last updated</option>
             <option value="create_date">last added</option>
@@ -78,16 +81,11 @@ class RecipeList extends Component {
             </Link>
           </div>
         ))}
-        <button
-          type="button"
-          role="link"
-          tabIndex="0"
-          onClick={() => fetchMoreRecipes(listOffset, value)}
-          onKeyDown={() => fetchMoreRecipes(listOffset, value)}
-          className="housekeeping-message load-more-button"
-        >
-          Load More...
-        </button>
+        <LoadMoreButton
+          onAction={() => fetchMoreRecipes(listOffset, sortMethod)}
+          loading={loading}
+          loadingAuth={loadingAuth}
+        />
       </div>
     );
   }
@@ -97,6 +95,7 @@ RecipeList.propTypes = {
   recipes: PropTypes.arrayOf(PropTypes.object),
   error: PropTypes.bool,
   loading: PropTypes.bool,
+  loadingAuth: PropTypes.bool.isRequired,
   selectedId: PropTypes.number,
   listOffset: PropTypes.number,
   fetchRecipes: PropTypes.func.isRequired,

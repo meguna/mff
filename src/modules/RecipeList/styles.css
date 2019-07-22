@@ -51,6 +51,7 @@ select, option {
 select, option :focus {
     outline: none;
 }
+
 select {
 	background-image: url(../../assets/icons/chevron-down.svg);
 	background-repeat: no-repeat;
@@ -58,4 +59,7 @@ select {
 	background-position-y: 50%;
 	border-radius: 2px;
 	padding-right: 2rem;
+}
+.default-cursor { 
+  cursor: default;
 }

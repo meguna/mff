@@ -569,6 +569,8 @@ Documenting my progress as I move through the project.
 
 ## July 22
 * successfully implement first authenticated API route!! Woo hoo!
+* add LoadMoreButton to RecipeList. shows "loading" while performing silent
+  auth and "load more" otherwise.
 
 #### Notes
 * I had a lot of difficulties figuring this out. I even posted on the Auth0
@@ -599,15 +601,11 @@ Documenting my progress as I move through the project.
   be in the `audience` parameter of my `auth0.webAuth` setup. If I set it to
   https://myauth0domain/userInfo, it overrode consent requirements and didn't
   give me errors but gave me an opaque string instead of a proper JWT as the
-  access token. I had the `audience` parameter in my auth0.webAuth set to 
-  https://myauth0domain/userInfo, which successfully overrides the pesky 
-  `consent_required` error that I kept getting (which apparently is a side
-  effect of developing locally). But this means that when I authenticate,
-  I get a short, non-JWT string as my access token. The Auth0 forums told me
-  that to solve this I needed to set `audience` to my custom API audience.
-  So I do that, and now I get a `consent_required` error. Auth0 forums tell
-  me that, to solve this problem, I need to set the `audience` to the
-  `userInfo` endpoint that I had been using. So it's a circular problem.
+  access token. The Auth0 forums told me that to solve this I needed to set
+  `audience` to my custom API audience. So I do that, and now I get a
+  `consent_required` error. Auth0 forums tell me that, to solve this problem,
+  I need to set the `audience` to the `userInfo` endpoint that I had been 
+  using. So it's a circular problem.
 * The solution: After stumbling on a [guide](https://bit.ly/2y4fqdW) in the
   official Auth0 docs about access token formats (which didn't really come up 
   on google through out my multiple-day quest to figure this out, for some
