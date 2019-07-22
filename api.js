@@ -47,15 +47,20 @@ const sanitize = (input, replaceVal) => {
   return mysql.escape(input);
 };
 
+const authConfig = {
+  domain: 'dev-jknyt6s8.auth0.com',
+  audience: 'https://dev-jknyt6s8.auth0.com/userinfo',
+};
+
 const checkJwt = jwt({
   secret: jwksRsa.expressJwtSecret({
     cache: true,
     rateLimit: true,
     jwksRequestsPerMinute: 5,
-    jwksUri: 'https://dev-jknyt6s8.auth0.com/.well-known/jwks.json',
+    jwksUri: `https://${authConfig.domain}/.well-known/jwks.json`,
   }),
-  audience: '<YOUR_AUTH0_CLIENT_ID>',
-  issuer: 'https://dev-jknyt6s8.auth0.com',
+  audience: authConfig.audience,
+  issuer: `https://${authConfig.domain}/`,
   algorithms: ['RS256'],
 });
 
@@ -82,7 +87,7 @@ app.get('/api/getrecipes/offset=:offset-sort=:sort', (req, res) => {
   });
 });
 
-app.get('/api/getrecipes/sort=:sort', (req, res) => {
+app.get('/api/getrecipes/sort=:sort', checkJwt, (req, res) => {
   let order = 'DESC';
   if (req.params.sort === 'name') {
     order = 'ASC';

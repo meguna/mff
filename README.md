@@ -558,12 +558,73 @@ Documenting my progress as I move through the project.
   lives. Reminds me of that [article in the Atlantic](https://bit.ly/2nc3OkU)
   about how programmers aren't really engineers.
 
+## July 21
+* Add a `/welcome` route & component. This will hold Demo, Sign Up, and
+  Sign In buttons. Users not logged in will be redirected here if they try
+  to access a protected route.
+* troubleshoot problems with auto-login after signing up. Seemed to be an
+  issue with the Lock.js options that I had configured (?) 
+  [Reference](https://bit.ly/30JDCi3). Add separate functions for the login
+  popup and the signup popup.
+
+## July 22
+* successfully implement first authenticated API route!! Woo hoo!
+
+#### Notes
+* I had a lot of difficulties figuring this out. I even posted on the Auth0
+  help forum (although I figured it out before I got anything back from it).
+* The first problem: I call the external API from various components'
+  `ComponentDidMount`, such as `fetchRecipe` from `RecipeIndex` or
+  `fetchSelectedRecipe` from `RecipeInfo`. All of these fetch calls, once
+  the auth stuff is set up, would require that an access token has already
+  been granted by the auth0 server. Now, the app calls `checkAuthStatus()`,
+  which silently signs in the user if they had already logged in recently,
+  and this is the function that grabs the access token and makes it available
+  for the other functions. My problem was that I didn't have a way to
+  guarantee that `checkAuthStatus()` would definitely finish running before
+  each component starts calling their fetch functions. In which case those
+  fetch functions would need to call `checkAuthStatus()` themselves to get
+  the token. 
+* The solution: I decided that once logged in, the only fetch call that's
+  immediately necessary is `fetchRecipes()`. The other ones are usually
+  triggered by user action such as clicking on 'load more recipes' or 'edit
+  this recipe' or something like that. So I had App.js call checkAuthStatus
+  and then after that fetchRecipes. Of course, there is the race problem
+  of the user clicking on things (and thus triggering other fetch calls)
+  before the auth process is complete. I don't know what I would do in that
+  case - perhaps disable links until it's done? Idk.
+* Next problem: I was really uncertain about how to generate a JWT access token
+  for the custom API that I had set up in Auth0 while at the same
+  authenticating the user through the Auth0 Auth API. The problem seemed to
+  be in the `audience` parameter of my `auth0.webAuth` setup. If I set it to
+  https://myauth0domain/userInfo, it overrode consent requirements and didn't
+  give me errors but gave me an opaque string instead of a proper JWT as the
+  access token. I had the `audience` parameter in my auth0.webAuth set to 
+  https://myauth0domain/userInfo, which successfully overrides the pesky 
+  `consent_required` error that I kept getting (which apparently is a side
+  effect of developing locally). But this means that when I authenticate,
+  I get a short, non-JWT string as my access token. The Auth0 forums told me
+  that to solve this I needed to set `audience` to my custom API audience.
+  So I do that, and now I get a `consent_required` error. Auth0 forums tell
+  me that, to solve this problem, I need to set the `audience` to the
+  `userInfo` endpoint that I had been using. So it's a circular problem.
+* The solution: After stumbling on a [guide](https://bit.ly/2y4fqdW) in the
+  official Auth0 docs about access token formats (which didn't really come up 
+  on google through out my multiple-day quest to figure this out, for some
+  reason), I found out that I _definitely_ needed to set `audience` to my
+  API audience, but the consent problem still persisted. What I ended up
+  having to do was edit my hosts file so that http://mff.meguna.co:3000
+  redirected to localhost:3000, and then work "locally" from there instead.
+  (Auth0 requires user consent for localhost).
+* I still have a decent bit more to do but I'm definitely over the hump since
+  I got the main logic working. Now I just need to repeat what I did here
+  with other fetch calls and other API endpoints.
+
+#### Lessons
+* JWT is pronounced 'jot' (why?)
+* opaque string = random string that seems to provide no information
+
 ## To Do Notes - immediate task
-* fix up route structure!
-  * option 1: set up welcome page. `/` redirects there if not logged in,
-    showing info about the website's services & forms for login/signup.
-  * option 2: rename current `/` to something like `dashboard` and have
-    everything point there. this seems a little too overly complicated.
 * make a Profile section where users can change passwords, emails, delete
   their account, etc.
 * add bearer authorization to fetch calls & handle them in the Express API.
@@ -584,7 +645,7 @@ Documenting my progress as I move through the project.
   is no more to load
 * add maximum number of ingredients & ingredient groups (just in case)
 
-## Tasks to considers
+## Tasks to consider
 
 * testing with Jest
 * "baking" vs "cooking" filter

@@ -10,9 +10,11 @@ import {
   FETCH_SELECTED_RECIPE_SUCCESS,
   FETCH_SELECTED_RECIPE_FAILURE,
   SET_NOTIFICATION_DETAILS,
+  AUTH_START,
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
   LOGOUT_SUCCESS,
+  AUTH_NOT_LOGGED_IN,
 } from '../Actions/ActionTypes';
 
 const INITIAL_STATE = {
@@ -27,6 +29,7 @@ const INITIAL_STATE = {
     message: '',
     status: '',
   },
+  loadingAuth: true,
   isAuthenticated: false,
   profile: null,
 };
@@ -123,6 +126,7 @@ const reducer = (state = INITIAL_STATE, action) => {
       ...state,
       error: true,
       loading: false,
+      loadingAuth: false,
     };
   case SET_NOTIFICATION_DETAILS:
     return {
@@ -132,9 +136,21 @@ const reducer = (state = INITIAL_STATE, action) => {
         status: action.payloadStatus,
       },
     };
+  case AUTH_START:
+    return {
+      ...state,
+      loadingAuth: true,
+      error: null,
+    };
+  case AUTH_NOT_LOGGED_IN:
+    return {
+      ...state,
+      loadingAuth: false,
+    };
   case LOGIN_SUCCESS:
     return {
       ...state,
+      loadingAuth: false,
       isAuthenticated: true,
       profile: action.payload,
       error: null,

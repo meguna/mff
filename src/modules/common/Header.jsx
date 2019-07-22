@@ -7,8 +7,7 @@ import { checkAuthStatus } from '../Actions/index';
 
 class Header extends Component {
   componentDidMount() {
-    const { checkAuthStatus } = this.props;
-    checkAuthStatus();
+
   }
 
   render() {

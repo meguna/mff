@@ -10,9 +10,11 @@ import {
   FETCH_SELECTED_RECIPE_FAILURE,
   SET_SELECTED_RECIPE,
   SET_NOTIFICATION_DETAILS,
+  AUTH_START,
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
   LOGOUT_SUCCESS,
+  AUTH_NOT_LOGGED_IN,
 } from './ActionTypes';
 import Auth0Client from '../auth/Auth';
 
@@ -39,7 +41,13 @@ const fetchRecipesFailure = error => ({
 
 export const fetchRecipes = sortMethod => (dispatch) => {
   dispatch(fetchRecipesStart(sortMethod));
-  fetch(`http://localhost:3005/api/getrecipes/sort=${sortMethod}`)
+  const token = Auth0Client.getToken();
+  console.log(token);
+  fetch(`http://localhost:3005/api/getrecipes/sort=${sortMethod}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
     .then((res, err) => {
       if (!res.ok) {
         throw Error(err);
@@ -148,6 +156,7 @@ const loginFailure = err => ({
 });
 
 export const login = () => (dispatch) => {
+  dispatch(loginStart());
   Auth0Client.signIn()
     .then((res) => {
       dispatch(loginSuccess(res));
@@ -157,24 +166,43 @@ export const login = () => (dispatch) => {
     });
 };
 
-const notLoggedInError = () => ({
-  type: 'NOTLOGGEDIN',
+const notLoggedIn = () => ({
+  type: AUTH_NOT_LOGGED_IN,
+});
+
+const loginStart = () => ({
+  type: AUTH_START,
 });
 
 export const checkAuthStatus = () => (dispatch) => {
-  Auth0Client.silentAuth()
-    .then(() => {
-      dispatch(loginSuccess(Auth0Client.getProfile()));
-    })
-    .catch((err) => {
-      if (err.error === 'consent_required') {
-        console.log('consent_required');
-      } else if (err.error === 'login_required') {
-        dispatch(notLoggedInError);
-      } else {
-        dispatch(loginFailure(err));
-      }
-    });
+  return new Promise((resolve) => {
+    dispatch(loginStart());
+    Auth0Client.silentAuth()
+      .then(() => {
+        console.log('done silent auth');
+        dispatch(loginSuccess(Auth0Client.getProfile()));
+        resolve();
+      })
+      .catch((err) => {
+        if (err.error === 'consent_required') {
+          console.error(err);
+          dispatch(loginStart());
+          Auth0Client.signIn()
+            .then((res) => {
+              dispatch(loginSuccess(res));
+            })
+            .catch((err) => {
+              dispatch(loginFailure(err));
+            });
+        } else if (err.error === 'login_required') {
+          console.error(err);
+          dispatch(notLoggedIn(err));
+        } else {
+          console.error(err);
+          dispatch(loginFailure(err));
+        }
+      });
+  });
 };
 
 const logoutSuccess = () => ({

@@ -14,8 +14,6 @@ import './styles.css';
 
 class RecipeIndex extends Component {
   componentDidMount() {
-    const { fetchRecipes, sortMethod } = this.props;
-    fetchRecipes(sortMethod);
   }
 
   render() {

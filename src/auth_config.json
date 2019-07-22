@@ -1,4 +1,6 @@
 {
   "domain": "dev-jknyt6s8.auth0.com",
-  "clientId": "7T5TkRWNMBtfhsSRJM5oli1yKog3DVXt"
+  "clientId": "7T5TkRWNMBtfhsSRJM5oli1yKog3DVXt",
+  "apiAudience": "api.meguna.co/moodforfood",
+  "rootUri":"http://mff.meguna.co:3000"
 }

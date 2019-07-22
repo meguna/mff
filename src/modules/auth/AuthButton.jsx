@@ -13,24 +13,28 @@ class AuthButton extends Component {
   }
 
   render() {
-    const { isAuthenticated } = this.props;
-    if (!isAuthenticated) {
+    const { isAuthenticated, loadingAuth } = this.props;
+    if (!loadingAuth) {
+      if (!isAuthenticated) {
+        return (
+          <div className="auth-button">
+            <Link to="/login">Log In</Link>
+          </div>
+        );
+      }
       return (
         <div className="auth-button">
-          <Link to="/login">Log In</Link>
+          <Link to="/logout">Log Out</Link>
         </div>
       );
     }
-    return (
-      <div className="auth-button">
-        <Link to="/logout">Log Out</Link>
-      </div>
-    );
+    return null;
   }
 }
 
 AuthButton.propTypes = {
   isAuthenticated: PropTypes.bool.isRequired,
+  loadingAuth: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = state => state;

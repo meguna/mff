@@ -1,16 +1,18 @@
 import auth0 from 'auth0-js';
 import Auth0Lock from 'auth0-lock';
-import auth0Config from '../../auth_config.json';
+import authConfig from '../../auth_config.json';
+require('dotenv').config();
 
 class Auth {
   constructor() {
     this.auth0 = new auth0.WebAuth({
-      domain: auth0Config.domain,
-      audience: `https://${auth0Config.domain}/userinfo`,
-      clientID: auth0Config.clientId,
-      redirectUri: 'http://localhost:3000/',
+      domain: authConfig.domain,
+      audience: authConfig.apiAudience,
+      clientID: authConfig.clientId,
+      redirectUri: authConfig.rootUri,
       responseType: 'id_token token',
       scope: 'openid profile email',
+      responseMode: 'form_post',
     });
 
     this.getProfile = this.getProfile.bind(this);
@@ -26,6 +28,10 @@ class Auth {
 
   getIdToken() {
     return this.idToken;
+  }
+
+  getToken() {
+    return this.accessToken;
   }
 
   isAuthenticated() {
@@ -68,7 +74,7 @@ class Auth {
       },
       auth: {
         redirect: true,
-        redirectUrl: 'http://localhost:3000',
+        redirectUrl: authConfig.rootUri,
         params: {
           state: sessionStorage.getItem('stateid'),
         },
@@ -76,9 +82,9 @@ class Auth {
     };
     const allOptions = Object.assign(options, additionalOptions);
     const lock = new Auth0Lock(
-      auth0Config.clientId,
-      auth0Config.domain,
-      options
+      authConfig.clientId,
+      authConfig.domain,
+      allOptions,
     );
     lock.show();
 
@@ -130,13 +136,14 @@ class Auth {
       this.auth0.checkSession({}, (err, authResult) => {
         if (err) return reject(err);
         this.setSession(authResult);
-        resolve();
+        resolve(authResult);
       });
     });
   }
 
   setSession(authResult) {
     this.idToken = authResult.idToken;
+    this.accessToken = authResult.accessToken;
     this.profile = authResult.idTokenPayload;
     this.expiresAt = authResult.idTokenPayload.exp * 1000;
   }
@@ -146,8 +153,8 @@ class Auth {
     this.profile = null;
     this.expiresAt = null;
     this.auth0.logout({
-      returnTo: 'http://localhost:3000/',
-      clientID: auth0Config.clientId,
+      returnTo: authConfig.rootUri,
+      clientID: authConfig.clientId,
     });
   }
 }
