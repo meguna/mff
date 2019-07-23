@@ -622,11 +622,31 @@ Documenting my progress as I move through the project.
 * JWT is pronounced 'jot' (why?)
 * opaque string = random string that seems to provide no information
 
+## July 23
+* add API middleware called `callApi` that adds authorization headers to
+  api calls
+* optimizing api calls & load time
+
+#### Notes
+* Adding authentication/authorization really slowed down the load time of
+  the app. Different parts load at different times (RecipeList loads
+  noticably later than RecipeInfo). I tried to fix the issue by
+  short-circuiting calls to `getToken()` (so that if the token already exists,
+  no call to the auth server is made) but it didn't help enough
+* gonna refactor code so that any fetch calls that are necessary on first load
+  are called in RecipeIndex all at once, instead of individually in RecipeInfo
+  and RecipeList. I definitely want to still run `checkSession()` in App.js,
+  but I want to separate out the initial fetch calls into each route - ie,
+  Welcome (doesn't actually need to fetch) / RecipeIndex / Profile. So
+  RecipeIndex will call all the recipe fetch calls once it's ready, as
+  determined by App.js
+
 ## To Do Notes - immediate task
+* add middleware to handle authentication for fetch calls
+  * move all fetch calls into redux?? think about it
+* add user_id to database columns so that only their recipes are retrieved.
 * make a Profile section where users can change passwords, emails, delete
   their account, etc.
-* add bearer authorization to fetch calls & handle them in the Express API.
-* add user info to database columns so that only their recipes are retrieved.
 
 ## To Do Notes - Medium
 

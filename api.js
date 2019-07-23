@@ -71,7 +71,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get('/api/getrecipes/offset=:offset-sort=:sort', (req, res) => {
+app.get('/api/getrecipes/offset=:offset-sort=:sort', checkJwt, (req, res) => {
   let order = 'DESC';
   if (req.params.sort === 'name') {
     order = 'ASC';
@@ -103,7 +103,7 @@ app.get('/api/getrecipes/sort=:sort', checkJwt, (req, res) => {
   });
 });
 
-app.get('/api/getrecipe/:id', (req, res) => {
+app.get('/api/getrecipe/:id', checkJwt, (req, res) => {
   connection.query(`
     SELECT * FROM recipes
     WHERE id = ${+req.params.id}
@@ -114,7 +114,7 @@ app.get('/api/getrecipe/:id', (req, res) => {
   });
 });
 
-app.get('/api/getingredients', (req, res) => {
+app.get('/api/getingredients', checkJwt, (req, res) => {
   connection.query(`
     SELECT * FROM recipe_ingredients
     ORDER BY recipe_ingredients.update_date
@@ -125,7 +125,7 @@ app.get('/api/getingredients', (req, res) => {
   });
 });
 
-app.get('/api/getingredients/:id', (req, res) => {
+app.get('/api/getingredients/:id', checkJwt, (req, res) => {
   connection.query(`
     SELECT * FROM recipe_ingredients 
     WHERE recipe_ingredients.recipe_id = ${mysql.escape(req.params.id)}
@@ -143,7 +143,7 @@ app.get('/api/getingredients/:id', (req, res) => {
   });
 });
 
-app.get('/api/getingredientgroups/:id', (req, res) => {
+app.get('/api/getingredientgroups/:id', checkJwt, (req, res) => {
   connection.query(`
     SELECT * FROM ingredient_groups 
     WHERE ingredient_groups.recipe_id = ${mysql.escape(req.params.id)}
@@ -161,7 +161,7 @@ app.get('/api/getingredientgroups/:id', (req, res) => {
   });
 });
 
-app.get('/api/getrecipeimages/:id', (req, res) => {
+app.get('/api/getrecipeimages/:id', checkJwt, (req, res) => {
   connection.query(`
     SELECT * FROM recipe_images
     WHERE recipe_images.recipe_id = ${mysql.escape(req.params.id)}
