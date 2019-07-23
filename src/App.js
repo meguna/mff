@@ -41,7 +41,6 @@ class App extends React.Component {
   }
 }
 
-
 App.propTypes = {
   checkAuthStatus: PropTypes.func.isRequired,
   fetchRecipes: PropTypes.func.isRequired,

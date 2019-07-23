@@ -17,6 +17,7 @@ import {
   AUTH_NOT_LOGGED_IN,
 } from './ActionTypes';
 import Auth0Client from '../auth/Auth';
+import callApi from '../helpers';
 
 /**
  * fetch a list of recipes for the first time
@@ -41,19 +42,7 @@ const fetchRecipesFailure = error => ({
 
 export const fetchRecipes = sortMethod => (dispatch) => {
   dispatch(fetchRecipesStart(sortMethod));
-  const token = Auth0Client.getToken();
-  fetch(`http://localhost:3005/api/getrecipes/sort=${sortMethod}`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  })
-    .then((res, err) => {
-      if (!res.ok) {
-        throw Error(err);
-      }
-      return res;
-    })
-    .then(res => res.json())
+  callApi(`/getrecipes/sort=${sortMethod}`)
     .then(res => dispatch(fetchRecipesSuccess(res)))
     .catch(err => dispatch(fetchRecipesFailure(err)));
 };
@@ -81,14 +70,7 @@ const fetchMoreRecipesFailure = error => ({
 
 export const fetchMoreRecipes = (offset, sortMethod) => (dispatch) => {
   dispatch(fetchMoreRecipesStart);
-  fetch(`http://localhost:3005/api/getrecipes/offset=${offset}-sort=${sortMethod}`)
-    .then((res, err) => {
-      if (!res.ok) {
-        throw Error(err);
-      }
-      return res;
-    })
-    .then(res => res.json())
+  callApi(`/getrecipes/offset=${offset}-sort=${sortMethod}`)
     .then(res => dispatch(fetchMoreRecipesSuccess(res)))
     .catch(err => dispatch(fetchMoreRecipesFailure(err)));
 };
@@ -122,14 +104,7 @@ const fetchSelectedFailure = error => ({
 
 export const fetchSelectedRecipe = id => (dispatch) => {
   dispatch(fetchSelectedStart(id));
-  fetch(`http://localhost:3005/api/getrecipe/${id}`)
-    .then((res, err) => {
-      if (!res.ok) {
-        throw Error(err);
-      }
-      return res;
-    })
-    .then(res => res.json())
+  callApi(`/getrecipe/${id}`)
     .then(res => dispatch(fetchSelectedSuccess(res[0])))
     .catch(err => dispatch(fetchSelectedFailure(err)));
 };
@@ -154,6 +129,10 @@ const loginFailure = err => ({
   payload: err,
 });
 
+const loginStart = () => ({
+  type: AUTH_START,
+});
+
 export const login = () => (dispatch) => {
   dispatch(loginStart());
   Auth0Client.signIn()
@@ -169,17 +148,13 @@ const notLoggedIn = () => ({
   type: AUTH_NOT_LOGGED_IN,
 });
 
-const loginStart = () => ({
-  type: AUTH_START,
-});
-
 export const checkAuthStatus = () => (dispatch) => {
   return new Promise((resolve) => {
     dispatch(loginStart());
-    Auth0Client.silentAuth()
-      .then(() => {
-        dispatch(loginSuccess(Auth0Client.getProfile()));
-        resolve();
+    Auth0Client.getToken()
+      .then((res) => {
+        dispatch(loginSuccess());
+        resolve(res);
       })
       .catch((err) => {
         if (err.error === 'consent_required') {
@@ -189,8 +164,8 @@ export const checkAuthStatus = () => (dispatch) => {
             .then((res) => {
               dispatch(loginSuccess(res));
             })
-            .catch((err) => {
-              dispatch(loginFailure(err));
+            .catch((err2) => {
+              dispatch(loginFailure(err2));
             });
         } else if (err.error === 'login_required') {
           console.error(err);

@@ -1,6 +1,7 @@
 import auth0 from 'auth0-js';
 import Auth0Lock from 'auth0-lock';
 import authConfig from '../../auth_config.json';
+
 require('dotenv').config();
 
 class Auth {
@@ -31,7 +32,23 @@ class Auth {
   }
 
   getToken() {
-    return this.accessToken;
+    console.log("start get token");
+    return new Promise((resolve) => {
+      console.log(this.accessToken);
+      if (this.accessToken !== undefined) {
+        console.error("end get token: already had token");
+        resolve(this.accessToken);
+      } else {
+        this.silentAuth()
+          .then((res) => {
+            console.error("end get token: fetched token");
+            resolve(res.accessToken);
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+      }
+    });
   }
 
   isAuthenticated() {
@@ -42,7 +59,6 @@ class Auth {
     return this.lockJs({
       allowSignUp: false,
       initialScreen: 'login',
-      
     });
   }
 
@@ -69,7 +85,7 @@ class Auth {
         primaryColor: '#FF320C',
       },
       languageDictionary: {
-        title: "Log In to Mood For Food",
+        title: 'Log In to Mood For Food',
       },
       auth: {
         redirect: true,
@@ -77,7 +93,7 @@ class Auth {
         params: {
           state: sessionStorage.getItem('stateid'),
         },
-      }
+      },
     };
     const allOptions = Object.assign(options, additionalOptions);
     const lock = new Auth0Lock(
@@ -90,7 +106,7 @@ class Auth {
     return new Promise((resolve, reject) => {
       lock.on('authenticated', (authResult) => {
         if (authResult.state !== sessionStorage.getItem('stateid')) {
-          reject('state mismatch error');
+          reject(new Error('state mismatch error'));
         } else {
           this.setSession(authResult);
           sessionStorage.removeItem('stateid');
@@ -123,7 +139,7 @@ class Auth {
           return reject(err);
         }
         this.setSession(authResult);
-        resolve();
+        return resolve();
       });
     });
   }
@@ -133,7 +149,7 @@ class Auth {
       this.auth0.checkSession({}, (err, authResult) => {
         if (err) return reject(err);
         this.setSession(authResult);
-        resolve(authResult);
+        return resolve(authResult);
       });
     });
   }

@@ -152,7 +152,6 @@ const reducer = (state = INITIAL_STATE, action) => {
       ...state,
       loadingAuth: false,
       isAuthenticated: true,
-      profile: action.payload,
       error: null,
     };
   case LOGOUT_SUCCESS:
@@ -160,7 +159,6 @@ const reducer = (state = INITIAL_STATE, action) => {
       ...state,
       isAuthenticated: false,
       error: null,
-      profile: null,
     };
   default:
     return state;

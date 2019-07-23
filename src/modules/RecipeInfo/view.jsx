@@ -8,6 +8,7 @@ import AddRecipeButton from './components/AddRecipeButton';
 import EditRecipeButton from './components/EditRecipeButton';
 import DeleteRecipeButton from './components/DeleteRecipeButton';
 import RecipeImages from './components/RecipeImages';
+import { callApi } from '../helpers';
 import { ING_GROUP_BLANK } from '../common/initial';
 import './styles.css';
 
@@ -44,7 +45,7 @@ class RecipeInfo extends Component {
     this.fetchImages();
 
     /* Redirect page if no recipe is selected or
-     * if no recipe id is passed as a route parameter
+     * if no recipe id is passed  as a route parameter
      */
     if (!(+match.params.id) && selectedId === -1) {
       history.push('/');
@@ -70,14 +71,7 @@ class RecipeInfo extends Component {
   fetchGroups() {
     const { selectedId } = this.props;
     this.setState({ loadingGroups: true }, () => {
-      fetch(`http://localhost:3005/api/getingredientgroups/${selectedId}`)
-        .then((res, err) => {
-          if (!res.ok) {
-            throw Error(err);
-          }
-          return res;
-        })
-        .then(res => res.json())
+      callApi(`/getingredientgroups/${selectedId}`)
         .then((res) => {
           let groups = res;
           if (res.length === 0) {
@@ -100,14 +94,7 @@ class RecipeInfo extends Component {
   fetchIngredients() {
     const { selectedId } = this.props;
     this.setState({ loadingIngredients: true }, () => {
-      fetch(`http://localhost:3005/api/getingredients/${selectedId}`)
-        .then((res, err) => {
-          if (!res.ok) {
-            throw Error(err);
-          }
-          return res;
-        })
-        .then(res => res.json())
+      callApi(`/getingredients/${selectedId}`)
         .then((res) => {
           this.setState({
             ingredients: res,
@@ -125,14 +112,7 @@ class RecipeInfo extends Component {
   fetchImages() {
     const { selectedId } = this.props;
     this.setState({ loadingImages: true }, () => {
-      fetch(`http://localhost:3005/api/getrecipeimages/${selectedId}`)
-        .then((res, err) => {
-          if (!res.ok) {
-            throw Error(err);
-          }
-          return res;
-        })
-        .then(res => res.json())
+      callApi(`/getrecipeimages/${selectedId}`)
         .then((res) => {
           this.setState({
             images: res,
