@@ -148,17 +148,26 @@ const notLoggedIn = () => ({
   type: AUTH_NOT_LOGGED_IN,
 });
 
+const logoutSuccess = () => ({
+  type: LOGOUT_SUCCESS,
+});
+
+export const logout = () => (dispatch) => {
+  dispatch(logoutSuccess());
+  Auth0Client.signOut();
+};
+
 export const checkAuthStatus = () => (dispatch) => {
-  return new Promise((resolve) => {
+  return new Promise((reject, resolve) => {
     dispatch(loginStart());
     Auth0Client.getToken()
       .then((res) => {
         dispatch(loginSuccess());
-        resolve(res);
+        return resolve(res);
       })
       .catch((err) => {
-        if (err.error === 'consent_required') {
-          console.error(err);
+        console.error(err);
+        if (err.code === 'consent_required') {
           dispatch(loginStart());
           Auth0Client.signIn()
             .then((res) => {
@@ -167,22 +176,13 @@ export const checkAuthStatus = () => (dispatch) => {
             .catch((err2) => {
               dispatch(loginFailure(err2));
             });
-        } else if (err.error === 'login_required') {
-          console.error(err);
-          dispatch(notLoggedIn(err));
+        } else if (err.code === 'login_required') {
+          logout();
+          dispatch(notLoggedIn());
+          reject(err);
         } else {
-          console.error(err);
           dispatch(loginFailure(err));
         }
       });
   });
-};
-
-const logoutSuccess = () => ({
-  type: LOGOUT_SUCCESS,
-});
-
-export const logout = () => (dispatch) => {
-  dispatch(logoutSuccess());
-  Auth0Client.signOut();
 };

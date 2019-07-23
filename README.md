@@ -629,6 +629,9 @@ Documenting my progress as I move through the project.
 * optimizing api calls & load time! minimizing the number of times the initial
   getToken() gets called and making sure all fetch calls are called _after_
   getting the token.
+* more robust error handling with fetch calls. better handling of 
+  `login_required` error
+* App.js redirects to `/welcome` if unauthenticated.
 
 #### Notes
 * Adding authentication/authorization really slowed down the load time of

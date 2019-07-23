@@ -2,9 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import {
-  login,
-} from '../Actions/index';
 import './styles.css';
 
 class AuthButton extends Component {
@@ -39,8 +36,4 @@ AuthButton.propTypes = {
 
 const mapStateToProps = state => state;
 
-const mapDispatchToProps = {
-  login,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(AuthButton);
+export default connect(mapStateToProps)(AuthButton);

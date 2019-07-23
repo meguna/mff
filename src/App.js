@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { Route, BrowserRouter, Switch } from 'react-router-dom';
+import { Route, BrowserRouter, Switch, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import RecipeIndex from './modules/RecipeIndex';
@@ -14,9 +14,14 @@ import { login, checkAuthStatus, fetchRecipes } from './modules/Actions/index';
 class App extends React.Component {
   componentDidMount() {
     document.title = 'In the Mood for Food';
-    const { checkAuthStatus } = this.props;
+    const { checkAuthStatus, isAuthenticated, history } = this.props;
     checkAuthStatus()
-      .then(() => {});
+      .finally(() => {
+        console.log("finally")
+        if (!isAuthenticated) {
+          history.push('/welcome');
+        }
+      });
   }
 
   render() {
@@ -26,12 +31,18 @@ class App extends React.Component {
           {/* Don't display header on welcome page */}
           {window.location.pathname !== '/welcome' && <Header />}
           <Switch>
-            <Route path="/login" component={Login} />
-            <Route path="/logout" component={Logout} />
-            <Route path="/welcome" component={Welcome} />
-            <AppErrorBoundary>
-              <Route path="/" component={RecipeIndex} />
-            </AppErrorBoundary>
+            <Route exact path="/login" component={Login} />
+            <Route exact path="/logout" component={Logout} />
+            <Route exact path="/welcome" component={Welcome} />
+            <Route
+              exact
+              path="/"
+              render={props => (
+                <AppErrorBoundary>
+                  <RecipeIndex {...props} />
+                </AppErrorBoundary>
+              )}
+            />
           </Switch>
         </BrowserRouter>
       </div>
@@ -49,4 +60,4 @@ const mapStateToProps = state => state;
 
 const mapDispatchToProps = { login, checkAuthStatus, fetchRecipes };
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(App));

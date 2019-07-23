@@ -14,14 +14,25 @@ export const callApi = (endpoint, options) => {
       })
         .then((res, err) => {
           if (!res.ok) {
-            reject(err);
+            throw new Error(err);
           }
           return res;
         })
         .then(res => res.json())
         .then(res => resolve(res))
-        .catch(err => reject(err));
-    });
+        .catch((err) => {
+          if (err.code !== 'login_required') {
+            console.error(err);
+            reject(err);
+          }
+        });
+    })
+      .catch((err) => {
+        if (err.code !== 'login_required') {
+          console.error(err);
+          reject(err);
+        }
+      });
   });
 };
 

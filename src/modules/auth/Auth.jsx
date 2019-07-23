@@ -13,7 +13,7 @@ class Auth {
       redirectUri: authConfig.rootUri,
       responseType: 'id_token token',
       scope: 'openid profile email',
-      responseMode: 'form_post',
+      // responseMode: 'form_post',
     });
 
     this.getProfile = this.getProfile.bind(this);
@@ -32,7 +32,7 @@ class Auth {
   }
 
   getToken() {
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
       if (this.accessToken !== undefined) {
         resolve(this.accessToken);
       } else {
@@ -41,7 +41,7 @@ class Auth {
             resolve(res.accessToken);
           })
           .catch((err) => {
-            console.error(err);
+            reject(err);
           });
       }
     });
@@ -144,6 +144,7 @@ class Auth {
     return new Promise((resolve, reject) => {
       this.auth0.checkSession({}, (err, authResult) => {
         if (err) return reject(err);
+        window.parent.postMessage('silent auth complete', '*');
         this.setSession(authResult);
         return resolve(authResult);
       });
