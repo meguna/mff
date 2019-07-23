@@ -13,7 +13,18 @@ import RecipeListErrorBoundary from '../errorBoundaries/RecipeListErrorBoundary'
 import './styles.css';
 
 class RecipeIndex extends Component {
-  componentDidMount() {
+  componentDidUpdate(prevProps) {
+    const {
+      fetchRecipes,
+      sortMethod,
+      loadingAuth,
+    } = this.props;
+
+    if (prevProps.loadingAuth !== loadingAuth) {
+      if (!loadingAuth) {
+        fetchRecipes(sortMethod);
+      }
+    }
   }
 
   render() {
@@ -55,6 +66,7 @@ RecipeIndex.propTypes = {
     status: PropTypes.string,
     message: PropTypes.string,
   }).isRequired,
+  loadingAuth: PropTypes.bool.isRequired,
 };
 
 RecipeIndex.defaultProps = {

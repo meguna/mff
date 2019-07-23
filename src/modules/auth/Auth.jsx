@@ -32,16 +32,12 @@ class Auth {
   }
 
   getToken() {
-    console.log("start get token");
     return new Promise((resolve) => {
-      console.log(this.accessToken);
       if (this.accessToken !== undefined) {
-        console.error("end get token: already had token");
         resolve(this.accessToken);
       } else {
         this.silentAuth()
           .then((res) => {
-            console.error("end get token: fetched token");
             resolve(res.accessToken);
           })
           .catch((err) => {

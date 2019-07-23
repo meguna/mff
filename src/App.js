@@ -14,11 +14,9 @@ import { login, checkAuthStatus, fetchRecipes } from './modules/Actions/index';
 class App extends React.Component {
   componentDidMount() {
     document.title = 'In the Mood for Food';
-    const { checkAuthStatus, fetchRecipes, sortMethod } = this.props;
+    const { checkAuthStatus } = this.props;
     checkAuthStatus()
-      .then(() => {
-        fetchRecipes(sortMethod);
-      });
+      .then(() => {});
   }
 
   render() {

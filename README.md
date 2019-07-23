@@ -625,7 +625,10 @@ Documenting my progress as I move through the project.
 ## July 23
 * add API middleware called `callApi` that adds authorization headers to
   api calls
-* optimizing api calls & load time
+* add api authentication to all GET routes
+* optimizing api calls & load time! minimizing the number of times the initial
+  getToken() gets called and making sure all fetch calls are called _after_
+  getting the token.
 
 #### Notes
 * Adding authentication/authorization really slowed down the load time of
@@ -640,6 +643,9 @@ Documenting my progress as I move through the project.
   Welcome (doesn't actually need to fetch) / RecipeIndex / Profile. So
   RecipeIndex will call all the recipe fetch calls once it's ready, as
   determined by App.js
+* so what I ended up doing was call fetchRecipes() in RecipeIndex and
+  call the other individual getIngredients(), etc in RecipeInfo (since I
+  needed the route params to call the functions).
 
 ## To Do Notes - immediate task
 * add middleware to handle authentication for fetch calls

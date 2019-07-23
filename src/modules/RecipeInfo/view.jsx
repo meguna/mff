@@ -32,17 +32,13 @@ class RecipeInfo extends Component {
       match,
       setSelectedRecipe,
       selectedId,
-      fetchSelectedRecipe,
       history,
     } = this.props;
 
     if (selectedId !== +match.params.id) {
       setSelectedRecipe(+match.params.id);
     }
-    fetchSelectedRecipe(+match.params.id);
-    this.fetchIngredients();
-    this.fetchGroups();
-    this.fetchImages();
+
 
     /* Redirect page if no recipe is selected or
      * if no recipe id is passed  as a route parameter
@@ -53,7 +49,24 @@ class RecipeInfo extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { selectedId } = this.props;
+    const {
+      loadingAuth,
+      fetchSelectedRecipe,
+      match,
+      selectedId,
+    } = this.props;
+
+    if (prevProps.loadingAuth !== loadingAuth) {
+      if (!loadingAuth) {
+        if (selectedId !== -1) {
+          fetchSelectedRecipe(+match.params.id);
+          this.fetchIngredients();
+          this.fetchGroups();
+          this.fetchImages();
+        }
+      }
+    }
+
     if (selectedId !== prevProps.selectedId) {
       this.fetchIngredients();
       this.fetchGroups();
@@ -67,6 +80,7 @@ class RecipeInfo extends Component {
       throw Error();
     }
   }
+
 
   fetchGroups() {
     const { selectedId } = this.props;
@@ -183,8 +197,9 @@ RecipeInfo.propTypes = {
       id: PropTypes.string,
     }).isRequired,
   }).isRequired,
-  setSelectedRecipe: PropTypes.func,
-  fetchSelectedRecipe: PropTypes.func,
+  setSelectedRecipe: PropTypes.func.isRequired,
+  fetchSelectedRecipe: PropTypes.func.isRequired,
+  loadingAuth: PropTypes.bool.isRequired,
 };
 
 RecipeInfo.defaultProps = {
@@ -197,8 +212,6 @@ RecipeInfo.defaultProps = {
     update_date: '',
   },
   error: false,
-  setSelectedRecipe: () => {},
-  fetchSelectedRecipe: () => {},
 };
 
 export default withRouter(RecipeInfo);

@@ -27,8 +27,8 @@ class RecipeList extends Component {
     return false;
   }
 
-  componentDidUpdate(prevProps) {
-    const { error, recipes } = this.props;
+  componentDidUpdate() {
+    const { error } = this.props;
     if (error) {
       throw Error();
     }
@@ -53,7 +53,7 @@ class RecipeList extends Component {
     const {
       recipes, selectedId, loading, error, fetchMoreRecipes, listOffset, loadingAuth,
     } = this.props;
-    const { sortMethod, noMore } = this.state;
+    const { sortMethod } = this.state;
 
     return (
       <div>
