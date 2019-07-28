@@ -1,9 +1,16 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import {
+  signup,
+} from '../Actions/index';
 
-class Welcome extends Component {
+class Signup extends Component {
   componentDidMount() {
+    const { isAuthenticated, signup } = this.props;
+    if (!isAuthenticated) {
+      signup();
+    }
   }
 
   componentDidUpdate() {
@@ -15,25 +22,23 @@ class Welcome extends Component {
 
   render() {
     return (
-      <div id="welcome">
-        <p>Welcome</p>
-      </div>
+      <div id="mff-lock-container" />
     );
   }
 }
 
-Welcome.propTypes = {
+Signup.propTypes = {
   isAuthenticated: PropTypes.bool.isRequired,
-  Welcome: PropTypes.func.isRequired,
+  signup: PropTypes.func.isRequired,
 };
 
-Welcome.defaultProps = {
+Signup.defaultProps = {
 };
 
 const mapStateToProps = state => state;
 
 const mapDispatchToProps = {
-  Welcome,
+  signup,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Welcome);
+export default connect(mapStateToProps, mapDispatchToProps)(Signup);

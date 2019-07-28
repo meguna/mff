@@ -144,6 +144,17 @@ export const login = () => (dispatch) => {
     });
 };
 
+export const signup = () => (dispatch) => {
+  dispatch(loginStart());
+  Auth0Client.signUp()
+    .then((res) => {
+      dispatch(loginSuccess(res));
+    })
+    .catch((err) => {
+      loginFailure(err);
+    });
+};
+
 const notLoggedIn = () => ({
   type: AUTH_NOT_LOGGED_IN,
 });
@@ -163,25 +174,18 @@ export const checkAuthStatus = () => (dispatch) => {
     Auth0Client.getToken()
       .then((res) => {
         dispatch(loginSuccess());
-        return resolve(res);
+        resolve(res);
       })
       .catch((err) => {
-        console.error(err);
         if (err.code === 'consent_required') {
-          dispatch(loginStart());
-          Auth0Client.signIn()
-            .then((res) => {
-              dispatch(loginSuccess(res));
-            })
-            .catch((err2) => {
-              dispatch(loginFailure(err2));
-            });
+          login();
         } else if (err.code === 'login_required') {
           logout();
           dispatch(notLoggedIn());
           reject(err);
         } else {
           dispatch(loginFailure(err));
+          reject(err);
         }
       });
   });

@@ -13,7 +13,7 @@ class Auth {
       redirectUri: authConfig.rootUri,
       responseType: 'id_token token',
       scope: 'openid profile email',
-      // responseMode: 'form_post',
+      responseMode: 'web_message',
     });
 
     this.getProfile = this.getProfile.bind(this);
@@ -38,9 +38,11 @@ class Auth {
       } else {
         this.silentAuth()
           .then((res) => {
+            console.log(res);
             resolve(res.accessToken);
           })
           .catch((err) => {
+            console.error(err);
             reject(err);
           });
       }
@@ -143,10 +145,13 @@ class Auth {
   silentAuth() {
     return new Promise((resolve, reject) => {
       this.auth0.checkSession({}, (err, authResult) => {
-        if (err) return reject(err);
-        window.parent.postMessage('silent auth complete', '*');
-        this.setSession(authResult);
-        return resolve(authResult);
+        if (err) {
+          console.error(err);
+          reject(err);
+        } else {
+          this.setSession(authResult);
+          return resolve(authResult);
+        }
       });
     });
   }

@@ -650,6 +650,15 @@ Documenting my progress as I move through the project.
   call the other individual getIngredients(), etc in RecipeInfo (since I
   needed the route params to call the functions).
 
+## July 24 - 28
+* I was having a big problem where an auth0 request would just be loading
+  indefinitely and I had no idea why. I asked around on the forum, to no avail,
+  and now it's been a few days trying to figure it out and the problem just
+  disappeared. Huge mystery. I don't know what's going on but I'm moving
+  forward for now. Will be really annoying if the problem reappears. Hopefully
+  it won't.
+* Fixed some routing & redirect issues with App.js
+
 ## To Do Notes - immediate task
 * add middleware to handle authentication for fetch calls
   * move all fetch calls into redux?? think about it
