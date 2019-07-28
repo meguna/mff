@@ -1,9 +1,8 @@
 import React, { Fragment, Component } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import AuthButton from '../auth/AuthButton';
-import { checkAuthStatus } from '../Actions/index';
 
 class Header extends Component {
   componentDidMount() {
@@ -11,6 +10,10 @@ class Header extends Component {
   }
 
   render() {
+    const { location } = this.props;
+    if (location.pathname === '/welcome' || location.pathname === 'logout') {
+      return null;
+    }
     return (
       <Fragment>
         <header className="app-main-header">
@@ -25,16 +28,11 @@ class Header extends Component {
 }
 
 Header.propTypes = {
-  checkAuthStatus: PropTypes.func.isRequired,
-};
-
-Header.defaultProps = {
+  location: PropTypes.shape({
+    pathname: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
 const mapStateToProps = state => state;
 
-const mapDispatchToProps = {
-  checkAuthStatus,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default connect(mapStateToProps)(withRouter(Header));

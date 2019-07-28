@@ -35,8 +35,7 @@ class App extends React.Component {
           {!loadingAuth && !isAuthenticated && (
             <Redirect to="/welcome" />
           )}
-          {/* Don't display header on welcome page */}
-          {window.location.pathname !== '/welcome' && <Header />}
+          <Header />
           <Switch>
             <Route exact path="/signup" component={Signup} />
             <Route exact path="/login" component={Login} />

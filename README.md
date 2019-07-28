@@ -685,13 +685,15 @@ Notes
 * don't load page until auth is done
 * fix bug in callApi where fetch request options were not being combined
   correctly
+* fixes with making sure header stays hidden when navigating to /logout &
+  /welcome
 
 #### Lessons
 * more promises! Today I learned that the `.catch()` method on a Promise is
   the same thing as calling `then(null, errorCallback)`. The implication of
   this is that calling `then(successCb, errorCb)` is not the same as calling
   `.then().catch()` because the latter catches errors in the first `then()`
-  as well as errors in the promise itself. (resource)[https://bit.ly/2Mh4HFz]
+  as well as errors in the promise itself. [resource](https://bit.ly/2Mh4HFz)
 * lots more work with `Object.assign()`. To copy values for nested objects,
   call `Object.assign()` twice - once for the parent and once for the inner
   child object that you want to copy.
