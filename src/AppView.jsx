@@ -6,29 +6,27 @@ import RecipeIndex from './modules/RecipeIndex';
 import AppErrorBoundary from './modules/errorBoundaries/AppErrorBoundary';
 import Login from './modules/auth/Login';
 import Logout from './modules/auth/Logout';
+import Signup from './modules/auth/Signup.jsx';
 import Welcome from './modules/Welcome';
 import Header from './modules/common/Header';
 
 class App extends React.Component {
   componentDidMount() {
     document.title = 'In the Mood for Food';
-    const { checkAuthStatus } = this.props;
+    const { checkAuthStatus, fetchRecipes, sortMethod } = this.props;
     checkAuthStatus()
       .then((res) => {
-        console.log('success response');
-        console.log(res);
       })
       .catch((err) => {
-        console.log('error in cas promise');
-        console.error(err);
+      })
+      .finally(() => {
+        fetchRecipes(sortMethod);
       });
   }
 
   render() {
-    console.log(window.location.pathname);
     const { loadingAuth, isAuthenticated } = this.props;
     if (loadingAuth) {
-      console.log('still loading');
       return null;
     }
     return (
@@ -40,11 +38,11 @@ class App extends React.Component {
           {/* Don't display header on welcome page */}
           {window.location.pathname !== '/welcome' && <Header />}
           <Switch>
+            <Route exact path="/signup" component={Signup} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/logout" component={Logout} />
             <Route exact path="/welcome" component={Welcome} />
             <Route
-              exact
               path="/"
               render={props => (
                 <AppErrorBoundary>

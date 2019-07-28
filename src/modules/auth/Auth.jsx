@@ -38,7 +38,6 @@ class Auth {
       } else {
         this.silentAuth()
           .then((res) => {
-            console.log(res);
             resolve(res.accessToken);
           })
           .catch((err) => {
@@ -74,6 +73,7 @@ class Auth {
       sessionStorage.setItem('stateid', nonce);
     }
     const options = {
+      closable: false,
       autoclose: true,
       avatar: null,
       allowedConnections: ['Username-Password-Authentication'],
@@ -118,10 +118,22 @@ class Auth {
         }
       });
       lock.on('unrecoverable_error', (err) => {
+        lock.show({
+          flashMessage: {
+            type: 'error',
+            text: err.errorDescription,
+          },
+        });
         console.error(err);
         reject(err);
       });
       lock.on('authorization_error', (err) => {
+        lock.show({
+          flashMessage: {
+            type: 'error',
+            text: err.errorDescription,
+          },
+        });
         console.error(err);
         reject(err);
       });

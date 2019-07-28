@@ -6,6 +6,10 @@ import { ING_FIELD_BLANK, ING_GROUP_BLANK } from '../common/initial';
 class NewRecipeForm extends Component {
   componentDidMount() {
     const { setSelectedRecipe } = this.props;
+    /* This function is required for the form request to go through properly.
+     * Invariant: maintain selected recipe ID always. When none applicable,
+     * use -1.
+     */
     setSelectedRecipe(-1);
   }
 
@@ -37,7 +41,7 @@ class NewRecipeForm extends Component {
           notes=""
           name=""
           size=""
-          fetchUrl="http://localhost:3005/api/createnewrecipe"
+          fetchUrl="/createnewrecipe"
           messages={messages}
         />
       </Fragment>

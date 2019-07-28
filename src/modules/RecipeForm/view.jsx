@@ -8,6 +8,7 @@ import IngFieldsHeader from './components/IngFieldsHeader';
 import RecipeImages from './components/RecipeImages';
 import FormSubHeader from './components/FormSubHeader';
 import { ING_FIELD_BLANK, ING_GROUP_BLANK } from '../common/initial';
+import { callApi } from '../helpers';
 import './styles.css';
 
 class RecipeForm extends Component {
@@ -167,7 +168,7 @@ class RecipeForm extends Component {
     });
     const groupCollect = (ingCollect.length === 0) ? [] : groups;
 
-    fetch(fetchUrl, {
+    callApi(fetchUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -181,12 +182,6 @@ class RecipeForm extends Component {
         images,
       }),
     })
-      .then((res, err) => {
-        if (res.ok) {
-          return res.json();
-        }
-        throw new Error(err);
-      })
       .then((res) => {
         this.setState({ ...stateOnSubmit });
         window.scrollTo(0, 0);
@@ -315,11 +310,13 @@ RecipeForm.propTypes = {
   selectedId: PropTypes.number.isRequired,
   setSelectedRecipe: PropTypes.func.isRequired,
   sortMethod: PropTypes.string,
-  submitCallback: PropTypes.func,
   messages: PropTypes.shape({
     buttonAction: PropTypes.string,
     failMessage: PropTypes.string,
     successMessage: PropTypes.string,
+  }).isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
   }).isRequired,
 };
 
@@ -331,7 +328,6 @@ RecipeForm.defaultProps = {
   name: '',
   size: '',
   sortMethod: 'update_date',
-  submitCallback: () => {},
 };
 
 export default withRouter(RecipeForm);

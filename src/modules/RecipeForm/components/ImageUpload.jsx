@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import StatusInfo from '../../common/StatusInfo';
+import { callApi } from '../../helpers';
 
 const MAX_FILE_SIZE = 1024 * 1024 * 2; // 2MB
 const MAX_FILE_COUNT = 5;
@@ -62,11 +63,10 @@ class ImageUpload extends Component {
         status: 'load',
         statusMessage: 'Your image(s) are being uploaded.',
       }, () => {
-        fetch('http://localhost:3005/api/addimage', {
+        callApi('/addimage', {
           method: 'POST',
           body: data,
         })
-          .then(res => res.json())
           .then((res) => {
             this.setState({
               status: 'success',

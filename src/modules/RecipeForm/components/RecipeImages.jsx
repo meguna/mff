@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import ImageUpload from './ImageUpload';
+import { callApi } from '../../helpers';
 
 class RecipeImages extends Component {
   constructor(props) {
@@ -49,7 +50,7 @@ class RecipeImages extends Component {
       onImageStateUpdate(newImageState);
     });
     // API call to actually delete the images from the server
-    fetch(`http://localhost:3005/api/deleteImageWithPath/${path}`, {
+    callApi(`/deleteImageWithPath/${path}`, {
       method: 'DELETE',
     })
       .catch((err) => {

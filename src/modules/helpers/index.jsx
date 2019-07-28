@@ -3,18 +3,24 @@ import Auth0Client from '../auth/Auth';
 export const API_ROOT = 'http://localhost:3005/api';
 
 export const callApi = (endpoint, options) => {
-  const fetchOptions = !options ? {} : options;
   return new Promise((resolve, reject) => {
     Auth0Client.getToken().then((token) => {
-      fetch(`${API_ROOT}${endpoint}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        ...fetchOptions,
-      })
-        .then((res, err) => {
+      /* combine headers from options parameter */
+      let headers = {
+        Authorization: `Bearer ${token}`,
+      };
+      if (options && options.headers) {
+        headers = Object.assign({}, headers, options.headers);
+      }
+      /* combine all fetch options, including headers */
+      let fetchOptions = { headers };
+      if (options) {
+        fetchOptions = Object.assign({}, options, { headers });
+      }
+      fetch(`${API_ROOT}${endpoint}`, fetchOptions)
+        .then((res) => {
           if (!res.ok) {
-            throw new Error(err);
+            throw new Error(res.statusText);
           }
           return res;
         })

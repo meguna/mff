@@ -20,9 +20,8 @@ class RecipeInfo extends Component {
       groups: [],
       groupCount: 1,
       images: [],
-      loadingIngredients: true,
-      loadingGroups: true,
-      loadingImages: true,
+      info: [],
+      loadingInfo: true,
       fetchError: false,
     };
   }
@@ -33,12 +32,21 @@ class RecipeInfo extends Component {
       setSelectedRecipe,
       selectedId,
       history,
+      loadingAuth,
     } = this.props;
 
     if (selectedId !== +match.params.id) {
       setSelectedRecipe(+match.params.id);
     }
 
+    /* Run fetchInfo() when a user first navigates to this page
+     * from elsewhere on the website
+     */
+    if (!loadingAuth) {
+      if (selectedId !== -1) {
+        this.fetchRecipeInfo();
+      }
+    }
 
     /* Redirect page if no recipe is selected or
      * if no recipe id is passed  as a route parameter
@@ -51,26 +59,19 @@ class RecipeInfo extends Component {
   componentDidUpdate(prevProps, prevState) {
     const {
       loadingAuth,
-      fetchSelectedRecipe,
-      match,
       selectedId,
     } = this.props;
 
-    if (prevProps.loadingAuth !== loadingAuth) {
+    /* Run fetchInfo() once when a user first navigates to this page
+     * (not from a different page on the website) and the call needs
+     * to wait until the user is authenticated.
+     */
+    if (prevProps.loadingAuth !== loadingAuth || prevProps.selectedId !== selectedId) {
       if (!loadingAuth) {
         if (selectedId !== -1) {
-          fetchSelectedRecipe(+match.params.id);
-          this.fetchIngredients();
-          this.fetchGroups();
-          this.fetchImages();
+          this.fetchRecipeInfo();
         }
       }
-    }
-
-    if (selectedId !== prevProps.selectedId) {
-      this.fetchIngredients();
-      this.fetchGroups();
-      this.fetchImages();
     }
 
     /* If above fetch calls causes a problem, throw error.
@@ -81,76 +82,39 @@ class RecipeInfo extends Component {
     }
   }
 
-
-  fetchGroups() {
+  fetchRecipeInfo() {
     const { selectedId } = this.props;
-    this.setState({ loadingGroups: true }, () => {
-      callApi(`/getingredientgroups/${selectedId}`)
-        .then((res) => {
-          let groups = res;
-          if (res.length === 0) {
-            groups = [{ ...ING_GROUP_BLANK }];
-          }
-          this.setState({
-            groups,
-            groupCount: res.length,
-            loadingGroups: false,
-            fetchError: false,
-          });
-        })
-        .catch((err) => {
-          console.error(err);
-          this.setState({ fetchError: true });
+    callApi(`/getrecipeinfo/${selectedId}`)
+      .then((res) => {
+        let { groups } = res;
+        if (groups.length === 0) {
+          groups = [{ ...ING_GROUP_BLANK }];
+        }
+        this.setState({
+          groups,
+          ingredients: res.ingredients,
+          images: res.images,
+          groupCount: groups.length,
+          info: res.info,
+          loadingInfo: false,
+          fetchError: false,
         });
-    });
-  }
-
-  fetchIngredients() {
-    const { selectedId } = this.props;
-    this.setState({ loadingIngredients: true }, () => {
-      callApi(`/getingredients/${selectedId}`)
-        .then((res) => {
-          this.setState({
-            ingredients: res,
-            loadingIngredients: false,
-            fetchError: false,
-          });
-        })
-        .catch((err) => {
-          console.error(err);
-          this.setState({ fetchError: true });
-        });
-    });
-  }
-
-  fetchImages() {
-    const { selectedId } = this.props;
-    this.setState({ loadingImages: true }, () => {
-      callApi(`/getrecipeimages/${selectedId}`)
-        .then((res) => {
-          this.setState({
-            images: res,
-            loadingImages: false,
-            fetchError: false,
-          });
-        })
-        .catch((err) => {
-          console.error(err);
-          this.setState({ fetchError: true });
-        });
-    });
+      })
+      .catch((err) => {
+        console.error(err);
+        this.setState({ fetchError: true });
+      });
   }
 
   render() {
-    const { selectedId, error, selected } = this.props;
+    const { selectedId, error } = this.props;
     const {
-      loadingGroups,
+      loadingInfo,
       groups,
       groupCount,
       ingredients,
       images,
-      loadingIngredients,
-      loadingImages,
+      info,
       fetchError,
     } = this.state;
 
@@ -163,18 +127,18 @@ class RecipeInfo extends Component {
         <AddRecipeButton />
         <EditRecipeButton id={selectedId} />
         <DeleteRecipeButton id={selectedId} />
-        <p className="recipe-info-name">{selected.name}</p>
-        <RecipeSize size={selected.size} />
-        {!loadingIngredients && !loadingGroups && (
-          <IngredientGroup
-            ingredients={ingredients}
-            groups={groups}
-            groupCount={groupCount}
-          />
-        )}
-        <RecipeNotes notes={selected.notes} />
-        {!loadingImages && (
-          <RecipeImages images={images} name={selected.name} />
+        <p className="recipe-info-name">{info.name}</p>
+        <RecipeSize size={info.size} />
+        {!loadingInfo && (
+          <Fragment>
+            <IngredientGroup
+              ingredients={ingredients}
+              groups={groups}
+              groupCount={groupCount}
+            />
+            <RecipeNotes notes={info.notes} />
+            <RecipeImages images={images} name={info.name} />
+          </Fragment>
         )}
       </Fragment>
     );
@@ -182,14 +146,6 @@ class RecipeInfo extends Component {
 }
 
 RecipeInfo.propTypes = {
-  selected: PropTypes.shape({
-    create_date: PropTypes.string,
-    id: PropTypes.number,
-    name: PropTypes.string,
-    notes: PropTypes.string,
-    size: PropTypes.string,
-    update_date: PropTypes.string,
-  }),
   error: PropTypes.bool,
   selectedId: PropTypes.number.isRequired,
   match: PropTypes.shape({
@@ -198,19 +154,13 @@ RecipeInfo.propTypes = {
     }).isRequired,
   }).isRequired,
   setSelectedRecipe: PropTypes.func.isRequired,
-  fetchSelectedRecipe: PropTypes.func.isRequired,
   loadingAuth: PropTypes.bool.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
 };
 
 RecipeInfo.defaultProps = {
-  selected: {
-    create_date: '',
-    id: -1,
-    name: '',
-    notes: '',
-    size: '',
-    update_date: '',
-  },
   error: false,
 };
 

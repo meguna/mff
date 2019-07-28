@@ -5,9 +5,6 @@ import {
   FETCH_MORE_RECIPES_START,
   FETCH_MORE_RECIPES_SUCCESS,
   FETCH_MORE_RECIPES_FAILURE,
-  FETCH_SELECTED_RECIPE_START,
-  FETCH_SELECTED_RECIPE_SUCCESS,
-  FETCH_SELECTED_RECIPE_FAILURE,
   SET_SELECTED_RECIPE,
   SET_NOTIFICATION_DETAILS,
   AUTH_START,
@@ -17,7 +14,7 @@ import {
   AUTH_NOT_LOGGED_IN,
 } from './ActionTypes';
 import Auth0Client from '../auth/Auth';
-import callApi from '../helpers';
+import { callApi } from '../helpers';
 
 /**
  * fetch a list of recipes for the first time
@@ -84,29 +81,6 @@ const setRecipe = id => ({
 
 export const setSelectedRecipe = id => (dispatch) => {
   dispatch(setRecipe(id));
-};
-
-
-const fetchSelectedStart = id => ({
-  type: FETCH_SELECTED_RECIPE_START,
-  payload: id,
-});
-
-const fetchSelectedSuccess = recipes => ({
-  type: FETCH_SELECTED_RECIPE_SUCCESS,
-  payload: recipes,
-});
-
-const fetchSelectedFailure = error => ({
-  type: FETCH_SELECTED_RECIPE_FAILURE,
-  payload: error,
-});
-
-export const fetchSelectedRecipe = id => (dispatch) => {
-  dispatch(fetchSelectedStart(id));
-  callApi(`/getrecipe/${id}`)
-    .then(res => dispatch(fetchSelectedSuccess(res[0])))
-    .catch(err => dispatch(fetchSelectedFailure(err)));
 };
 
 const setNotificationDetails = (status, message) => ({
@@ -185,6 +159,7 @@ export const checkAuthStatus = () => (dispatch) => {
           reject(err);
         } else {
           dispatch(loginFailure(err));
+          console.log('error!');
           reject(err);
         }
       });

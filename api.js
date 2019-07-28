@@ -9,6 +9,8 @@ const formidable = require('formidable');
 const jwt = require('express-jwt');
 const jwksRsa = require('jwks-rsa');
 
+/** Constants */
+
 const app = express();
 
 const connection = mysql.createConnection({
@@ -20,24 +22,17 @@ const connection = mysql.createConnection({
   multipleStatements: true,
 });
 
-connection.connect((err) => {
-  if (err) throw err;
-});
-
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
-app.use(cors());
-
-const server = app.listen(3005, '127.0.0.1');
-server.timeout = 1000 * 60 * 10;
+const authConfig = {
+  domain: 'dev-jknyt6s8.auth0.com',
+  audience: 'https://dev-jknyt6s8.auth0.com/userinfo',
+};
 
 /**
-   * function to check for empty strings and replace them with some value.
-   * default value is 'NULL', the null value in mysql.
-   * if a second parameter is passed, it is used as the replacement value.
-   * otherwise, the given input is sanitized for mysql.
-   */
+  * function to check for empty strings and replace them with some value.
+  * default value is 'NULL', the null value in mysql.
+  * if a second parameter is passed, it is used as the replacement value.
+  * otherwise, the given input is sanitized for mysql.
+  */
 const sanitize = (input, replaceVal) => {
   let defaultOnNull = 'NULL';
   if (replaceVal) defaultOnNull = replaceVal;
@@ -45,11 +40,6 @@ const sanitize = (input, replaceVal) => {
     return defaultOnNull;
   }
   return mysql.escape(input);
-};
-
-const authConfig = {
-  domain: 'dev-jknyt6s8.auth0.com',
-  audience: 'https://dev-jknyt6s8.auth0.com/userinfo',
 };
 
 const checkJwt = jwt({
@@ -63,6 +53,20 @@ const checkJwt = jwt({
   issuer: `https://${authConfig.domain}/`,
   algorithms: ['RS256'],
 });
+
+/** server */
+
+connection.connect((err) => {
+  if (err) throw err;
+});
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+app.use(cors());
+
+const server = app.listen(3005, '127.0.0.1');
+server.timeout = 1000 * 60 * 10;
 
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
@@ -177,11 +181,56 @@ app.get('/api/getrecipeimages/:id', checkJwt, (req, res) => {
   });
 });
 
+app.get('/api/getrecipeinfo/:id', checkJwt, (req, res) => {
+  const id = mysql.escape(req.params.id);
+  connection.query(`
+    SELECT * FROM recipe_ingredients 
+    WHERE recipe_ingredients.recipe_id = ${id};
+
+    SELECT * FROM recipe_images
+    WHERE recipe_images.recipe_id = ${id}
+    ORDER BY recipe_images.order;
+
+    SELECT * FROM ingredient_groups 
+    WHERE ingredient_groups.recipe_id = ${id}
+    ORDER BY ingredient_groups.group_id;
+
+    SELECT * FROM recipes
+    WHERE id = ${id};
+    `,
+  (error, results) => {
+    if (error) throw error;
+    const ingredients = results[0].map(ing => ({
+      name: ing.name,
+      amount: ing.amount,
+      notes: ing.notes,
+      groupId: ing.group_id,
+      elemId: ing.id,
+    }));
+    const groups = results[2].map(group => ({
+      name: group.name,
+      notes: group.notes,
+      groupId: group.group_id,
+      elemId: group.id,
+    }));
+    const images = results[1].map(img => ({
+      imagePath: img.image_path,
+      elemId: img.id,
+    }));
+    const info = results[3][0];
+    res.end(JSON.stringify({
+      images,
+      groups,
+      ingredients,
+      info,
+    }));
+  });
+});
 /**
  * endpoint for adding a new image to /static/userImages
  * takes: an HTML File object
  */
-app.post('/api/addimage', (req, res) => {
+app.post('/api/addimage', checkJwt, (req, res) => {
   const form = formidable.IncomingForm();
   const fileNames = [];
   form.uploadDir = `${__dirname}/static/userImages`;
@@ -208,7 +257,7 @@ app.post('/api/addimage', (req, res) => {
  * takes: name (string), notes (string), size(string),
  *        ingredients (array of objects), groups (array of objects)
  */
-app.post('/api/createnewrecipe', (req, res) => {
+app.post('/api/createnewrecipe', checkJwt, (req, res) => {
   const recipeName = mysql.escape(req.body.name);
   const recipeSize = sanitize(req.body.size);
   const recipeNotes = sanitize(req.body.notes);
@@ -256,7 +305,7 @@ app.post('/api/createnewrecipe', (req, res) => {
   );
 });
 
-app.post('/api/updateRecipe/:id', (req, res) => {
+app.post('/api/updateRecipe/:id', checkJwt, (req, res) => {
   const recipeId = +req.params.id;
   const recipeName = sanitize(req.body.name);
   const recipeSize = sanitize(req.body.size);
@@ -325,7 +374,7 @@ app.post('/api/updateRecipe/:id', (req, res) => {
   );
 });
 
-app.delete('/api/deleteImageWithPath/:path', (req, res) => {
+app.delete('/api/deleteImageWithPath/:path', checkJwt, (req, res) => {
   try {
     fs.unlinkSync(`${__dirname}/static/userImages/${req.params.path}`);
   } catch (err) {
@@ -334,7 +383,7 @@ app.delete('/api/deleteImageWithPath/:path', (req, res) => {
   res.end(JSON.stringify(req.params.path));
 });
 
-app.delete('/api/deleteRecipe/:id', (req, res) => {
+app.delete('/api/deleteRecipe/:id', checkJwt, (req, res) => {
   const recipeId = +req.params.id;
   let images = [];
   connection.query(`

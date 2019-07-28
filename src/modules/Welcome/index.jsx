@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 class Welcome extends Component {
   componentDidMount() {
@@ -17,6 +18,12 @@ class Welcome extends Component {
     return (
       <div id="welcome">
         <p>Welcome</p>
+        <div>
+          <Link to="/login">Log In</Link>
+        </div>
+        <div>
+          <Link to="/signup">Sign Up</Link>
+        </div>
       </div>
     );
   }
@@ -24,7 +31,9 @@ class Welcome extends Component {
 
 Welcome.propTypes = {
   isAuthenticated: PropTypes.bool.isRequired,
-  Welcome: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
 };
 
 Welcome.defaultProps = {

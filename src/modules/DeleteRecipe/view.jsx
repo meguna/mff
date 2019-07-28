@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import StatusInfo from '../common/StatusInfo';
+import { callApi } from '../helpers';
 import './styles.css';
 
 class DeleteRecipe extends Component {
@@ -29,7 +30,7 @@ class DeleteRecipe extends Component {
     } = this.props;
 
     e.preventDefault();
-    fetch(`http://localhost:3005/api/deleteRecipe/${selectedId}`, {
+    callApi(`/deleteRecipe/${selectedId}`, {
       method: 'DELETE',
     })
       .then(() => {
@@ -92,6 +93,9 @@ DeleteRecipe.propTypes = {
   }).isRequired,
   fetchRecipes: PropTypes.func.isRequired,
   sortMethod: PropTypes.string,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
 };
 
 DeleteRecipe.defaultProps = {

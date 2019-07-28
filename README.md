@@ -29,7 +29,6 @@ Documenting my progress as I move through the project.
   take care when setting up production version
 * serviceworkers? 
 
-
 ## May 31
 
 * Add method to grab list of ingredients from ingredient database
@@ -651,17 +650,55 @@ Documenting my progress as I move through the project.
   needed the route params to call the functions).
 
 ## July 24 - 28
+* Fixed (? see below) problem where authentication was loading indefinitely
+* Fixed some routing & redirect issues with App.js
+
+Notes
 * I was having a big problem where an auth0 request would just be loading
   indefinitely and I had no idea why. I asked around on the forum, to no avail,
   and now it's been a few days trying to figure it out and the problem just
   disappeared. Huge mystery. I don't know what's going on but I'm moving
   forward for now. Will be really annoying if the problem reappears. Hopefully
   it won't.
-* Fixed some routing & redirect issues with App.js
+* no idea why a successful fetch in checkAuthStatus returns a promise
+  rejection (with the correct successful result as the error payload). trying
+  to figure it out
+
+#### Lessons
+* chrome devtools "Execution Context Selector" (iframes log their shit there)
+* chrome devtools - use verbose console logs
+* chrome devtools - turn on XHR logs in settings
+
+## July 28
+* merge get recipe fetch calls - big efficiency jump
+* add Signup component, route, and redux action
+* implement callApi middleware for ALL fetch calls that require authentication!
+* fix problem i was having with wonky routes (remove `exact` from `/` route)
+  lol
+* instead of using `selected` object stored in redux, grab notes/name/size of
+  recipe in `/recipeinfo` fetch call (since you're already doing that anyway).
+  This was a big decision but ultimately it's for the better I think. Cleaner
+  and more efficient. Accordingly, I got rid of the `fetchSelectedRecipe()`
+  func
+* minor style change: title font Souvenir -> Canela
+* improved documentation/comments
+* don't load page until auth is done
+* fix bug in callApi where fetch request options were not being combined
+  correctly
+
+#### Lessons
+* more promises! Today I learned that the `.catch()` method on a Promise is
+  the same thing as calling `then(null, errorCallback)`. The implication of
+  this is that calling `then(successCb, errorCb)` is not the same as calling
+  `.then().catch()` because the latter catches errors in the first `then()`
+  as well as errors in the promise itself. (resource)[https://bit.ly/2Mh4HFz]
+* lots more work with `Object.assign()`. To copy values for nested objects,
+  call `Object.assign()` twice - once for the parent and once for the inner
+  child object that you want to copy.
 
 ## To Do Notes - immediate task
-* add middleware to handle authentication for fetch calls
-  * move all fetch calls into redux?? think about it
+* Welcome page
+* securely serve images
 * add user_id to database columns so that only their recipes are retrieved.
 * make a Profile section where users can change passwords, emails, delete
   their account, etc.

@@ -6,9 +6,6 @@ import {
   FETCH_MORE_RECIPES_SUCCESS,
   FETCH_MORE_RECIPES_FAILURE,
   SET_SELECTED_RECIPE,
-  FETCH_SELECTED_RECIPE_START,
-  FETCH_SELECTED_RECIPE_SUCCESS,
-  FETCH_SELECTED_RECIPE_FAILURE,
   SET_NOTIFICATION_DETAILS,
   AUTH_START,
   LOGIN_SUCCESS,
@@ -24,7 +21,6 @@ const INITIAL_STATE = {
   loading: false,
   listOffset: 0,
   sortMethod: 'update_date',
-  selected: {},
   notification: {
     message: '',
     status: '',
@@ -44,17 +40,9 @@ const reducer = (state = INITIAL_STATE, action) => {
     };
   }
   case FETCH_RECIPES_SUCCESS: {
-    let selectedRecipeFiltered = state.selected;
-    if (state.selected.length === 0 && state.recipes) {
-      selectedRecipeFiltered = action.payload.filter(rec => state.selectedId === rec.id)[0];
-      if (selectedRecipeFiltered === undefined) {
-        selectedRecipeFiltered = {};
-      }
-    }
     return {
       ...state,
       recipes: [...action.payload],
-      selected: selectedRecipeFiltered,
       error: null,
       loading: false,
       listOffset: action.payload.length,
@@ -69,13 +57,6 @@ const reducer = (state = INITIAL_STATE, action) => {
     };
   }
   case FETCH_MORE_RECIPES_SUCCESS: {
-    let selectedRecipeFiltered = state.selected;
-    if (state.selected.length === 0 && state.recipes) {
-      selectedRecipeFiltered = action.payload.filter(rec => state.selectedId === rec.id)[0];
-      if (selectedRecipeFiltered === undefined) {
-        selectedRecipeFiltered = {};
-      }
-    }
     if (action.payload.length === 0) {
       return state;
     }
@@ -85,41 +66,16 @@ const reducer = (state = INITIAL_STATE, action) => {
       error: null,
       loading: false,
       listOffset: state.recipes.length + action.payload.length,
-      selected: selectedRecipeFiltered,
     };
   }
   case SET_SELECTED_RECIPE: {
-    let selectedRecipeFiltered = state.selected;
-    if (state.recipes) {
-      selectedRecipeFiltered = state.recipes.filter(rec => action.payload === rec.id)[0];
-      if (selectedRecipeFiltered === undefined) {
-        selectedRecipeFiltered = {};
-      }
-    }
     return {
       ...state,
       selectedId: action.payload,
-      selected: selectedRecipeFiltered,
-    };
-  }
-  case FETCH_SELECTED_RECIPE_START: {
-    return {
-      ...state,
-      error: null,
-      loading: true,
-      selectedId: action.payload,
-    };
-  }
-  case FETCH_SELECTED_RECIPE_SUCCESS: {
-    return {
-      ...state,
-      loading: false,
-      selected: { ...action.payload },
     };
   }
   case FETCH_RECIPES_FAILURE:
   case FETCH_MORE_RECIPES_FAILURE:
-  case FETCH_SELECTED_RECIPE_FAILURE:
   case LOGIN_FAILURE:
     console.error(action.payload);
     return {

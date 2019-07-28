@@ -30,6 +30,9 @@ class Signup extends Component {
 Signup.propTypes = {
   isAuthenticated: PropTypes.bool.isRequired,
   signup: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
 };
 
 Signup.defaultProps = {
