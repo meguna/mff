@@ -687,6 +687,7 @@ Notes
   correctly
 * fixes with making sure header stays hidden when navigating to /logout &
   /welcome
+* handle expired token (run checkSession if token at hand is already expired)
 
 #### Lessons
 * more promises! Today I learned that the `.catch()` method on a Promise is
@@ -696,21 +697,29 @@ Notes
   as well as errors in the promise itself. [resource](https://bit.ly/2Mh4HFz)
 * lots more work with `Object.assign()`. To copy values for nested objects,
   call `Object.assign()` twice - once for the parent and once for the inner
-  child object that you want to copy.
+  child object that you want to copy. [https://bit.ly/2YaFGCT](source)
+* every `<Route>` component renders *something* - if nothing matches, then it
+  renders `null`, if something matches it renders a component. So if the route
+  matches multiple `<Route>`s, then all of them render something.
 
 ## To Do Notes - immediate task
+* handle expired access token (different from id token)
 * Welcome page
 * securely serve images
+  * no auth, but security through obscurity - rename /userimages to
+    something a little more discreet and add UUIDs to filenames so they're
+    harder to copy. add same size div on top of image so that gets selected
+    if someone inspects element.
 * add user_id to database columns so that only their recipes are retrieved.
 * make a Profile section where users can change passwords, emails, delete
   their account, etc.
 
 ## To Do Notes - Medium
 
+* add note on form saying to click on the box to get a new box for ingredient
 * convert to styled-components?
 * modularize Express API - reference
   [here](http://catlau.co/how-to-modularize-routes-with-the-express-router/)
-* add authentication to database
 * refactor reducers - divide into separate reducers & lint code
 * does `loading...` message take a little too long on RecipeForm? Investigate
 * editRecipe warning on navigating away from unsaved changes
@@ -718,7 +727,7 @@ Notes
 * change document titles according to page
 * change error message for "load more" to "no more to load" when there 
   is no more to load
-* add maximum number of ingredients & ingredient groups (just in case)
+* add maximum number of ingredients & ingredient groups in form (just in case)
 
 ## Tasks to consider
 
@@ -730,7 +739,7 @@ Notes
 * FUN feature: color picker to choose a theme (replace --key-red in CSS) -
   forest green! etc.
 
-## General Workflow Plan
+## General Workflow Overview
 
 * ~~planning~~
 * ~~set up db~~
@@ -750,6 +759,9 @@ Notes
 * graphics / illustrations
 * deploy to web
 * set up demo page 
+
+#### Additional Goals
+
 * mobile dev with React Mobile
 * deploy to iOS App Store
 * AI/OCR to scan in handwritten notes & automatically input them

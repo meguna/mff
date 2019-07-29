@@ -33,7 +33,7 @@ class Auth {
 
   getToken() {
     return new Promise((resolve, reject) => {
-      if (this.accessToken !== undefined) {
+      if (this.accessToken !== undefined && this.isAuthenticated()) {
         resolve(this.accessToken);
       } else {
         this.silentAuth()
