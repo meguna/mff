@@ -2,8 +2,6 @@ import auth0 from 'auth0-js';
 import Auth0Lock from 'auth0-lock';
 import authConfig from '../../auth_config.json';
 
-require('dotenv').config();
-
 class Auth {
   constructor() {
     this.auth0 = new auth0.WebAuth({

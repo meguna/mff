@@ -702,7 +702,13 @@ Notes
   renders `null`, if something matches it renders a component. So if the route
   matches multiple `<Route>`s, then all of them render something.
 
+## Aug 1
+* add user_id database column
+* check that the user calling the API endpoints is authorized to view/edit
+  that recipe id! whew
+
 ## To Do Notes - immediate task
+* randomize paths to recipes so that ids are not exposed
 * handle expired access token (different from id token)
 * Welcome page
 * securely serve images

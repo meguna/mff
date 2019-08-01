@@ -42,6 +42,8 @@ const sanitize = (input, replaceVal) => {
   return mysql.escape(input);
 };
 
+/* middlewares */
+
 const checkJwt = jwt({
   secret: jwksRsa.expressJwtSecret({
     cache: true,
@@ -54,7 +56,28 @@ const checkJwt = jwt({
   algorithms: ['RS256'],
 });
 
-/** server */
+/** middleware for parameterized routes. checks that user calling the
+  * endpoint is authorized to edit/view the specified recipe by recipe ID.
+  * requires that checkJwt is called before it so that it has access to
+  * auth information
+  */
+const checkAuthorized = (req, res, next) => {
+  const id = mysql.escape(req.params.id);
+  const checkAuthorizedQuery = `
+    SELECT user_id FROM recipes
+    WHERE id = ${id}
+  `;
+  connection.query(checkAuthorizedQuery, (authError, authResults) => {
+    if (authError) throw new Error(authError);
+    if (authResults[0].user_id === req.user.sub) {
+      next();
+    } else {
+      throw new Error('Unauthorized');
+    }
+  });
+};
+
+/* server */
 
 connection.connect((err) => {
   if (err) throw err;
@@ -75,6 +98,8 @@ app.use((req, res, next) => {
   next();
 });
 
+/* endpoints */
+
 app.get('/api/getrecipes/offset=:offset-sort=:sort', checkJwt, (req, res) => {
   let order = 'DESC';
   if (req.params.sort === 'name') {
@@ -82,6 +107,7 @@ app.get('/api/getrecipes/offset=:offset-sort=:sort', checkJwt, (req, res) => {
   }
   connection.query(`
     SELECT * FROM recipes
+    WHERE recipes.user_id = '${req.user.sub}'
     ORDER BY recipes.${req.params.sort} ${order}
     LIMIT ${+req.params.offset},5
     `,
@@ -98,6 +124,7 @@ app.get('/api/getrecipes/sort=:sort', checkJwt, (req, res) => {
   }
   const query = `
     SELECT * FROM recipes
+    WHERE recipes.user_id = '${req.user.sub}'
     ORDER BY recipes.${req.params.sort} ${order}
     LIMIT 5
     `;
@@ -107,10 +134,10 @@ app.get('/api/getrecipes/sort=:sort', checkJwt, (req, res) => {
   });
 });
 
-app.get('/api/getrecipe/:id', checkJwt, (req, res) => {
+app.get('/api/getrecipe/:id', checkJwt, checkAuthorized, (req, res) => {
   connection.query(`
     SELECT * FROM recipes
-    WHERE id = ${+req.params.id}
+    WHERE id = ${+req.params.id} AND recipes.user_id = '${req.user.sub}'
     `,
   (error, results) => {
     if (error) throw error;
@@ -118,74 +145,12 @@ app.get('/api/getrecipe/:id', checkJwt, (req, res) => {
   });
 });
 
-app.get('/api/getingredients', checkJwt, (req, res) => {
-  connection.query(`
-    SELECT * FROM recipe_ingredients
-    ORDER BY recipe_ingredients.update_date
-    `,
-  (error, results) => {
-    if (error) throw error;
-    res.end(JSON.stringify(results));
-  });
-});
-
-app.get('/api/getingredients/:id', checkJwt, (req, res) => {
-  connection.query(`
-    SELECT * FROM recipe_ingredients 
-    WHERE recipe_ingredients.recipe_id = ${mysql.escape(req.params.id)}
-    `,
-  (error, results) => {
-    if (error) throw error;
-    const modified = results.map(ing => ({
-      name: ing.name,
-      amount: ing.amount,
-      notes: ing.notes,
-      groupId: ing.group_id,
-      elemId: ing.id,
-    }));
-    res.end(JSON.stringify(modified));
-  });
-});
-
-app.get('/api/getingredientgroups/:id', checkJwt, (req, res) => {
-  connection.query(`
-    SELECT * FROM ingredient_groups 
-    WHERE ingredient_groups.recipe_id = ${mysql.escape(req.params.id)}
-    ORDER BY ingredient_groups.group_id
-    `,
-  (error, results) => {
-    if (error) throw error;
-    const modified = results.map(group => ({
-      name: group.name,
-      notes: group.notes,
-      groupId: group.group_id,
-      elemId: group.id,
-    }));
-    res.end(JSON.stringify(modified));
-  });
-});
-
-app.get('/api/getrecipeimages/:id', checkJwt, (req, res) => {
-  connection.query(`
-    SELECT * FROM recipe_images
-    WHERE recipe_images.recipe_id = ${mysql.escape(req.params.id)}
-    ORDER BY recipe_images.order
-    `,
-  (error, results) => {
-    if (error) throw error;
-    const modified = results.map(img => ({
-      imagePath: img.image_path,
-      elemId: img.id,
-    }));
-    res.end(JSON.stringify(modified));
-  });
-});
-
-app.get('/api/getrecipeinfo/:id', checkJwt, (req, res) => {
+app.get('/api/getrecipeinfo/:id', checkJwt, checkAuthorized, (req, res) => {
   const id = mysql.escape(req.params.id);
   connection.query(`
     SELECT * FROM recipe_ingredients 
-    WHERE recipe_ingredients.recipe_id = ${id};
+    WHERE recipe_ingredients.recipe_id = ${id}
+    ORDER BY recipe_ingredients.order;
 
     SELECT * FROM recipe_images
     WHERE recipe_images.recipe_id = ${id}
@@ -194,7 +159,7 @@ app.get('/api/getrecipeinfo/:id', checkJwt, (req, res) => {
     SELECT * FROM ingredient_groups 
     WHERE ingredient_groups.recipe_id = ${id}
     ORDER BY ingredient_groups.group_id;
-
+    
     SELECT * FROM recipes
     WHERE id = ${id};
     `,
@@ -226,9 +191,11 @@ app.get('/api/getrecipeinfo/:id', checkJwt, (req, res) => {
     }));
   });
 });
+
 /**
- * endpoint for adding a new image to /static/userImages
+ * endpoint for adding a new image to local folder /static/userImages
  * takes: an HTML File object
+ * warnings: this does not update recipe_images table in database
  */
 app.post('/api/addimage', checkJwt, (req, res) => {
   const form = formidable.IncomingForm();
@@ -258,12 +225,13 @@ app.post('/api/addimage', checkJwt, (req, res) => {
  *        ingredients (array of objects), groups (array of objects)
  */
 app.post('/api/createnewrecipe', checkJwt, (req, res) => {
+  const userId = req.user.sub;
   const recipeName = mysql.escape(req.body.name);
   const recipeSize = sanitize(req.body.size);
   const recipeNotes = sanitize(req.body.notes);
   let query = `
-    INSERT INTO recipes (\`name\`, notes, size)
-    VALUES (${recipeName}, ${recipeNotes}, ${recipeSize});
+    INSERT INTO recipes (\`name\`, notes, size, \`user_id\`)
+    VALUES (${recipeName}, ${recipeNotes}, ${recipeSize}, '${userId}');
     SET @recid = LAST_INSERT_ID();`;
 
   req.body.ingredients.forEach((ing, i) => {
@@ -297,15 +265,13 @@ app.post('/api/createnewrecipe', checkJwt, (req, res) => {
     `;
   });
 
-  connection.query(
-    query, (error, results) => {
-      if (error) throw error;
-      res.end(JSON.stringify(results[0].insertId));
-    }
-  );
+  connection.query(query, (error, results) => {
+    if (error) throw error;
+    res.end(JSON.stringify(results[0].insertId));
+  });
 });
 
-app.post('/api/updateRecipe/:id', checkJwt, (req, res) => {
+app.post('/api/updateRecipe/:id', checkJwt, checkAuthorized, (req, res) => {
   const recipeId = +req.params.id;
   const recipeName = sanitize(req.body.name);
   const recipeSize = sanitize(req.body.size);
@@ -366,14 +332,19 @@ app.post('/api/updateRecipe/:id', checkJwt, (req, res) => {
     `;
   });
 
-  connection.query(
-    query, (error, results) => {
-      if (error) throw error;
-      res.end(JSON.stringify(results));
-    }
-  );
+  connection.query(query, (error, results) => {
+    if (error) throw error;
+    res.end(JSON.stringify(results));
+  });
 });
 
+/**
+ * endpoint for deleting an image that has previously been uploaded
+ * to local folder /static/userImages
+ * warnings: this does not update recipe_images table in database.
+ * accordingly, this endpoint does not check if the user is authorized
+ * to delete the image.
+ */
 app.delete('/api/deleteImageWithPath/:path', checkJwt, (req, res) => {
   try {
     fs.unlinkSync(`${__dirname}/static/userImages/${req.params.path}`);
@@ -383,8 +354,14 @@ app.delete('/api/deleteImageWithPath/:path', checkJwt, (req, res) => {
   res.end(JSON.stringify(req.params.path));
 });
 
-app.delete('/api/deleteRecipe/:id', checkJwt, (req, res) => {
-  const recipeId = +req.params.id;
+/**
+ * endpoint for deleting all of a recipe's information from all tables.
+ * checks that the user is authorized to delete that recipe first.
+ * does not delete related images from the server. this must be called
+ * separately
+ */
+app.delete('/api/deleteRecipe/:id', checkJwt, checkAuthorized, (req, res) => {
+  const recipeId = mysql.escape(req.params.id);
   let images = [];
   connection.query(`
     SELECT * FROM recipe_images
@@ -417,12 +394,10 @@ app.delete('/api/deleteRecipe/:id', checkJwt, (req, res) => {
     DELETE FROM recipes
     WHERE id = ${recipeId};
   `;
-  connection.query(
-    query, (recDbDelError, finalResults) => {
-      if (recDbDelError) throw recDbDelError;
-      res.end(JSON.stringify(finalResults));
-    }
-  );
+  connection.query(query, (recDbDelError, finalResults) => {
+    if (recDbDelError) throw recDbDelError;
+    res.end(JSON.stringify(finalResults));
+  });
 });
 
 app.use('/static', express.static('static'));
