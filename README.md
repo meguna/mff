@@ -710,8 +710,15 @@ Notes
 * use `hashids` npm package to obfuscate recipe IDs in all URLs throughout
   the app. Awesome simple solution! Glad I found the package. Used a singleton
   pattern to manage it all. Feel proud of myself
+* fixed a bug where changing the sort method to "Last Added" then clicking
+  "Load More..." caused the 5th element to appear twice in the RecipeList
+  array. This was caused by the fact that "If multiple rows have identical
+  values in the ORDER BY columns, [mysql] is free to return those rows in any
+  order" [source](https://bit.ly/2KgDBf7). I was unaware of this. Problem fixed
+  by just declaring id's as the second ordering rule.
 
 #### Notes
+* on adding user authorization to API endpoints:
 * My first thought was that I would have to set up functions in the Auth0Client
   singleton that would return the userId, and then send it along on all of my
   fetch calls so that I can check that the logged-in user is authorized to edit
@@ -732,8 +739,6 @@ Notes
   solutions to code problems.
 
 ## To Do Notes - immediate task
-* check that all routes that need to be protected are protected routes
-* add 'name' field to sign up sheet
 * handle expired access token (different from id token)
 * Welcome page
 * securely serve images
@@ -741,12 +746,13 @@ Notes
     something a little more discreet and add UUIDs to filenames so they're
     harder to copy. add same size div on top of image so that gets selected
     if someone inspects element.
-* add user_id to database columns so that only their recipes are retrieved.
 * make a Profile section where users can change passwords, emails, delete
   their account, etc.
 
 ## To Do Notes - Medium
 
+* error notifications (ex. file size > 2mb) were not showing up properly
+  on recipe image upload form. investigate
 * add note on form saying to click on the box to get a new box for ingredient
 * convert to styled-components?
 * modularize Express API - reference

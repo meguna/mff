@@ -108,8 +108,8 @@ app.get('/api/getrecipes/offset=:offset-sort=:sort', checkJwt, (req, res) => {
   connection.query(`
     SELECT * FROM recipes
     WHERE recipes.user_id = '${req.user.sub}'
-    ORDER BY recipes.${req.params.sort} ${order}
-    LIMIT ${+req.params.offset},5
+    ORDER BY recipes.${req.params.sort} ${order}, id
+    LIMIT 5 OFFSET ${+req.params.offset}
     `,
   (error, results) => {
     if (error) throw error;
@@ -125,7 +125,7 @@ app.get('/api/getrecipes/sort=:sort', checkJwt, (req, res) => {
   const query = `
     SELECT * FROM recipes
     WHERE recipes.user_id = '${req.user.sub}'
-    ORDER BY recipes.${req.params.sort} ${order}
+    ORDER BY recipes.${req.params.sort} ${order}, id
     LIMIT 5
     `;
   connection.query(query, (error, results) => {
