@@ -1,4 +1,4 @@
-.auth-button {
+.auth-button-link {
 	padding: 10px;
 	border: 1px solid black;
 	border-radius: 5px;
@@ -6,8 +6,11 @@
 	font-family: 'Apercu', sans-serif;
 	font-weight: 300;
 	width: fit-content;
-	display: inline-block;
 	font-size: 1.6rem;
+	margin-left: 25px; 
+}
+.auth-button-wrapper {
+	display: inline-block;
 	position: absolute;
 	right: 5vw;
 }

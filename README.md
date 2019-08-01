@@ -728,6 +728,8 @@ Notes
   solutions to code problems.
 
 ## To Do Notes - immediate task
+* check that all routes that need to be protected are protected routes
+* add 'name' field to sign up sheet
 * randomize paths to recipes so that ids are not exposed - use Hashids
 * handle expired access token (different from id token)
 * Welcome page

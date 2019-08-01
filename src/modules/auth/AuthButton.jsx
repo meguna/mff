@@ -14,14 +14,15 @@ class AuthButton extends Component {
     if (!loadingAuth) {
       if (!isAuthenticated) {
         return (
-          <div className="auth-button">
-            <Link to="/login">Log In</Link>
+          <div className="auth-button-wrapper">
+            <Link className="auth-button-link" to="/login">Log In</Link>
           </div>
         );
       }
       return (
-        <div className="auth-button">
-          <Link to="/logout">Log Out</Link>
+        <div className="auth-button-wrapper">
+          <Link className="auth-button-link" to="/account">Account</Link>
+          <Link className="auth-button-link" to="/logout">Log Out</Link>
         </div>
       );
     }
