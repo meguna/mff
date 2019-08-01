@@ -8,7 +8,7 @@ import IngFieldsHeader from './components/IngFieldsHeader';
 import RecipeImages from './components/RecipeImages';
 import FormSubHeader from './components/FormSubHeader';
 import { ING_FIELD_BLANK, ING_GROUP_BLANK } from '../common/initial';
-import { callApi } from '../helpers';
+import { hs, callApi } from '../helpers';
 import './styles.css';
 
 class RecipeForm extends Component {
@@ -188,9 +188,11 @@ class RecipeForm extends Component {
         fetchRecipes(sortMethod);
         if (selectedId === -1) {
           setSelectedRecipe(+res);
-          history.push(`/recipe/${+res}`);
+          const hashid = hs.encode(+res);
+          history.push(`/recipe/${hashid}`);
         } else {
-          history.push(`/recipe/${selectedId}`);
+          const hashid = hs.encode(selectedId);
+          history.push(`/recipe/${hashid}`);
         }
       })
       .catch((err) => {
