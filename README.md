@@ -659,7 +659,7 @@ Notes
   and now it's been a few days trying to figure it out and the problem just
   disappeared. Huge mystery. I don't know what's going on but I'm moving
   forward for now. Will be really annoying if the problem reappears. Hopefully
-  it won't.
+  it won't. **NOT SOLVED YET**
 * no idea why a successful fetch in checkAuthStatus returns a promise
   rejection (with the correct successful result as the error payload). trying
   to figure it out
@@ -707,8 +707,28 @@ Notes
 * check that the user calling the API endpoints is authorized to view/edit
   that recipe id! whew
 
+#### Notes
+* My first thought was that I would have to set up functions in the Auth0Client
+  singleton that would return the userId, and then send it along on all of my
+  fetch calls so that I can check that the logged-in user is authorized to edit
+  that specific recipe. This would have been terrible because then I would have
+  to convert all of my GETs into POSTs and it just seemed super redundant. I
+  had a feeling that there was a better way, but obviously there are a lot of
+  situations in web development where there *should* be a simpler or better
+  way but there just isn't.
+* In this case, though, I was lucky. The better way was this: the checkJwt
+  middleware that I had implemented previously (with the help of `express-jwt`)
+  in the API actually already sets up the userId in an accessable variable.
+  So I just needed to use that inside the API and just modify my mySQL queries.
+* I started to write more complex queries (changing simple SELECT WHERE's to 
+  INNER JOINS) but then I realized that it was also overly complicated for
+  what I was trying to accomplish. So I wrote an express middleware that
+  checked if the user was authorized, which would be used solely for
+  parameterized routes, and that was that. Feels good to find satisfying
+  solutions to code problems.
+
 ## To Do Notes - immediate task
-* randomize paths to recipes so that ids are not exposed
+* randomize paths to recipes so that ids are not exposed - use Hashids
 * handle expired access token (different from id token)
 * Welcome page
 * securely serve images
