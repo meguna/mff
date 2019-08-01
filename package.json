@@ -11,6 +11,7 @@
     "express": "^4.17.1",
     "express-jwt": "^5.3.1",
     "formidable": "^1.2.1",
+    "hashids": "^1.2.2",
     "jwks-rsa": "^1.6.0",
     "mysql2": "^1.6.5",
     "prop-types": "^15.7.2",

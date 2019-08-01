@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import RecipeForm from '../RecipeForm';
-import { callApi } from '../helpers';
+import { hs, callApi } from '../helpers';
 import { ING_FIELD_BLANK, ING_GROUP_BLANK } from '../common/initial';
 import './styles.css';
 
@@ -33,8 +33,9 @@ class EditRecipeForm extends Component {
       loadingAuth,
     } = this.props;
 
-    if (selectedId !== +match.params.id) {
-      setSelectedRecipe(+match.params.id);
+    const paramId = +hs.decode(match.params.id);
+    if (selectedId !== paramId) {
+      setSelectedRecipe(paramId);
     }
 
     /* Run fetchInfo() when a user first navigates to this page

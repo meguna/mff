@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import StatusInfo from '../common/StatusInfo';
-import { callApi } from '../helpers';
+import { hs, callApi } from '../helpers';
 import './styles.css';
 
 class DeleteRecipe extends Component {
@@ -17,7 +17,8 @@ class DeleteRecipe extends Component {
 
   componentDidMount() {
     const { match, setSelectedRecipe } = this.props;
-    setSelectedRecipe(+match.params.id);
+    const paramId = +hs.decode(match.params.id);
+    setSelectedRecipe(paramId);
   }
 
   deleteRecipe = (e) => {

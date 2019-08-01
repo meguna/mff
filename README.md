@@ -706,6 +706,10 @@ Notes
 * add user_id database column
 * check that the user calling the API endpoints is authorized to view/edit
   that recipe id! whew
+* add Profile component & route. This allows user to view their info
+* use `hashids` npm package to obfuscate recipe IDs in all URLs throughout
+  the app. Awesome simple solution! Glad I found the package. Used a singleton
+  pattern to manage it all. Feel proud of myself
 
 #### Notes
 * My first thought was that I would have to set up functions in the Auth0Client
@@ -730,7 +734,6 @@ Notes
 ## To Do Notes - immediate task
 * check that all routes that need to be protected are protected routes
 * add 'name' field to sign up sheet
-* randomize paths to recipes so that ids are not exposed - use Hashids
 * handle expired access token (different from id token)
 * Welcome page
 * securely serve images

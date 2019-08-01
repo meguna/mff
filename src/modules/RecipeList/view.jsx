@@ -3,6 +3,7 @@ import './styles.css';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import LoadMoreButton from './components/LoadMoreButton';
+import { hs } from '../helpers';
 
 class RecipeList extends Component {
   constructor(props) {
@@ -51,7 +52,13 @@ class RecipeList extends Component {
 
   render() {
     const {
-      recipes, selectedId, loading, error, fetchMoreRecipes, listOffset, loadingAuth,
+      recipes,
+      selectedId,
+      loading,
+      error,
+      fetchMoreRecipes,
+      listOffset,
+      loadingAuth,
     } = this.props;
     const { sortMethod } = this.state;
 
@@ -64,23 +71,25 @@ class RecipeList extends Component {
             <option value="create_date">last added</option>
           </select>
         </form>
-
-        {(!loading || !error) && recipes.map(recipe => (
-          <div key={recipe.id}>
-            <Link
-              role="link"
-              to={`/recipe/${recipe.id}`}
-              tabIndex="0"
-              onClick={() => this.onRecipeClick(recipe.id)}
-              onKeyDown={() => this.onRecipeClick(recipe.id)}
-              className="recipe-list-item-wrapper"
-            >
-              <p className={(recipe.id === selectedId ? 'selected' : '')}>
-                {recipe.name}
-              </p>
-            </Link>
-          </div>
-        ))}
+        {(!loading || !error) && recipes.map((recipe) => {
+          const hashid = hs.encode(recipe.id);
+          return (
+            <div key={recipe.id}>
+              <Link
+                role="link"
+                to={`/recipe/${hashid}`}
+                tabIndex="0"
+                onClick={() => this.onRecipeClick(recipe.id)}
+                onKeyDown={() => this.onRecipeClick(recipe.id)}
+                className="recipe-list-item-wrapper"
+              >
+                <p className={(recipe.id === selectedId ? 'selected' : '')}>
+                  {recipe.name}
+                </p>
+              </Link>
+            </div>
+          );
+        })}
         <LoadMoreButton
           onAction={() => fetchMoreRecipes(listOffset, sortMethod)}
           loading={loading}

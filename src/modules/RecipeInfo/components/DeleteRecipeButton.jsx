@@ -13,7 +13,7 @@ const DeleteRecipeButton = ({ id }) => (
 );
 
 DeleteRecipeButton.propTypes = {
-  id: PropTypes.number.isRequired,
+  id: PropTypes.string.isRequired,
 };
 
 export default React.memo(DeleteRecipeButton);

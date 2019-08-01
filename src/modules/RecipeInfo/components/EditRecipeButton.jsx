@@ -13,7 +13,7 @@ const EditRecipeButton = ({ id }) => (
 );
 
 EditRecipeButton.propTypes = {
-  id: PropTypes.number.isRequired,
+  id: PropTypes.string.isRequired,
 };
 
 export default React.memo(EditRecipeButton);

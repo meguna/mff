@@ -8,7 +8,7 @@ import AddRecipeButton from './components/AddRecipeButton';
 import EditRecipeButton from './components/EditRecipeButton';
 import DeleteRecipeButton from './components/DeleteRecipeButton';
 import RecipeImages from './components/RecipeImages';
-import { callApi } from '../helpers';
+import { hs, callApi } from '../helpers';
 import { ING_GROUP_BLANK } from '../common/initial';
 import './styles.css';
 
@@ -35,8 +35,9 @@ class RecipeInfo extends Component {
       loadingAuth,
     } = this.props;
 
-    if (selectedId !== +match.params.id) {
-      setSelectedRecipe(+match.params.id);
+    const paramId = +hs.decode(match.params.id);
+    if (selectedId !== paramId) {
+      setSelectedRecipe(paramId);
     }
 
     /* Run fetchInfo() when a user first navigates to this page
@@ -51,7 +52,7 @@ class RecipeInfo extends Component {
     /* Redirect page if no recipe is selected or
      * if no recipe id is passed  as a route parameter
      */
-    if (!(+match.params.id) && selectedId === -1) {
+    if (!(match.params.id) && selectedId === -1) {
       history.push('/');
     }
   }
@@ -122,11 +123,13 @@ class RecipeInfo extends Component {
       return null;
     }
 
+    const hashid = hs.encode(selectedId);
+
     return (
       <Fragment>
         <AddRecipeButton />
-        <EditRecipeButton id={selectedId} />
-        <DeleteRecipeButton id={selectedId} />
+        <EditRecipeButton id={hashid} />
+        <DeleteRecipeButton id={hashid} />
         <p className="recipe-info-name">{info.name}</p>
         <RecipeSize size={info.size} />
         {!loadingInfo && (

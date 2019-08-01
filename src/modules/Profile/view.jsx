@@ -20,6 +20,7 @@ class Profile extends Component {
 
     if (!loadingAuth) {
       const profile = Auth0Client.getProfile();
+      console.log(profile);
       this.setState({
         name: profile.name,
         email: profile.email,
