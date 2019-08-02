@@ -738,14 +738,17 @@ Notes
   parameterized routes, and that was that. Feels good to find satisfying
   solutions to code problems.
 
+## Aug 2
+* removed "userimages" from image file path for a sense of more security
+
+#### Notes
+* I wanted to add hashids to the image file paths but I couldn't find a quick
+  and simple way to do it with express-static so I'll leave that for now. I
+  think the image paths right now could be better but are ok as is.
+
 ## To Do Notes - immediate task
 * handle expired access token (different from id token)
 * Welcome page
-* securely serve images
-  * no auth, but security through obscurity - rename /userimages to
-    something a little more discreet and add UUIDs to filenames so they're
-    harder to copy. add same size div on top of image so that gets selected
-    if someone inspects element.
 * make a Profile section where users can change passwords, emails, delete
   their account, etc.
 

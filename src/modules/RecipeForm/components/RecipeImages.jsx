@@ -72,7 +72,7 @@ class RecipeImages extends Component {
               <div className="form-image-wrapper" key={image.elemId}>
                 <img
                   className="recipe-form-image"
-                  src={`http://localhost:3005/static/userImages/${image.imagePath}`}
+                  src={`http://localhost:3005/static/${image.imagePath}`}
                   alt={`${name}-${i}`}
                 />
                 <input
