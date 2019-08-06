@@ -155,11 +155,12 @@ export const checkAuthStatus = () => (dispatch) => {
           login();
         } else if (err.code === 'login_required') {
           logout();
+          login();
           dispatch(notLoggedIn());
           reject(err);
         } else {
           dispatch(loginFailure(err));
-          console.log('error!');
+          login();
           reject(err);
         }
       });
