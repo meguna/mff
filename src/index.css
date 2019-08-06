@@ -67,6 +67,7 @@
   --notification-medium-green:#6ae4a7;
   --notification-yellow: #fff190;
   --notification-medium-yellow: #f3e37a;
+  font-size: 75%;
 }
 
 body {
