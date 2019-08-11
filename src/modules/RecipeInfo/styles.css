@@ -68,6 +68,7 @@ span.recipe-info-group-letter-label {
 	position: relative;
 	padding: 20px 0;
 	width: 25vw;
+	cursor: text;
 }
 
 .recipe-info-ing-item {

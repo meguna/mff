@@ -746,14 +746,30 @@ Notes
   and simple way to do it with express-static so I'll leave that for now. I
   think the image paths right now could be better but are ok as is.
 
+## Aug 6
+* quick style change - fix root font size (bless rem units!)
+* quick fix for redux action - call login() if error in checkAuth()
+* 
+
 ## To Do Notes - immediate task
+* FIX IMMEDIATELY - bug: click "delete recipe" then click "cancel" - some
+  auth error in api
 * handle expired access token (different from id token)
 * Welcome page
 * make a Profile section where users can change passwords, emails, delete
   their account, etc.
+  * view
+    * ~~email~~
+    * ~~name~~
+  * edit
+    * change email address - 
+    * change password - require password re-entry - use auth0 implementation?
+    * forgot password - leave to auth0 but implement lockjs pattern
+    * delete account - require password re-entry
 
 ## To Do Notes - Medium
 
+* make sure ingredient names can wrap
 * error notifications (ex. file size > 2mb) were not showing up properly
   on recipe image upload form. investigate
 * add note on form saying to click on the box to get a new box for ingredient
@@ -771,6 +787,7 @@ Notes
 
 ## Tasks to consider
 
+* add recipes export option
 * testing with Jest
 * "baking" vs "cooking" filter
 * drag to change ingredient order
