@@ -749,7 +749,23 @@ Notes
 ## Aug 6
 * quick style change - fix root font size (bless rem units!)
 * quick fix for redux action - call login() if error in checkAuth()
-* 
+
+## Aug 14
+* set up AccountSettings component
+* set up modal functionality
+
+#### Lessons
+* (CSS) Best way to shade the background behind a modal is to drop in a
+  pseudoelement that fills the whole window with black & mid opacity.
+
+## Aug 15
+* set up new auth endpoints & functionality to change user's name & email
+  address
+
+#### Notes
+* Problems with making user's root info reflect identical parameters in
+  user_metadata [https://bit.ly/2Ze31Uh](source). Man I hate working with auth0
+
 
 ## To Do Notes - immediate task
 * FIX IMMEDIATELY - bug: click "delete recipe" then click "cancel" - some
@@ -762,10 +778,13 @@ Notes
     * ~~email~~
     * ~~name~~
   * edit
-    * change email address - 
+    * ~~change name~~
+    * ~~change email address~~
+      * require verification email
     * change password - require password re-entry - use auth0 implementation?
     * forgot password - leave to auth0 but implement lockjs pattern
     * delete account - require password re-entry
+* required verified email to login
 
 ## To Do Notes - Medium
 
@@ -815,7 +834,23 @@ Notes
 * responsive styling for mobile screens
 * graphics / illustrations
 * deploy to web
+* set up demo page
 * set up demo page 
+
+#### Demo Page Implemenation Plan
+* set up user "guest" (password: "guest") in auth0
+* on "Try Demo" button click, send user/pass combination to auth0 servers
+  automatically and log in as guest (no user interaction required).
+* at the same time, generate random username (guest-XXXX) with hashids and 
+  store it in redux store. Send a request to API endpoint `/setupguest` that
+  populates recipe tables with that username as owner.
+* modify the authorization redux actions so that for guest login, the username
+  will be identically generated with hashids (?) or passed to the function in
+  some way. Make sure that any user interaction with the database will only
+  change that specific temporary username's rows.
+* show warning ribbon at top of window: "This is a demo. Your changes will
+  not be saved."
+* When the session ends, log out user and delete rows from table.
 
 #### Additional Goals
 

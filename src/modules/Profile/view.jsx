@@ -20,7 +20,6 @@ class Profile extends Component {
 
     if (!loadingAuth) {
       const profile = Auth0Client.getProfile();
-      console.log(profile);
       this.setState({
         name: profile.name,
         email: profile.email,
@@ -57,7 +56,7 @@ class Profile extends Component {
           <p className="account-info-label">email</p>
           <p className="account-info-desc">{email}</p>
         </div>
-        <Link className="edit-button" to="/editprofile">Change Account Settings</Link>
+        <Link className="edit-button" to="/editaccount">Change Account Settings</Link>
       </div>
     );
   }

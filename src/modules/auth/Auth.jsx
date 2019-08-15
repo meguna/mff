@@ -166,6 +166,40 @@ class Auth {
     });
   }
 
+  patchUserData(userMetadata) {
+    return new Promise((resolve, reject) => {
+      this.auth0.checkSession({
+        audience: 'https://dev-jknyt6s8.auth0.com/api/v2/',
+        scope: 'read:current_user update:current_user_identities create:current_user_metadata update:current_user_metadata delete:current_user_metadata create:current_user_device_credentials delete:current_user_device_credentials',
+      }, (err, authResult) => {
+        if (err) {
+          console.error(err);
+          reject(err);
+        }
+        const auth0Manage = new auth0.Management({
+          domain: 'dev-jknyt6s8.auth0.com',
+          token: authResult.accessToken,
+        });
+        auth0Manage.patchUserMetadata(this.profile.sub, userMetadata, (e2, ar2) => {
+          if (e2) {
+            console.error(e2);
+          }
+          /* Takes a moment for the rules in auth0's backend to finish running.
+           * The rules make sure that user metadata matches user root data.
+           * Below code runs it manually on this end so users see immediate feedback.
+           */
+          if (ar2.user_metadata.name) {
+            this.profile.name = ar2.user_metadata.name;
+          }
+          if (ar2.user_metadata.email) {
+            this.profile.email = ar2.user_metadata.email;
+          }
+          return resolve(auth0Manage);
+        });
+      });
+    });
+  }
+
   setSession(authResult) {
     this.idToken = authResult.idToken;
     this.accessToken = authResult.accessToken;

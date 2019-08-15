@@ -9,6 +9,7 @@ import Logout from './modules/auth/Logout';
 import Signup from './modules/auth/Signup.jsx';
 import Welcome from './modules/Welcome';
 import Profile from './modules/Profile';
+import AccountSettings from './modules/AccountSettings';
 import Header from './modules/common/Header';
 
 class App extends React.Component {
@@ -43,6 +44,7 @@ class App extends React.Component {
             <Route exact path="/logout" component={Logout} />
             <Route exact path="/welcome" component={Welcome} />
             <Route exact path="/account" component={Profile} />
+            <Route exact path="/editaccount" component={AccountSettings} />
             <Route
               path="/"
               render={props => (
