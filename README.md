@@ -761,6 +761,7 @@ Notes
 ## Aug 15
 * set up new auth endpoints & functionality to change user's name & email
   address
+* finally set up first slide on Welcome page, sans the hero illustration
 
 #### Notes
 * Problems with making user's root info reflect identical parameters in

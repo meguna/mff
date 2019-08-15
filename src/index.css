@@ -52,6 +52,12 @@
   font-weight: 100;
 }
 
+@font-face {
+  font-family: 'Gentona';
+  src: url('./assets/fonts/Gentona-Light.otf');
+  font-weight: 100;
+}
+
 :root {
   --key-red: #FF320C;
   --medium-red: #FF6E54;
