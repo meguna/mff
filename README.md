@@ -770,6 +770,7 @@ Notes
 ## Aug 16
 * style changes
 * delete Profile and replace its route with EditAccount component
+* add back name parameter to "sign up" Lock.js configuration
 
 ## To Do Notes - immediate task
 * FIX IMMEDIATELY - bug: click "delete recipe" then click "cancel" - some

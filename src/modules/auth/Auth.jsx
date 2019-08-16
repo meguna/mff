@@ -62,6 +62,10 @@ class Auth {
       allowLogin: false,
       initialScreen: 'signUp',
       allowShowPassword: true,
+      additionalSignUpFields: [{
+        name: 'name',
+        placeholder: 'your name',
+      }],
     });
   }
 
