@@ -765,8 +765,11 @@ Notes
 
 #### Notes
 * Problems with making user's root info reflect identical parameters in
-  user_metadata [https://bit.ly/2Ze31Uh](source). Man I hate working with auth0
+  user_metadata [source](https://bit.ly/2Ze31Uh). Man I hate working with auth0
 
+## Aug 16
+* style changes
+* delete Profile and replace its route with EditAccount component
 
 ## To Do Notes - immediate task
 * FIX IMMEDIATELY - bug: click "delete recipe" then click "cancel" - some

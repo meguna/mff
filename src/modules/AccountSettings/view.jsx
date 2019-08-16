@@ -106,12 +106,22 @@ class AccountSettings extends Component {
         <div className="account-info-group">
           <p className="account-info-label">name</p>
           <p className="account-info-desc">{name}</p>
-          <input type="button" value="Change Name" onClick={this.setNameModal} />
+          <input
+            className="account-change-button"
+            type="button"
+            value="Change"
+            onClick={this.setNameModal}
+          />
         </div>
         <div className="account-info-group">
           <p className="account-info-label">email</p>
           <p className="account-info-desc">{email}</p>
-          <input type="button" value="Change Email Address" onClick={this.setEmailModal} />
+          <input
+            className="account-change-button"
+            type="button"
+            value="Change"
+            onClick={this.setEmailModal}
+          />
         </div>
       </div>
     );
