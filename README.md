@@ -778,15 +778,30 @@ Notes
 * fix bug in DeleteRecipe where hashids were not being used in recipe link and
   was causing errors
 * consistent font naming ("souvenir" --> "canela")
+* make sure that if an ID token used in the authentication expires while the
+  user is browsing the page, they are taken to the login page.
+* in auth0 settings, set the expiration date for the id tokens to be 7,776,000
+  seconds, or about 3 months. Too long?
+* fix that old problem I used to have where the chained promises around
+  `checkAuthStatus()` would mix up rejections and resolutions really weirdly.
+  Not really a proper fix, since I still couldn't figure out what was causing
+  the problem, but I rewrote `checkAuthStatus()` so that instead of returning
+  a promise, it just executes a callback function passed in as a parameter.
+  It solves the problem in that I catch the errors in the right place now, but
+  yeah. Idk. Satisfactory, but unfinished.
+* start adding translations for EN/JA on most simple UI buttons and such. Set
+  up i18next. It's really annoying
 
 ## To Do Notes - moderate
-* handle expired access token (different from id token)
+* use up/down keys to move between recipes in a loop?
+* handle expired access token
 * profile section
   * delete account
   * require verification email to log in, since changing the email address
     doesn't require anything (eg retype password, etc.)
   * reset password flow (as opposed to "forgot password" flow)
 * export as CSV
+* "baking" vs "cooking" filter, ability to add tags to recipes (csv)
 * make sure ingredient names can wrap
 * error notifications (ex. file size > 2mb) were not showing up properly
   on recipe image upload form. investigate
@@ -805,9 +820,7 @@ Notes
 
 ## Tasks to consider
 
-* add recipes export option
 * testing with Jest
-* "baking" vs "cooking" filter
 * drag to change ingredient order
 * imperial / customary change! --> is this really necessary?
 * favicon
@@ -835,7 +848,6 @@ Notes
 * graphics / illustrations
 * deploy to web
 * set up demo page
-* set up demo page 
 
 #### Demo Page Implemenation Plan
 * set up user "guest" (password: "guest") in auth0

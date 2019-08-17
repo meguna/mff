@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import AuthButton from '../auth/AuthButton';
+import LangChange from './LangChange';
 
 class Header extends Component {
   componentDidMount() {

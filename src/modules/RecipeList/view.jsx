@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import LoadMoreButton from './components/LoadMoreButton';
 import { hs } from '../helpers';
+import { withTranslation } from 'react-i18next';
 
 class RecipeList extends Component {
   constructor(props) {
@@ -59,6 +60,7 @@ class RecipeList extends Component {
       fetchMoreRecipes,
       listOffset,
       loadingAuth,
+      t,
     } = this.props;
     const { sortMethod } = this.state;
 
@@ -66,9 +68,9 @@ class RecipeList extends Component {
       <div>
         <form>
           <select value={sortMethod} onChange={this.onSortSelect}>
-            <option value="name">name</option>
-            <option value="update_date">last updated</option>
-            <option value="create_date">last added</option>
+            <option value="name">{t('common:list.name')}</option>
+            <option value="update_date">{t('common:list.update')}</option>
+            <option value="create_date">{t('common:list.create')}</option>
           </select>
         </form>
         {(!loading || !error) && recipes.map((recipe) => {
@@ -110,6 +112,7 @@ RecipeList.propTypes = {
   fetchRecipes: PropTypes.func.isRequired,
   fetchMoreRecipes: PropTypes.func.isRequired,
   setSelectedRecipe: PropTypes.func.isRequired,
+  t: PropTypes.func.isRequired,
 };
 
 RecipeList.defaultProps = {
@@ -120,4 +123,4 @@ RecipeList.defaultProps = {
   listOffset: 0,
 };
 
-export default RecipeList;
+export default withTranslation()(RecipeList);

@@ -38,28 +38,6 @@
 	padding: 10px;
 }
 
-select, option {
-	font-family: 'Apercu', sans-serif;
-    font-size: 1.5em;
-    padding: 10px;
-    border: none;
-    box-sizing: content-box;
-    border-radius: 1px;
-    -webkit-appearance: none;
-}
-
-select, option :focus {
-    outline: none;
-}
-
-select {
-	background-image: url(../../assets/icons/chevron-down.svg);
-	background-repeat: no-repeat;
-	background-position-x: 98%;
-	background-position-y: 50%;
-	border-radius: 2px;
-	padding-right: 2rem;
-}
 .default-cursor { 
   cursor: default;
 }

@@ -1,0 +1,24 @@
+{
+  "actions": {
+    "add": "Add a new Recipe",
+    "edit": "Edit this Recipe",
+    "delete": "Delete this Recipe"
+  },
+  "list": {
+    "update": "last updated",
+    "create": "last added",
+    "name": "name",
+    "load": "Load More...",
+    "loading": "Loading..."
+  },
+  "header" : {
+    "account": "Account",
+    "logout": "Log Out",
+    "login": "Log In"
+  },
+  "recipe" : {
+    "ing": "ingredients",
+    "notes": "notes",
+    "images": "images"
+  }
+}

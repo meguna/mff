@@ -76,13 +76,21 @@ const reducer = (state = INITIAL_STATE, action) => {
   }
   case FETCH_RECIPES_FAILURE:
   case FETCH_MORE_RECIPES_FAILURE:
-  case LOGIN_FAILURE:
     console.error(action.payload);
     return {
       ...state,
       error: true,
       loading: false,
       loadingAuth: false,
+    };
+  case LOGIN_FAILURE:
+    console.error(action.payload);
+    return {
+      ...state,
+      error: false,
+      loading: false,
+      loadingAuth: false,
+      isAuthenticated: false,
     };
   case SET_NOTIFICATION_DETAILS:
     return {

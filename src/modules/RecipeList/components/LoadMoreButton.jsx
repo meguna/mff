@@ -1,12 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useTranslation } from 'react-i18next';
 
 const LoadMoreButton = ({ onAction, loading, loadingAuth }) => {
-  let str = 'Load More...';
+  const { t } = useTranslation();
+  let str = t('common:list.load');
   let cursorClass = '';
   let func = onAction;
   if (loadingAuth || loading) {
-    str = 'Loading...';
+    str = t('common:list.loading');
     cursorClass = 'default-cursor';
     func = null;
   }

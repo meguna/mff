@@ -142,27 +142,15 @@ export const logout = () => (dispatch) => {
   Auth0Client.signOut();
 };
 
-export const checkAuthStatus = () => (dispatch) => {
-  return new Promise((reject, resolve) => {
-    dispatch(loginStart());
-    Auth0Client.getToken()
-      .then((res) => {
-        dispatch(loginSuccess());
-        resolve(res);
-      })
-      .catch((err) => {
-        if (err.code === 'consent_required') {
-          login();
-        } else if (err.code === 'login_required') {
-          logout();
-          login();
-          dispatch(notLoggedIn());
-          reject(err);
-        } else {
-          dispatch(loginFailure(err));
-          login();
-          reject(err);
-        }
-      });
-  });
+export const checkAuthStatus = cb => (dispatch) => {
+  dispatch(loginStart());
+  Auth0Client.getToken()
+    .then((res) => {
+      dispatch(loginSuccess());
+      cb();
+    })
+    .catch((err) => {
+      dispatch(loginFailure());
+      login();
+    });
 };

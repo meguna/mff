@@ -2,11 +2,12 @@ import React from 'react';
 import './App.css';
 import { Route, BrowserRouter, Switch, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { withTranslation } from 'react-i18next';
 import RecipeIndex from './modules/RecipeIndex';
 import AppErrorBoundary from './modules/errorBoundaries/AppErrorBoundary';
 import Login from './modules/auth/Login';
 import Logout from './modules/auth/Logout';
-import Signup from './modules/auth/Signup.jsx';
+import Signup from './modules/auth/Signup';
 import Welcome from './modules/Welcome';
 import AccountSettings from './modules/AccountSettings';
 import Header from './modules/common/Header';
@@ -15,14 +16,9 @@ class App extends React.Component {
   componentDidMount() {
     document.title = 'In the Mood for Food';
     const { checkAuthStatus, fetchRecipes, sortMethod } = this.props;
-    checkAuthStatus()
-      .then((res) => {
-      })
-      .catch((err) => {
-      })
-      .finally(() => {
-        fetchRecipes(sortMethod);
-      });
+
+    /* pass fetchRecipes as callback */
+    checkAuthStatus(() => { fetchRecipes(sortMethod); });
   }
 
   render() {
@@ -66,4 +62,4 @@ App.propTypes = {
   isAuthenticated: PropTypes.bool.isRequired,
 };
 
-export default App;
+export default withTranslation('common')(App);

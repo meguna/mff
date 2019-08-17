@@ -1,8 +1,10 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
+import { useTranslation } from 'react-i18next';
 import Ingredient from './Ingredients';
 
 const IngredientGroup = ({ ingredients, groups, groupCount }) => {
+  const { t } = useTranslation();
   /**
    * From a 1D array of ingredient objects, form a 2D array with each the
    * ingredients grouped by groupId
@@ -18,7 +20,7 @@ const IngredientGroup = ({ ingredients, groups, groupCount }) => {
 
   return (
     <Fragment>
-      <p className="recipe-info-label">ingredients</p>
+      <p className="recipe-info-label">{t('common:recipe.ing')}</p>
       {ingredients.length === 0 && (
         <p className="form-description">
           Looks like this recipe doesn&apos;t have any ingredients yet.
