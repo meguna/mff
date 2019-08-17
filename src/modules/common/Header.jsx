@@ -18,7 +18,7 @@ class Header extends Component {
       <Fragment>
         <header className="app-main-header">
           <Link className="app-main-header-title" to="/">
-            In the Mood for Food
+            Foodnotes
           </Link>
           <AuthButton />
         </header>

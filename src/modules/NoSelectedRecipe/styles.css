@@ -1,10 +1,8 @@
 h1.nsr-title {
-    font-family: 'Styrene', sans-serif;
+    font-family: 'Canela', sans-serif;
     color: var(--key-red);
-    text-transform: uppercase;
-    font-size: 7rem;
+    font-size: 5rem;
     margin: 0;
-    margin-bottom: 30px;
     font-weight: 500;
     padding: 0;
 }
@@ -12,6 +10,9 @@ h1.nsr-title {
 h2.nsr-subtitle {
     font-size: 2.4rem;
     font-weight: 500;
+    color: var(--key-red);
+    margin: 0px;
+    margin-bottom: 30px;
 }
 
 p.nsr-description {

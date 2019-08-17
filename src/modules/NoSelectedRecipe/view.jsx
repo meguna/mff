@@ -13,14 +13,6 @@ class NoSelectedRecipe extends Component {
     return (
       <Fragment>
         <AddRecipeButton />
-        <h1 className="nsr-title">
-          In The Mood
-          <br />
-          For Food
-        </h1>
-        <h2 className="nsr-subtitle">
-          The recipe management app for food enthusiasts.
-        </h2>
         <p className="nsr-description">
           Use the button above to add a new recipe, or
           select one to play with from the sidebar.

@@ -11,7 +11,7 @@
 }
 
 @font-face {
-  font-family: 'Souvenir';
+  font-family: 'Canela';
   src: url('./assets/fonts/Canela-Black.otf');
   font-weight: 300;
 }
@@ -128,7 +128,7 @@ h1 {
 }
 
 h1.title {
-    font-family: 'Souvenir', serif;
+    font-family: 'Canela', serif;
     color: var(--key-red);
     font-size: 4.5rem;
     padding: 0;

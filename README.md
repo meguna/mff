@@ -774,9 +774,10 @@ Notes
 
 ## Aug 17
 * implement forgot password
-* mood for food --> foodnotes (rip)
+* mood for food --> foodnotes (rip) :(
 * fix bug in DeleteRecipe where hashids were not being used in recipe link and
   was causing errors
+* consistent font naming ("souvenir" --> "canela")
 
 ## To Do Notes - immediate task
 * handle expired access token (different from id token)
