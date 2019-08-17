@@ -779,24 +779,13 @@ Notes
   was causing errors
 * consistent font naming ("souvenir" --> "canela")
 
-## To Do Notes - immediate task
+## To Do Notes - moderate
 * handle expired access token (different from id token)
-* Welcome page
-* make a Profile section where users can change passwords, emails, delete
-  their account, etc.
-  * view
-    * ~~email~~
-    * ~~name~~
-  * edit
-    * ~~change name~~
-    * ~~change email address~~
-      * require verification email
-    * ~~forgot password - leave to auth0 but implement lockjs pattern~~
-    * delete account - require password re-entry
-* required verified email to login
-
-## To Do Notes - Medium
-
+* profile section
+  * delete account
+  * require verification email to log in, since changing the email address
+    doesn't require anything (eg retype password, etc.)
+  * reset password flow (as opposed to "forgot password" flow)
 * export as CSV
 * make sure ingredient names can wrap
 * error notifications (ex. file size > 2mb) were not showing up properly
@@ -839,7 +828,8 @@ Notes
 * ~~image handling (CRUD for images per recipe)~~
 * search functionality
 * ~~routing~~
-* authentication with auth0
+* ~~authentication with auth0~~
+* Welcome page
 * i18n with i18next & react-i18next
 * responsive styling for mobile screens
 * graphics / illustrations
