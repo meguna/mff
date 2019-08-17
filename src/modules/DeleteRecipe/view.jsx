@@ -73,7 +73,7 @@ class DeleteRecipe extends Component {
             Yes, I am sure.
           </button>
           <div>
-            <Link to={`/recipe/${selectedId}`} className="confirm-buttons cancel">
+            <Link to={`/recipe/${hs.encode(selectedId)}`} className="confirm-buttons cancel">
               Cancel
             </Link>
           </div>

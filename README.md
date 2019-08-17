@@ -772,11 +772,13 @@ Notes
 * delete Profile and replace its route with EditAccount component
 * add back name parameter to "sign up" Lock.js configuration
 
+## Aug 17
+* implement forgot password
+* mood for food --> foodnotes (rip)
+* fix bug in DeleteRecipe where hashids were not being used in recipe link and
+  was causing errors
+
 ## To Do Notes - immediate task
-* IMMEDIATELY - JUST FUCKIN IMPLEMENT FORGOT PASSWORD. forget delete account
-  and change password for now.
-* FIX IMMEDIATELY - bug: click "delete recipe" then click "cancel" - some
-  auth error in api
 * handle expired access token (different from id token)
 * Welcome page
 * make a Profile section where users can change passwords, emails, delete
@@ -788,13 +790,13 @@ Notes
     * ~~change name~~
     * ~~change email address~~
       * require verification email
-    * change password - require password re-entry - use auth0 implementation?
-    * forgot password - leave to auth0 but implement lockjs pattern
+    * ~~forgot password - leave to auth0 but implement lockjs pattern~~
     * delete account - require password re-entry
 * required verified email to login
 
 ## To Do Notes - Medium
 
+* export as CSV
 * make sure ingredient names can wrap
 * error notifications (ex. file size > 2mb) were not showing up properly
   on recipe image upload form. investigate
