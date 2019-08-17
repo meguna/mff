@@ -773,6 +773,8 @@ Notes
 * add back name parameter to "sign up" Lock.js configuration
 
 ## To Do Notes - immediate task
+* IMMEDIATELY - JUST FUCKIN IMPLEMENT FORGOT PASSWORD. forget delete account
+  and change password for now.
 * FIX IMMEDIATELY - bug: click "delete recipe" then click "cancel" - some
   auth error in api
 * handle expired access token (different from id token)

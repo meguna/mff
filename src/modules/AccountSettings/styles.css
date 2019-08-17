@@ -32,6 +32,10 @@ input.account-change-button {
     border: 1px solid var(--medium-brown);
 }
 
+input.account-change-button:focus {
+    outline: none;
+}
+
 .account-info-group {
     padding-bottom: 5vh;
 }

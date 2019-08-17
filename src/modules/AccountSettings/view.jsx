@@ -123,6 +123,15 @@ class AccountSettings extends Component {
             onClick={this.setEmailModal}
           />
         </div>
+        <div className="account-info-group">
+          <p className="account-info-label">Password</p>
+          <input
+            className="account-change-button"
+            type="button"
+            value="Reset Password"
+            onClick={() => { Auth0Client.resetPassword(email); }}
+          />
+        </div>
       </div>
     );
   }

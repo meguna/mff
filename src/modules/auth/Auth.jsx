@@ -69,6 +69,18 @@ class Auth {
     });
   }
 
+  resetPassword(emailPrefill) {
+    return this.lockJs({
+      allowLogin: false,
+      allowSignUp: false,
+      initialScreen: 'forgotPassword',
+      closable: true,
+      prefill: {
+        email: emailPrefill,
+      },
+    });
+  }
+
   lockJs(additionalOptions) {
     if (sessionStorage.getItem('stateid') === null) {
       const nonce = Math.floor(Math.random() * 100000);
