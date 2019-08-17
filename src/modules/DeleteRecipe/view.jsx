@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { Link, withRouter } from 'react-router-dom';
+import { withTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import StatusInfo from '../common/StatusInfo';
 import { hs, callApi } from '../helpers';
@@ -49,7 +50,7 @@ class DeleteRecipe extends Component {
   }
 
   render() {
-    const { selectedId } = this.props;
+    const { selectedId, t } = this.props;
     const { deleteStatus, deleteMessage } = this.state;
     return (
       <Fragment>
@@ -58,10 +59,10 @@ class DeleteRecipe extends Component {
           dynamicMessage={deleteMessage}
         />
         <h1 className="title">
-          Delete Recipe
+          {t('common:delete.title')}
         </h1>
         <p className="delete-description">
-          You are about to delete this recipe. Are you sure?
+          {t('common:delete.confirm')}
         </p>
         <div className="confirm-buttons-wrapper">
           <button
@@ -70,11 +71,11 @@ class DeleteRecipe extends Component {
             affirmative"
             onClick={this.deleteRecipe}
           >
-            Yes, I am sure.
+            {t('common:delete.yes')}
           </button>
           <div>
             <Link to={`/recipe/${hs.encode(selectedId)}`} className="confirm-buttons cancel">
-              Cancel
+              {t('common:delete.cancel')}
             </Link>
           </div>
         </div>
@@ -86,6 +87,7 @@ class DeleteRecipe extends Component {
 DeleteRecipe.propTypes = {
   selectedId: PropTypes.number.isRequired,
   setSelectedRecipe: PropTypes.func.isRequired,
+  t: PropTypes.func.isRequired,
   setNotification: PropTypes.func.isRequired,
   match: PropTypes.shape({
     params: PropTypes.shape({
@@ -103,4 +105,4 @@ DeleteRecipe.defaultProps = {
   sortMethod: 'update_date',
 };
 
-export default withRouter(DeleteRecipe);
+export default withTranslation()(withRouter(DeleteRecipe));

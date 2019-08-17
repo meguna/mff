@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
+import { withTranslation } from 'react-i18next';
 import ImageUpload from './ImageUpload';
 import { callApi } from '../../helpers';
 
@@ -60,7 +61,7 @@ class RecipeImages extends Component {
 
   render() {
     const { images } = this.state;
-    const { name } = this.props;
+    const { name, t } = this.props;
     const imageCount = images.length;
 
     return (
@@ -80,7 +81,7 @@ class RecipeImages extends Component {
                   type="button"
                   data={image.elemId}
                   onClick={() => { this.onImageDelete(image.elemId, image.imagePath); }}
-                  value="Remove this image"
+                  value={t('common:imgupload.remove')}
                 />
               </div>
             );
@@ -99,6 +100,7 @@ RecipeImages.propTypes = {
   })),
   name: PropTypes.string,
   onImageStateUpdate: PropTypes.func.isRequired,
+  t: PropTypes.func.isRequired,
 };
 
 RecipeImages.defaultProps = {
@@ -106,4 +108,4 @@ RecipeImages.defaultProps = {
   name: '',
 };
 
-export default RecipeImages;
+export default withTranslation()(RecipeImages);

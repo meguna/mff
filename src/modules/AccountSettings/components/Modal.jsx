@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { X } from 'react-feather';
+import { withTranslation } from 'react-i18next';
 import Auth0Client from '../../auth/Auth';
 import StatusInfo from '../../common/StatusInfo';
 
@@ -27,7 +28,7 @@ class Modal extends Component {
   }
 
   handleSubmit(e) {
-    const { fieldParamName, toggleModal } = this.props;
+    const { fieldParamName, toggleModal, t } = this.props;
     const { fieldVal } = this.state;
     e.preventDefault();
     const userData = {
@@ -42,7 +43,7 @@ class Modal extends Component {
         this.setState({
           errorStatus: {
             error: true,
-            message: 'Oops! Something went wrong. Try again!',
+            message: t('common:error.general'),
             status: 'fail',
           },
         });
@@ -56,7 +57,7 @@ class Modal extends Component {
 
   render() {
     const { fieldVal, errorStatus } = this.state;
-    const { desc, title } = this.props;
+    const { desc, title, t } = this.props;
     return (
       <div className="check-pass-modal">
         {errorStatus.error && (
@@ -82,7 +83,7 @@ class Modal extends Component {
             value={fieldVal}
             onChange={this.handlePassChange}
           />
-          <input type="submit" />
+          <input type="submit" value={t('common:actions.submit')} />
         </form>
       </div>
     );
@@ -94,10 +95,11 @@ Modal.propTypes = {
   fieldParamName: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   desc: PropTypes.string,
+  t: PropTypes.func.isRequired,
 };
 
 Modal.defaultProps = {
   desc: '',
 };
 
-export default Modal;
+export default withTranslation()(Modal);

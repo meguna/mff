@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import { withTranslation } from 'react-i18next';
 import { AlertCircle } from 'react-feather';
 
 class Field extends PureComponent {
@@ -29,6 +30,8 @@ class Field extends PureComponent {
       outerClassName,
       required,
       info,
+      labelname,
+      t,
     } = this.props;
 
     const TagType = textarea ? 'textarea' : 'input';
@@ -37,12 +40,12 @@ class Field extends PureComponent {
     return (
       <div className={outerClassName}>
         <label htmlFor={id} className={`${labelClassName} field-label`}>
-          {name}
-          {required && <span className="required-label"> required</span>}
+          {labelname || name}
+          {required && <span className="required-label">{t('common:recipeform.required')}</span>}
         </label>
         <p className="form-description">{info}</p>
         <TagType
-          placeholder={name}
+          placeholder={labelname || name}
           className={`${className}${validClass}`}
           id={id}
           type="text"
@@ -62,8 +65,9 @@ class Field extends PureComponent {
 }
 
 Field.propTypes = {
-  onChange: PropTypes.func,
-  onBlur: PropTypes.func,
+  onChange: PropTypes.func.isRequired,
+  onBlur: PropTypes.func.isRequired,
+  t: PropTypes.func.isRequired,
   className: PropTypes.string,
   labelClassName: PropTypes.string,
   value: PropTypes.string,
@@ -74,12 +78,11 @@ Field.propTypes = {
   validString: PropTypes.string,
   outerClassName: PropTypes.string,
   info: PropTypes.string,
+  labelname: PropTypes.string,
   required: PropTypes.bool,
 };
 
 Field.defaultProps = {
-  onChange: () => {},
-  onBlur: () => {},
   className: '',
   labelClassName: '',
   value: '',
@@ -88,9 +91,10 @@ Field.defaultProps = {
   textarea: false,
   invalid: false,
   validString: '',
+  labelname: '',
   outerClassName: 'form-group',
   info: '',
   required: false,
 };
 
-export default Field;
+export default withTranslation()(Field);

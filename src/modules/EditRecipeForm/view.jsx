@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
+import { withTranslation } from 'react-i18next';
 import RecipeForm from '../RecipeForm';
 import { hs, callApi } from '../helpers';
 import { ING_FIELD_BLANK, ING_GROUP_BLANK } from '../common/initial';
@@ -125,12 +126,11 @@ class EditRecipeForm extends Component {
 
   render() {
     const { form, loadingInfo, fetchError } = this.state;
-    const { selectedId } = this.props;
+    const { selectedId, t } = this.props;
     const messages = {
-      buttonAction: 'Update recipe!',
-      failMessage: `Oops! There was an error updating your recipe. 
-        Please try again!`,
-      successMessage: 'The recipe was updated successfully!',
+      buttonAction: t('common:editrecipe.submit'),
+      failMessage: t('common:editrecipe.fail'),
+      successMessage: t('common:editrecipe.success'),
     };
 
     if (loadingInfo) {
@@ -145,7 +145,7 @@ class EditRecipeForm extends Component {
       <Fragment>
         <RecipeForm
           initialFormState={form}
-          title={`Edit Recipe: ${form.info.name}`}
+          title={t('common:editrecipe.title')}
           initialIngredients={form.ingredients}
           initialGroups={form.groups}
           initialImages={form.images}
@@ -163,6 +163,7 @@ class EditRecipeForm extends Component {
 EditRecipeForm.propTypes = {
   selectedId: PropTypes.number.isRequired,
   setSelectedRecipe: PropTypes.func.isRequired,
+  t: PropTypes.func.isRequired,
   loadingAuth: PropTypes.bool.isRequired,
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
@@ -174,4 +175,4 @@ EditRecipeForm.propTypes = {
   }).isRequired,
 };
 
-export default EditRecipeForm;
+export default withTranslation()(EditRecipeForm);

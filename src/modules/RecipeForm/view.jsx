@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Plus, AlertCircle } from 'react-feather';
 import { withRouter } from 'react-router-dom';
+import { withTranslation } from 'react-i18next';
 import Field from './components/Field';
 import IngGroup from './components/IngGroup';
 import IngFieldsHeader from './components/IngFieldsHeader';
@@ -217,6 +218,7 @@ class RecipeForm extends Component {
     const {
       title,
       messages,
+      t,
     } = this.props;
 
     const groupFields = [];
@@ -237,11 +239,12 @@ class RecipeForm extends Component {
     return (
       <Fragment>
         <h1 className="title">{title}</h1>
-        <FormSubHeader subtitle="info" />
+        <FormSubHeader subtitle={t('common:recipeform.info')} />
         <form id="nr-form" onSubmit={this.onSubmit} autoComplete="off">
           <Field
             onChange={this.onFieldChange}
             value={name}
+            labelname={t('common:recipeform.name')}
             name="name"
             id="nr-name-input"
             invalid={invalid.name}
@@ -251,23 +254,23 @@ class RecipeForm extends Component {
           />
           <Field
             onChange={this.onFieldChange}
+            labelname={t('common:recipeform.size')}
             value={size}
             name="size"
             id="nr-size-input"
-            info={`
-              Use this field creatively - for anything from serving count to 
-              baking tray dimensions`}
+            info={t('common:recipeform.sizeDesc')}
           />
           <Field
             onChange={this.onFieldChange}
             value={notes}
+            labelname={t('common:recipeform.notes')}
             name="notes"
             id="nr-recipenotes-input"
             textarea
           />
           <fieldset className="ingredients-fieldset">
             <legend>
-              <FormSubHeader subtitle="ingredients" />
+              <FormSubHeader subtitle={t('common:recipeform.ing')} />
             </legend>
             <IngFieldsHeader />
             {groupFields}
@@ -277,11 +280,11 @@ class RecipeForm extends Component {
               onClick={this.onAddGroup}
             >
               <Plus />
-              add another ingredient group
+              {t('common:recipeform.addIngGroup')}
             </button>
           </fieldset>
 
-          <FormSubHeader subtitle="Images" />
+          <FormSubHeader subtitle={t('common:recipeform.images')} />
           <RecipeImages images={images} onImageStateUpdate={this.updateImageState} />
 
           <FormSubHeader />
@@ -311,6 +314,7 @@ RecipeForm.propTypes = {
   setNotification: PropTypes.func.isRequired,
   selectedId: PropTypes.number.isRequired,
   setSelectedRecipe: PropTypes.func.isRequired,
+  t: PropTypes.func.isRequired,
   sortMethod: PropTypes.string,
   messages: PropTypes.shape({
     buttonAction: PropTypes.string,
@@ -332,4 +336,4 @@ RecipeForm.defaultProps = {
   sortMethod: 'update_date',
 };
 
-export default withRouter(RecipeForm);
+export default withTranslation()(withRouter(RecipeForm));

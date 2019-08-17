@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { X } from 'react-feather';
+import { withTranslation } from 'react-i18next';
 import { ING_FIELD_BLANK } from '../../common/initial';
 
 class IngField extends Component {
@@ -69,12 +70,13 @@ class IngField extends Component {
       value,
       ingId,
       groupId,
+      t,
     } = this.props;
 
     return (
       <div className="new-ing-fields form-group">
         <input
-          placeholder="name"
+          placeholder={t('common:recipeform.ingName')}
           className="new-ing-field-left field-label"
           id="nr-ing-name-input"
           type="text"
@@ -83,7 +85,7 @@ class IngField extends Component {
           onChange={this.handleNameChange}
         />
         <input
-          placeholder="amount"
+          placeholder={t('common:recipeform.ingAmt')}
           className="new-ing-field-ctr field-label"
           id="nr-ing-amount-input"
           type="text"
@@ -91,7 +93,7 @@ class IngField extends Component {
           onChange={this.handleAmtChange}
         />
         <input
-          placeholder="notes"
+          placeholder={t('common:recipeform.ingNotes')}
           className="new-ing-field-right field-label"
           id="nr-ing-notes-input"
           type="text"
@@ -118,23 +120,20 @@ class IngField extends Component {
 }
 
 IngField.propTypes = {
-  onChange: PropTypes.func,
-  onBlur: PropTypes.func,
-  onFocus: PropTypes.func,
-  onRemoveSelected: PropTypes.func,
+  onChange: PropTypes.func.isRequired,
+  onBlur: PropTypes.func.isRequired,
+  onFocus: PropTypes.func.isRequired,
+  onRemoveSelected: PropTypes.func.isRequired,
   value: PropTypes.object,
   ingId: PropTypes.number,
   groupId: PropTypes.number,
+  t: PropTypes.func.isRequired,
 };
 
 IngField.defaultProps = {
-  onChange: () => {},
-  onBlur: () => {},
-  onFocus: () => {},
-  onRemoveSelected: () => {},
   value: { ...ING_FIELD_BLANK },
   ingId: 0,
   groupId: 1,
 };
 
-export default IngField;
+export default withTranslation()(IngField);

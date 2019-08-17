@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { withTranslation } from 'react-i18next';
 import IngField from './IngField';
 import Field from './Field';
 import { ING_FIELD_BLANK, ING_GROUP_BLANK } from '../../common/initial';
@@ -103,7 +104,7 @@ class IngGroup extends Component {
       ingredients,
       groupInfo,
     } = this.state;
-    const { groupId } = this.props;
+    const { groupId, t } = this.props;
 
     if (ingredients.length === 0) {
       return null;
@@ -130,14 +131,11 @@ class IngGroup extends Component {
         {ingFields}
         <div className="form-group-buttons">
           <p className="form-description">
-            If you&apos;d like to elaborate more on this group,
-            use these fields!
-            <br />
-            For example, you might have groups called
-            &quot;batter mix&quot; or &quot;dry ingredients.&quot;
+            {t('common:recipeform.ingGroupDesc')}
           </p>
           <div className="ing-group-fields">
             <Field
+              labelname={t('common:recipeform.grpNotes')}
               name="name"
               className="ing-group-info"
               outerClassName="no-pad"
@@ -145,6 +143,7 @@ class IngGroup extends Component {
               value={groupInfo.name}
             />
             <Field
+              labelname={t('common:recipeform.grpNotes')}
               name="notes"
               className="ing-group-info"
               outerClassName="no-pad"
@@ -160,18 +159,17 @@ class IngGroup extends Component {
 
 IngGroup.propTypes = {
   groupId: PropTypes.number,
-  onIngGroupUpdate: PropTypes.func,
+  onIngGroupUpdate: PropTypes.func.isRequired,
   ingredients: PropTypes.arrayOf(PropTypes.object),
   group: PropTypes.object,
-  onRemoveGroup: PropTypes.func,
+  onRemoveGroup: PropTypes.func.isRequired,
+  t: PropTypes.func.isRequired,
 };
 
 IngGroup.defaultProps = {
   groupId: 1,
-  onIngGroupUpdate: () => {},
   ingredients: [ING_FIELD_BLANK],
   group: { ...ING_GROUP_BLANK },
-  onRemoveGroup: () => {},
 };
 
-export default IngGroup;
+export default withTranslation()(IngGroup);

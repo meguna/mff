@@ -791,8 +791,16 @@ Notes
   yeah. Idk. Satisfactory, but unfinished.
 * start adding translations for EN/JA on most simple UI buttons and such. Set
   up i18next. It's really annoying
+* full translations complete for:
+  * recipe forms, both new & edit
+  * delete recipe page
+  * profile page
+  * recipe list
+  * header
 
 ## To Do Notes - moderate
+* translations not finished for: welcome page (needs to be written)
+* add language detection to auth0 & user_metadata.
 * use up/down keys to move between recipes in a loop?
 * handle expired access token
 * profile section

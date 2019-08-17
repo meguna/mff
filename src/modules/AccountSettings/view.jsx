@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { withTranslation } from 'react-i18next';
 import Auth0Client from '../auth/Auth';
 import Modal from './components/Modal';
 import './styles.css';
@@ -59,9 +60,10 @@ class AccountSettings extends Component {
   }
 
   setEmailModal() {
+    const { t } = this.props;
     this.setState({
       modal: {
-        title: 'Change your email address',
+        title: t('common:account.emailchange'),
         fieldParamName: 'email',
       },
     }, () => {
@@ -70,9 +72,10 @@ class AccountSettings extends Component {
   }
 
   setNameModal() {
+    const { t } = this.props;
     this.setState({
       modal: {
-        title: 'Change your name',
+        title: t('common:account.namechange'),
         fieldParamName: 'name',
       },
     }, () => {
@@ -91,6 +94,7 @@ class AccountSettings extends Component {
 
   render() {
     const { name, email, isModalOpen, modal } = this.state;
+    const { t } = this.props;
     return (
       <div id="profile-page-wrapper" className={isModalOpen ? 'modal-open-bkgd' : ''}>
         {isModalOpen && (
@@ -101,34 +105,34 @@ class AccountSettings extends Component {
           />
         )}
         <h1 className="title">
-          Account Settings
+          {t('common:account.title')}
         </h1>
         <div className="account-info-group">
-          <p className="account-info-label">name</p>
+          <p className="account-info-label">{t('common:account.name')}</p>
           <p className="account-info-desc">{name}</p>
           <input
             className="account-change-button"
             type="button"
-            value="Change"
+            value={t('common:account.change')}
             onClick={this.setNameModal}
           />
         </div>
         <div className="account-info-group">
-          <p className="account-info-label">email</p>
+          <p className="account-info-label">{t('common:account.email')}</p>
           <p className="account-info-desc">{email}</p>
           <input
             className="account-change-button"
             type="button"
-            value="Change"
+            value={t('common:account.change')}
             onClick={this.setEmailModal}
           />
         </div>
         <div className="account-info-group">
-          <p className="account-info-label">Password</p>
+          <p className="account-info-label">{t('common:account.password')}</p>
           <input
             className="account-change-button"
             type="button"
-            value="Reset Password"
+            value={t('common:account.reset')}
             onClick={() => { Auth0Client.resetPassword(email); }}
           />
         </div>
@@ -140,9 +144,10 @@ class AccountSettings extends Component {
 AccountSettings.propTypes = {
   loadingAuth: PropTypes.bool.isRequired,
   setSelectedRecipe: PropTypes.func.isRequired,
+  t: PropTypes.func.isRequired,
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
 };
 
-export default AccountSettings;
+export default withTranslation()(AccountSettings);

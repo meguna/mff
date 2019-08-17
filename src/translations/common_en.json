@@ -2,7 +2,8 @@
   "actions": {
     "add": "Add a new Recipe",
     "edit": "Edit this Recipe",
-    "delete": "Delete this Recipe"
+    "delete": "Delete this Recipe",
+    "submit": "submit"
   },
   "list": {
     "update": "last updated",
@@ -11,7 +12,7 @@
     "load": "Load More...",
     "loading": "Loading..."
   },
-  "header" : {
+  "header": {
     "account": "Account",
     "logout": "Log Out",
     "login": "Log In"
@@ -20,5 +21,70 @@
     "ing": "ingredients",
     "notes": "notes",
     "images": "images"
+  },
+  "message": {
+    "noselected": "Use the button above to add a new recipe, or select one to play with from the sidebar."
+  },
+  "account": {
+    "title": "Account Settings",
+    "name": "name",
+    "email": "email",
+    "password": "password",
+    "change":"Change",
+    "reset": "Reset Password",
+    "emailchange": "Change your email address",
+    "namechange": "Change your name"
+  },
+  "error": {
+    "general": "Oops! Something went wrong. Try again!"
+  },
+  "recipeform": {
+    "title": "Edit Recipe",
+    "info": "info",
+    "name": "name",
+    "required": "required",
+    "size": "size",
+    "sizeDesc": "use this field creatively - for anything from serving count to baking tray dimensions",
+    "notes": "notes",
+    "ing": "ingredients",
+    "ingName": "ingredient name",
+    "ingAmt": "amount",
+    "ingNotes": "notes",
+    "ingGroupDesc": "if you'd like to elaborate more on this group, use these fields! \nfor example, you might have groups called 'batter mix' or 'dry ingredients.'",
+    "grpName": "name",
+    "grpNotes": "notes",
+    "addIngGroup": "add another ingredient group",
+    "images": "images",
+    "imgDesc": "attach any images you have of your recipe!\nmax image size: 2mb.\nmax number of images: 5.",
+    "updateButton": "Update Recipe!"
+  },
+  "newrecipe": {
+    "title": "Add A New Recipe",
+    "submit": "Add this recipe!",
+    "fail": "Oops! There was an error adding your recipe. Please try again!",
+    "success": "The recipe was added successfully!"
+  },
+  "editrecipe": {
+    "title": "Edit Recipe",
+    "submit": "Update recipe!",
+    "fail": "Oops! There was an error updating your recipe. Please try again!",
+    "success": "The recipe was updated successfully!"
+  },
+  "imgupload": {
+    "filename": "One or more of your files has a filename that exceeds the character limit of {{length}} and could not be uploaded.",
+    "filecount": "You selected over five files. Only the first five will be uploaded.",
+    "filesize": "One or more of your files exceeds the maximum size. Please choose a different file.",
+    "loading": "Your image(s) are being uploaded.",
+    "success": "Your images have been successfully uploaded.",
+    "fail": "Your images could not be uploaded. Please try again.",
+    "remove": "Remove this image"
+  },
+  "delete": {
+    "title": "Delete Recipe",
+    "success": "Successfully deleted recipe.",
+    "fail": "Failed to delete recipe. Please try again later.",
+    "confirm": "You are about to delete this recipe. Are you sure?",
+    "yes": "Yes, I am sure.",
+    "cancel": "cancel"
   }
 }

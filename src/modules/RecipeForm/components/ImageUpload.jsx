@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { withTranslation } from 'react-i18next';
 import StatusInfo from '../../common/StatusInfo';
 import { callApi } from '../../helpers';
 
@@ -26,7 +27,7 @@ class ImageUpload extends Component {
     e.preventDefault();
     e.stopPropagation();
 
-    const { onDone, imageCount } = this.props;
+    const { onDone, imageCount, t } = this.props;
     const data = new FormData();
     let fail = false;
 
@@ -37,22 +38,19 @@ class ImageUpload extends Component {
         fail = true;
         this.setState({
           status: 'fail',
-          statusMessage: `One or more of your files has a filename that exceeds
-          the character limit of ${MAX_FILE_NAME_LENGTH} and could not be uploaded.`,
+          statusMessage: t('common:imgupload.filename', { length: MAX_FILE_NAME_LENGTH }),
         });
       }
       if (i >= MAX_FILE_COUNT - imageCount) {
         this.setState({
           warn: 'warn',
-          warnMessage: `You selected over five files.
-          Only the first five will be uploaded.`,
+          warnMessage: t('common:imgupload.filecount', { count: MAX_FILE_COUNT }),
         });
       } else if (file.size > MAX_FILE_SIZE) {
         fail = true;
         this.setState({
           status: 'fail',
-          statusMessage: `One or more of your files exceeds the maximum size. 
-          Please choose a different file.`,
+          statusMessage: t('common:imgupload.filesize', { size: 2 }),
         });
       } else {
         data.append('file', e.target.files[i]);
@@ -61,7 +59,7 @@ class ImageUpload extends Component {
     if (!fail) {
       this.setState({
         status: 'load',
-        statusMessage: 'Your image(s) are being uploaded.',
+        statusMessage: t('common:imgupload.loading'),
       }, () => {
         callApi('/addimage', {
           method: 'POST',
@@ -70,7 +68,7 @@ class ImageUpload extends Component {
           .then((res) => {
             this.setState({
               status: 'success',
-              statusMessage: 'Your images have been successfully uploaded.',
+              statusMessage: t('common:imgupload.success'),
             });
             console.log(res);
             if (onDone) {
@@ -81,8 +79,7 @@ class ImageUpload extends Component {
           .catch((err) => {
             this.setState({
               status: 'fail',
-              statusMessage: `Your images could not be uploaded.
-              Please try again.`,
+              statusMessage: t('common:imgupload.fail'),
             });
             console.error(err);
           });
@@ -92,14 +89,11 @@ class ImageUpload extends Component {
 
   render() {
     const { status, statusMessage, warn, warnMessage } = this.state;
+    const { t } = this.props;
     return (
       <div className="form-group">
         <p className="form-description">
-          Attach any images you have of your recipe!
-          <br />
-          Max image size: 2MB.
-          <br />
-          Max number of images: 5.
+          {t('common:recipeform.imgDesc')}
         </p>
         <label htmlFor="recipe-image-upload" className="hidden">
           Image Upload
@@ -128,10 +122,7 @@ class ImageUpload extends Component {
 ImageUpload.propTypes = {
   imageCount: PropTypes.number.isRequired,
   onDone: PropTypes.func.isRequired,
+  t: PropTypes.func.isRequired,
 };
 
-ImageUpload.defaultProps = {
-};
-
-
-export default ImageUpload;
+export default withTranslation()(ImageUpload);

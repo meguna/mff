@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
+import { withTranslation } from 'react-i18next';
 import RecipeForm from '../RecipeForm';
 import { ING_FIELD_BLANK, ING_GROUP_BLANK } from '../common/initial';
 
@@ -14,6 +15,7 @@ class NewRecipeForm extends Component {
   }
 
   render() {
+    const { t } = this.props;
     const recipeInfo = {
       name: '',
       size: '',
@@ -25,10 +27,9 @@ class NewRecipeForm extends Component {
     };
 
     const messages = {
-      buttonAction: 'Add this recipe!',
-      failMessage: `Oops! There was an error adding your recipe. 
-        Please try again!`,
-      successMessage: 'The recipe was added successfully!',
+      buttonAction: t('common:newrecipe.submit'),
+      failMessage: t('common:newrecipe.fail'),
+      successMessage: t('common:newrecipe.success'),
     };
 
     return (
@@ -36,7 +37,7 @@ class NewRecipeForm extends Component {
         <RecipeForm
           initialFormState={recipeInfo}
           initialIngredients={recipeInfo.ingredients}
-          title="Add A New Recipe"
+          title={t('common:newrecipe.title')}
           initialGroups={recipeInfo.groups}
           notes=""
           name=""
@@ -51,6 +52,7 @@ class NewRecipeForm extends Component {
 
 NewRecipeForm.propTypes = {
   setSelectedRecipe: PropTypes.func.isRequired,
+  t: PropTypes.func.isRequired,
 };
 
-export default NewRecipeForm;
+export default withTranslation()(NewRecipeForm);
