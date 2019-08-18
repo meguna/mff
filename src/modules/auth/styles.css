@@ -15,3 +15,7 @@
 	position: absolute;
 	right: 5vw;
 }
+
+.auth0-lock-widget-container {
+	font-family: 'Gentona', 'Avenir', sans-serif;
+}

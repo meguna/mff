@@ -815,6 +815,7 @@ Notes
   i18next.
 * remove language selection dropdown from authenticated header.
 * touched up lots of styling errors in account settings modal.
+* fix styles (font weight) in lock.js
 
 #### Notes
 * (also documented in Auth.js comments): 
@@ -829,7 +830,6 @@ Notes
 
 ## To Do Notes - moderate
 
-* fix styles (font weight) in lock.js
 * back/forward buttons on welcome page shows nothing
 * maybe signup/signout shouldnt be on paths but should just be popup windows
 * make signup/signout modals closable? what was the reasoning behind making it
