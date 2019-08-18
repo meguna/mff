@@ -750,6 +750,10 @@ Notes
 * quick style change - fix root font size (bless rem units!)
 * quick fix for redux action - call login() if error in checkAuth()
 
+## Aug 11-13
+* develop hero illustrations for welcome page, Cookie (chef character) concept
+  and test illustration, food illustrations, etc. Work in progress
+
 ## Aug 14
 * set up AccountSettings component
 * set up modal functionality
@@ -803,10 +807,30 @@ Notes
 
 ## Aug 18
 * fix bug that caused EditRecipe to reload to /.
+* save language settings from welcome/signup page into user_metadata in
+  auth0 database connection.
+* load language setting, right after silent authentication, from user_metadata
+  and pass to i18next.
+
+#### Notes
+* (also documented in Auth.js comments): 
+  the user's language preference is stored as "nickname" because
+  per auth0 rules, items stored in user_metadata cannot be accessed through
+  auth0.js. Basic params like nickname, name, given_name, etc are available
+  to access from auth0.js. Since I already do silent authentication with
+  auth0.js every time a user navigates to the app, it seems too costly to do
+  an operation with the management api every time as well. However, I still
+  need to access the language parameter every time the user navigates to
+  the app so that I can tell react-i18n which language to use.
+
 
 ## To Do Notes - moderate
 
+* fix styles (font weight) in lock.js
 * back/forward buttons on welcome page shows nothing
+* maybe signup/signout shouldnt be on paths but should just be popup windows
+* make signup/signout modals closable? what was the reasoning behind making it
+  unclosable? there was a reason
 * error notifications need to wrap - 40vw (image upload)
 * translations not finished for: welcome page (needs to be written)
 * add language detection to auth0 & user_metadata.

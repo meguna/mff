@@ -146,11 +146,11 @@ export const checkAuthStatus = cb => (dispatch) => {
   dispatch(loginStart());
   Auth0Client.getToken()
     .then((res) => {
-      dispatch(loginSuccess());
+      dispatch(loginSuccess(res));
       cb();
     })
     .catch((err) => {
-      dispatch(loginFailure());
+      dispatch(loginFailure(err));
       login();
     });
 };

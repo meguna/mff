@@ -1,5 +1,6 @@
 import auth0 from 'auth0-js';
 import Auth0Lock from 'auth0-lock';
+import i18n from '../../i18n';
 import authConfig from '../../auth_config.json';
 
 class Auth {
@@ -10,7 +11,7 @@ class Auth {
       clientID: authConfig.clientId,
       redirectUri: authConfig.rootUri,
       responseType: 'id_token token',
-      scope: 'openid profile email',
+      scope: 'openid profile email user_metadata',
       responseMode: 'web_message',
     });
 
@@ -57,6 +58,16 @@ class Auth {
     });
   }
 
+  /* IMPORTANT
+   * the user's language preference is stored as "nickname" because
+   * per auth0 rules, items stored in user_metadata cannot be accessed through
+   * auth0.js. Basic params like nickname, name, given_name, etc are available
+   * to access from auth0.js. Since I already do silent authentication with
+   * auth0.js every time a user navigates to the app, it seems too costly to do
+   * an operation with the management api every time as well. However, I still
+   * need to access the language parameter every time the user navigates to
+   * the app so that I can tell react-i18n which language to use.
+   */
   signUp() {
     return this.lockJs({
       allowLogin: false,
@@ -65,6 +76,10 @@ class Auth {
       additionalSignUpFields: [{
         name: 'name',
         placeholder: 'your name',
+      }, {
+        type: 'hidden',
+        name: 'nickname',
+        value: i18n.language,
       }],
     });
   }
@@ -87,6 +102,7 @@ class Auth {
       sessionStorage.setItem('stateid', nonce);
     }
     const options = {
+      language: i18n.language || 'en',
       closable: false,
       autoclose: true,
       avatar: null,
@@ -97,7 +113,7 @@ class Auth {
         primaryColor: '#FF320C',
       },
       languageDictionary: {
-        title: 'Log In to Mood For Food',
+        title: 'Log In to Foodnotes',
       },
       auth: {
         redirect: true,

@@ -11,14 +11,25 @@ import Signup from './modules/auth/Signup';
 import Welcome from './modules/Welcome';
 import AccountSettings from './modules/AccountSettings';
 import Header from './modules/common/Header';
+import Auth0Client from './modules/auth/Auth';
 
 class App extends React.Component {
   componentDidMount() {
     document.title = 'In the Mood for Food';
     const { checkAuthStatus, fetchRecipes, sortMethod } = this.props;
 
+    const cb = () => {
+      const { i18n } = this.props;
+      fetchRecipes(sortMethod);
+      /* language is stored in as the "nickname" parameter. See longer
+       * explanation in Auth.js
+       */
+      const { nickname: lang } = Auth0Client.getProfile();
+      i18n.changeLanguage(lang);
+    };
+
     /* pass fetchRecipes as callback */
-    checkAuthStatus(() => { fetchRecipes(sortMethod); });
+    checkAuthStatus(cb);
   }
 
   render() {
@@ -60,6 +71,9 @@ App.propTypes = {
   sortMethod: PropTypes.string.isRequired,
   loadingAuth: PropTypes.bool.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
+  i18n: PropTypes.shape({
+    changeLanguage: PropTypes.func.isRequired,
+  }).isRequired,
 };
 
 export default withTranslation('common')(App);

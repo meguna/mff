@@ -9,8 +9,8 @@ import commonJa from './translations/common_ja.json';
 i18n
   .use(initReactI18next)
   .init({
-    fallbackLng: 'ja',
-    lng: 'ja',
+    fallbackLng: 'en',
+    lng: 'en',
     debug: true,
     interpolation: {
       escapeValue: false, // not needed for react as it escapes by default
