@@ -11,6 +11,7 @@ class AccountSettings extends Component {
     this.state = {
       name: '',
       email: '',
+      language: '',
       isModalOpen: false,
       modal: {
         title: '',
@@ -20,6 +21,7 @@ class AccountSettings extends Component {
     this.toggleModal = this.toggleModal.bind(this);
     this.setEmailModal = this.setEmailModal.bind(this);
     this.setNameModal = this.setNameModal.bind(this);
+    this.setLangModal = this.setLangModal.bind(this);
   }
 
   componentDidMount() {
@@ -33,6 +35,7 @@ class AccountSettings extends Component {
       this.setState({
         name: profile.name,
         email: profile.email,
+        language: profile.nickname,
       });
     }
   }
@@ -46,6 +49,7 @@ class AccountSettings extends Component {
         this.setState({
           name: profile.name,
           email: profile.email,
+          language: profile.nickname,
         });
       }
     }
@@ -56,6 +60,7 @@ class AccountSettings extends Component {
     this.setState({
       name: profile.name,
       email: profile.email,
+      language: profile.nickname,
     });
   }
 
@@ -83,6 +88,18 @@ class AccountSettings extends Component {
     });
   }
 
+  setLangModal() {
+    const { t } = this.props;
+    this.setState({
+      modal: {
+        title: t('common:account.langchange'),
+        fieldParamName: 'language',
+      },
+    }, () => {
+      this.toggleModal();
+    });
+  }
+
   toggleModal(shouldResetProfile) {
     this.setState(prevState => ({
       isModalOpen: !prevState.isModalOpen,
@@ -93,8 +110,15 @@ class AccountSettings extends Component {
   }
 
   render() {
-    const { name, email, isModalOpen, modal } = this.state;
+    const { name, email, language, isModalOpen, modal } = this.state;
     const { t } = this.props;
+    let langName = '';
+    if (language === 'en') {
+      langName = 'English';
+    } else if (language === 'ja') {
+      langName = '日本語';
+    }
+
     return (
       <div id="profile-page-wrapper" className={isModalOpen ? 'modal-open-bkgd' : ''}>
         {isModalOpen && (
@@ -107,6 +131,16 @@ class AccountSettings extends Component {
         <h1 className="title">
           {t('common:account.title')}
         </h1>
+        <div className="account-info-group">
+          <p className="account-info-label">{t('common:account.language')}</p>
+          <p className="account-info-desc">{langName}</p>
+          <input
+            className="account-change-button"
+            type="button"
+            value={t('common:account.change')}
+            onClick={this.setLangModal}
+          />
+        </div>
         <div className="account-info-group">
           <p className="account-info-label">{t('common:account.name')}</p>
           <p className="account-info-desc">{name}</p>

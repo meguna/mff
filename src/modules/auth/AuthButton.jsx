@@ -26,7 +26,6 @@ class AuthButton extends Component {
       }
       return (
         <div className="auth-button-wrapper">
-          <LangChange />
           <Link className="auth-button-link" to="/account">
             {t('common:header.account')}
           </Link>

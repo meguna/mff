@@ -811,6 +811,10 @@ Notes
   auth0 database connection.
 * load language setting, right after silent authentication, from user_metadata
   and pass to i18next.
+* add language setting to account settings. saves to user_metadata and updates
+  i18next.
+* remove language selection dropdown from authenticated header.
+* touched up lots of styling errors in account settings modal.
 
 #### Notes
 * (also documented in Auth.js comments): 
@@ -823,7 +827,6 @@ Notes
   need to access the language parameter every time the user navigates to
   the app so that I can tell react-i18n which language to use.
 
-
 ## To Do Notes - moderate
 
 * fix styles (font weight) in lock.js
@@ -833,7 +836,6 @@ Notes
   unclosable? there was a reason
 * error notifications need to wrap - 40vw (image upload)
 * translations not finished for: welcome page (needs to be written)
-* add language detection to auth0 & user_metadata.
 * use up/down keys to move between recipes in a loop?
 * handle expired access token
 * profile section
