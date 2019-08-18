@@ -697,7 +697,7 @@ Notes
   as well as errors in the promise itself. [resource](https://bit.ly/2Mh4HFz)
 * lots more work with `Object.assign()`. To copy values for nested objects,
   call `Object.assign()` twice - once for the parent and once for the inner
-  child object that you want to copy. [https://bit.ly/2YaFGCT](source)
+  child object that you want to copy. [source](https://bit.ly/2YaFGCT)
 * every `<Route>` component renders *something* - if nothing matches, then it
   renders `null`, if something matches it renders a component. So if the route
   matches multiple `<Route>`s, then all of them render something.
@@ -790,7 +790,7 @@ Notes
   It solves the problem in that I catch the errors in the right place now, but
   yeah. Idk. Satisfactory, but unfinished.
 * start adding translations for EN/JA on most simple UI buttons and such. Set
-  up i18next. It's really annoying
+  up i18next. It's really annoying. [reference](https://bit.ly/2P0qV1u)
 * full translations complete for:
   * recipe forms, both new & edit
   * delete recipe page
@@ -798,7 +798,16 @@ Notes
   * recipe list
   * header
 
+#### Lessons
+* learned about React Suspense
+
+## Aug 18
+* fix bug that caused EditRecipe to reload to /.
+
 ## To Do Notes - moderate
+
+* back/forward buttons on welcome page shows nothing
+* error notifications need to wrap - 40vw (image upload)
 * translations not finished for: welcome page (needs to be written)
 * add language detection to auth0 & user_metadata.
 * use up/down keys to move between recipes in a loop?
@@ -820,7 +829,9 @@ Notes
 * refactor reducers - divide into separate reducers & lint code
 * does `loading...` message take a little too long on RecipeForm? Investigate
 * editRecipe warning on navigating away from unsaved changes
-* show 404 whenever a user navigates to /anypath/:nonexistentId.
+* show 404 whenever a user navigates to /anypath/:nonexistentId. OR simply
+  reload to `/` (current implementation) ? Pros/cons? Always take the option
+  that provides more feedback to a user action?
 * change document titles according to page
 * change error message for "load more" to "no more to load" when there 
   is no more to load
@@ -829,8 +840,7 @@ Notes
 ## Tasks to consider
 
 * testing with Jest
-* drag to change ingredient order
-* imperial / customary change! --> is this really necessary?
+* drag to change ingredient group order
 * favicon
 * FUN feature: color picker to choose a theme (replace --key-red in CSS) -
   forest green! etc.

@@ -49,9 +49,11 @@ class EditRecipeForm extends Component {
     }
 
     /* Redirect page if no recipe is selected or
-     * if no recipe id is passed  as a route parameter
+     * if no recipe id is passed  as a route parameter.
+     * If hashid decodes a bogus key then it returns 0, so check for that
+     * as well.
      */
-    if (!(+match.params.id) && selectedId === -1) {
+    if ((!paramId || paramId === 0) && selectedId === -1) {
       history.push('/');
     }
   }
