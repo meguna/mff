@@ -817,9 +817,6 @@ Notes
 * touched up lots of styling errors in account settings modal.
 * fix styles (font weight) in lock.js
 
-## Aug 19-20
-* implement recipe search functionality with corresponding redux funcs
-
 #### Notes
 * (also documented in Auth.js comments): 
   the user's language preference is stored as "nickname" because
@@ -830,6 +827,24 @@ Notes
   an operation with the management api every time as well. However, I still
   need to access the language parameter every time the user navigates to
   the app so that I can tell react-i18n which language to use.
+
+## Aug 19-20
+* implement recipe search functionality with corresponding redux funcs
+* change RecipeList to have a "search mode" boolean. this helps the re-sorting
+  dropdown and the search bar, as well as the list of recipes without those
+  filters, coordinate.
+* finally, hide "load more" button when there's no more to load! (added
+  redux store param)
+* implemented search's "fetch more" and "fetch" in a way that the client
+  doesn't have to call different functions. if an offset value is passed to
+  the client function, then it calls "fetch more". Ultimately, of course, the
+  client has to determine when to call "more" and when not to, but I think
+  this is a cleaner implementation than the non-search fetch implementation
+  (which included different functions, "more" and "regular", that the client
+  needs to call).
+
+#### Notes
+* quick search is officially done!! This was a quick one.
 
 ## To Do Notes - moderate
 
@@ -845,7 +860,7 @@ Notes
   * require verification email to log in, since changing the email address
     doesn't require anything (eg retype password, etc.)
   * reset password flow (as opposed to "forgot password" flow)
-* export as CSV
+* export as CSV functionality
 * "baking" vs "cooking" filter, ability to add tags to recipes (csv)
 * make sure ingredient names can wrap
 * error notifications (ex. file size > 2mb) were not showing up properly
@@ -855,14 +870,11 @@ Notes
 * modularize Express API - reference
   [here](http://catlau.co/how-to-modularize-routes-with-the-express-router/)
 * refactor reducers - divide into separate reducers & lint code
-* does `loading...` message take a little too long on RecipeForm? Investigate
 * editRecipe warning on navigating away from unsaved changes
 * show 404 whenever a user navigates to /anypath/:nonexistentId. OR simply
   reload to `/` (current implementation) ? Pros/cons? Always take the option
   that provides more feedback to a user action?
 * change document titles according to page
-* change error message for "load more" to "no more to load" when there 
-  is no more to load
 * add maximum number of ingredients & ingredient groups in form (just in case)
 
 ## Tasks to consider

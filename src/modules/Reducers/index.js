@@ -7,6 +7,7 @@ import {
   FETCH_MORE_RECIPES_FAILURE,
   FETCH_QS_START,
   FETCH_QS_SUCCESS,
+  FETCH_MORE_QS_SUCCESS,
   FETCH_QS_FAILURE,
   SET_SELECTED_RECIPE,
   SET_NOTIFICATION_DETAILS,
@@ -31,7 +32,10 @@ const INITIAL_STATE = {
   loadingAuth: true,
   isAuthenticated: false,
   profile: null,
+  noMoreResults: false,
 };
+
+const LIST_COUNT_THRESHOLD = 5;
 
 const reducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
@@ -49,6 +53,7 @@ const reducer = (state = INITIAL_STATE, action) => {
       error: null,
       loading: false,
       listOffset: action.payload.length,
+      noMoreResults: (action.payload.length < LIST_COUNT_THRESHOLD),
     };
   }
   case FETCH_MORE_RECIPES_START: {
@@ -60,15 +65,13 @@ const reducer = (state = INITIAL_STATE, action) => {
     };
   }
   case FETCH_MORE_RECIPES_SUCCESS: {
-    if (action.payload.length === 0) {
-      return state;
-    }
     return {
       ...state,
       recipes: [...state.recipes, ...action.payload],
       error: null,
       loading: false,
       listOffset: state.recipes.length + action.payload.length,
+      noMoreResults: (action.payload.length < LIST_COUNT_THRESHOLD),
     };
   }
   case SET_SELECTED_RECIPE: {
@@ -95,14 +98,23 @@ const reducer = (state = INITIAL_STATE, action) => {
       sortMethod: action.payload,
     };
   case FETCH_QS_SUCCESS: {
-    if (action.payload.length === 0) {
-      return state;
-    }
     return {
       ...state,
       recipes: [...action.payload],
       error: null,
       loading: false,
+      listOffset: action.payload.length,
+      noMoreResults: (action.payload.length < LIST_COUNT_THRESHOLD),
+    };
+  }
+  case FETCH_MORE_QS_SUCCESS: {
+    return {
+      ...state,
+      recipes: [...state.recipes, ...action.payload],
+      error: null,
+      loading: false,
+      listOffset: state.recipes.length + action.payload.length,
+      noMoreResults: (action.payload.length < LIST_COUNT_THRESHOLD),
     };
   }
   case LOGIN_FAILURE:

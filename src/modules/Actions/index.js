@@ -7,6 +7,7 @@ import {
   FETCH_MORE_RECIPES_FAILURE,
   FETCH_QS_START,
   FETCH_QS_SUCCESS,
+  FETCH_MORE_QS_SUCCESS,
   FETCH_QS_FAILURE,
   SET_SELECTED_RECIPE,
   SET_NOTIFICATION_DETAILS,
@@ -168,14 +169,26 @@ const fetchQuickSearchSuccess = recipes => ({
   payload: recipes,
 });
 
+const fetchMoreQuickSearchSuccess = recipes => ({
+  type: FETCH_MORE_QS_SUCCESS,
+  payload: recipes,
+});
+
 const fetchQuickSearchFailure = error => ({
   type: FETCH_QS_FAILURE,
   payload: error,
 });
 
-export const fetchQuickSearch = (query, sortMethod) => (dispatch) => {
+export const fetchQuickSearch = (query, sortMethod, offset) => (dispatch) => {
+  const offsetParam = offset || '';
   dispatch(fetchQuickSearchStart(sortMethod));
-  callApi(`/quicksearch/q=${query}-sort=${sortMethod}`)
-    .then(res => dispatch(fetchQuickSearchSuccess(res)))
+  callApi(`/quicksearch/${query}/${sortMethod}/${offsetParam}`)
+    .then((res) => {
+      if (!offset) {
+        dispatch(fetchQuickSearchSuccess(res));
+      } else {
+        dispatch(fetchMoreQuickSearchSuccess(res));
+      }
+    })
     .catch(err => dispatch(fetchQuickSearchFailure(err)));
 };

@@ -145,16 +145,18 @@ app.get('/api/getrecipe/:id', checkJwt, checkAuthorized, (req, res) => {
   });
 });
 
-app.get('/api/quicksearch/q=:query-sort=:sort', checkJwt, (req, res) => {
+app.get('/api/quicksearch/:query/:sort/:offset?', checkJwt, (req, res) => {
   let order = 'DESC';
   if (req.params.sort === 'name') {
     order = 'ASC';
   }
+  const offset = req.params.offset || '0';
   connection.query(`
     SELECT * FROM recipes
     WHERE recipes.user_id = '${req.user.sub}'
     AND recipes.name LIKE '%${req.params.query}%'
-    ORDER BY recipes.${req.params.sort} ${order}, id;
+    ORDER BY recipes.${req.params.sort} ${order}, id
+    LIMIT 5 OFFSET ${offset};
     `,
   (error, results) => {
     if (error) throw error;

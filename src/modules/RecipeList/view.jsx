@@ -4,17 +4,19 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { withTranslation } from 'react-i18next';
 import LoadMoreButton from './components/LoadMoreButton';
-import { callApi, hs } from '../helpers';
+import { hs } from '../helpers';
 
 class RecipeList extends Component {
   constructor(props) {
     super(props);
     this.state = {
       sortMethod: 'update_date',
+      searchMode: false,
       sQuery: '',
     };
     this.onSortSelect = this.onSortSelect.bind(this);
     this.onSearchChange = this.onSearchChange.bind(this);
+    this.onLoadMore = this.onLoadMore.bind(this);
   }
 
   componentDidUpdate() {
@@ -32,10 +34,14 @@ class RecipeList extends Component {
   }
 
   onSortSelect(event) {
-    const { fetchRecipes } = this.props;
+    const { fetchRecipes, fetchQuickSearch } = this.props;
     this.setState({ sortMethod: event.target.value }, () => {
-      const { sortMethod } = this.state;
-      fetchRecipes(sortMethod);
+      const { sortMethod, searchMode, sQuery } = this.state;
+      if (!searchMode) {
+        fetchRecipes(sortMethod);
+      } else {
+        fetchQuickSearch(sQuery, sortMethod);
+      }
     });
   }
 
@@ -46,9 +52,25 @@ class RecipeList extends Component {
       sQuery: query,
     });
     if (query !== '') {
+      this.setState({
+        searchMode: true,
+      });
       fetchQuickSearch(query, sortMethod);
     } else {
+      this.setState({
+        searchMode: false,
+      });
       fetchRecipes(sortMethod);
+    }
+  }
+
+  onLoadMore() {
+    const { searchMode, sortMethod, sQuery } = this.state;
+    const { fetchMoreRecipes, fetchQuickSearch, listOffset, recipes } = this.props;
+    if (!searchMode) {
+      fetchMoreRecipes(listOffset, sortMethod);
+    } else {
+      fetchQuickSearch(sQuery, sortMethod, recipes.length);
     }
   }
 
@@ -58,10 +80,9 @@ class RecipeList extends Component {
       selectedId,
       loading,
       error,
-      fetchMoreRecipes,
-      listOffset,
       loadingAuth,
       t,
+      noMoreResults,
     } = this.props;
     const { sortMethod, sQuery } = this.state;
 
@@ -102,11 +123,13 @@ class RecipeList extends Component {
             </div>
           );
         })}
-        <LoadMoreButton
-          onAction={() => fetchMoreRecipes(listOffset, sortMethod)}
-          loading={loading}
-          loadingAuth={loadingAuth}
-        />
+        {!noMoreResults && (
+          <LoadMoreButton
+            onAction={this.onLoadMore}
+            loading={loading}
+            loadingAuth={loadingAuth}
+          />
+        )}
       </div>
     );
   }
@@ -124,6 +147,7 @@ RecipeList.propTypes = {
   sortMethod: PropTypes.string.isRequired,
   fetchMoreRecipes: PropTypes.func.isRequired,
   setSelectedRecipe: PropTypes.func.isRequired,
+  noMoreResults: PropTypes.bool.isRequired,
   t: PropTypes.func.isRequired,
 };
 
