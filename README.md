@@ -817,6 +817,9 @@ Notes
 * touched up lots of styling errors in account settings modal.
 * fix styles (font weight) in lock.js
 
+## Aug 19-20
+* implement recipe search functionality with corresponding redux funcs
+
 #### Notes
 * (also documented in Auth.js comments): 
   the user's language preference is stored as "nickname" because
@@ -836,7 +839,6 @@ Notes
   unclosable? there was a reason
 * error notifications need to wrap - 40vw (image upload)
 * translations not finished for: welcome page (needs to be written)
-* use up/down keys to move between recipes in a loop?
 * handle expired access token
 * profile section
   * delete account

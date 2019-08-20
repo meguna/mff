@@ -41,6 +41,8 @@ select, option {
   box-sizing: content-box;
   border-radius: 1px;
   -webkit-appearance: none;
+  background-color: var(--faint-grey);
+  border: 1px solid var(--light-grey);
 }
 
 select, option :focus {

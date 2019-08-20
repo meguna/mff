@@ -5,6 +5,9 @@ import {
   FETCH_MORE_RECIPES_START,
   FETCH_MORE_RECIPES_SUCCESS,
   FETCH_MORE_RECIPES_FAILURE,
+  FETCH_QS_START,
+  FETCH_QS_SUCCESS,
+  FETCH_QS_FAILURE,
   SET_SELECTED_RECIPE,
   SET_NOTIFICATION_DETAILS,
   AUTH_START,
@@ -74,6 +77,7 @@ const reducer = (state = INITIAL_STATE, action) => {
       selectedId: action.payload,
     };
   }
+  case FETCH_QS_FAILURE:
   case FETCH_RECIPES_FAILURE:
   case FETCH_MORE_RECIPES_FAILURE:
     console.error(action.payload);
@@ -83,6 +87,24 @@ const reducer = (state = INITIAL_STATE, action) => {
       loading: false,
       loadingAuth: false,
     };
+  case FETCH_QS_START:
+    return {
+      ...state,
+      error: null,
+      loading: true,
+      sortMethod: action.payload,
+    };
+  case FETCH_QS_SUCCESS: {
+    if (action.payload.length === 0) {
+      return state;
+    }
+    return {
+      ...state,
+      recipes: [...action.payload],
+      error: null,
+      loading: false,
+    };
+  }
   case LOGIN_FAILURE:
     console.error(action.payload);
     return {

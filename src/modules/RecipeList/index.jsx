@@ -3,6 +3,7 @@ import {
   fetchRecipes,
   setSelectedRecipe,
   fetchMoreRecipes,
+  fetchQuickSearch,
 } from '../Actions/index';
 
 import RecipeList from './view';
@@ -13,6 +14,7 @@ const mapDispatchToProps = {
   fetchRecipes,
   setSelectedRecipe,
   fetchMoreRecipes,
+  fetchQuickSearch,
 };
 
 export default connect(

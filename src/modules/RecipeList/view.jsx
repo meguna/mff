@@ -2,31 +2,19 @@ import React, { Component } from 'react';
 import './styles.css';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import LoadMoreButton from './components/LoadMoreButton';
-import { hs } from '../helpers';
 import { withTranslation } from 'react-i18next';
+import LoadMoreButton from './components/LoadMoreButton';
+import { callApi, hs } from '../helpers';
 
 class RecipeList extends Component {
   constructor(props) {
     super(props);
     this.state = {
       sortMethod: 'update_date',
+      sQuery: '',
     };
     this.onSortSelect = this.onSortSelect.bind(this);
-  }
-
-  shouldComponentUpdate(prevProps) {
-    const { recipes, selectedId } = this.props;
-    if (recipes !== prevProps.recipes) {
-      return true;
-    }
-    if (selectedId !== prevProps.selectedId) {
-      return true;
-    }
-    if (prevProps.error) {
-      return true;
-    }
-    return false;
+    this.onSearchChange = this.onSearchChange.bind(this);
   }
 
   componentDidUpdate() {
@@ -51,6 +39,19 @@ class RecipeList extends Component {
     });
   }
 
+  onSearchChange(e) {
+    const { sortMethod, fetchRecipes, fetchQuickSearch } = this.props;
+    const query = e.target.value;
+    this.setState({
+      sQuery: query,
+    });
+    if (query !== '') {
+      fetchQuickSearch(query, sortMethod);
+    } else {
+      fetchRecipes(sortMethod);
+    }
+  }
+
   render() {
     const {
       recipes,
@@ -62,10 +63,19 @@ class RecipeList extends Component {
       loadingAuth,
       t,
     } = this.props;
-    const { sortMethod } = this.state;
+    const { sortMethod, sQuery } = this.state;
 
     return (
       <div>
+        <form>
+          <input
+            type="text"
+            placeholder="quick search"
+            id="quick-search-field"
+            value={sQuery}
+            onChange={this.onSearchChange}
+          />
+        </form>
         <form>
           <select value={sortMethod} onChange={this.onSortSelect}>
             <option value="name">{t('common:list.name')}</option>
@@ -110,6 +120,8 @@ RecipeList.propTypes = {
   selectedId: PropTypes.number,
   listOffset: PropTypes.number,
   fetchRecipes: PropTypes.func.isRequired,
+  fetchQuickSearch: PropTypes.func.isRequired,
+  sortMethod: PropTypes.string.isRequired,
   fetchMoreRecipes: PropTypes.func.isRequired,
   setSelectedRecipe: PropTypes.func.isRequired,
   t: PropTypes.func.isRequired,

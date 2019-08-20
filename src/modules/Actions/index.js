@@ -5,6 +5,9 @@ import {
   FETCH_MORE_RECIPES_START,
   FETCH_MORE_RECIPES_SUCCESS,
   FETCH_MORE_RECIPES_FAILURE,
+  FETCH_QS_START,
+  FETCH_QS_SUCCESS,
+  FETCH_QS_FAILURE,
   SET_SELECTED_RECIPE,
   SET_NOTIFICATION_DETAILS,
   AUTH_START,
@@ -153,4 +156,26 @@ export const checkAuthStatus = cb => (dispatch) => {
       dispatch(loginFailure(err));
       login();
     });
+};
+
+const fetchQuickSearchStart = sortMethod => ({
+  type: FETCH_QS_START,
+  payload: sortMethod,
+});
+
+const fetchQuickSearchSuccess = recipes => ({
+  type: FETCH_QS_SUCCESS,
+  payload: recipes,
+});
+
+const fetchQuickSearchFailure = error => ({
+  type: FETCH_QS_FAILURE,
+  payload: error,
+});
+
+export const fetchQuickSearch = (query, sortMethod) => (dispatch) => {
+  dispatch(fetchQuickSearchStart(sortMethod));
+  callApi(`/quicksearch/q=${query}-sort=${sortMethod}`)
+    .then(res => dispatch(fetchQuickSearchSuccess(res)))
+    .catch(err => dispatch(fetchQuickSearchFailure(err)));
 };

@@ -41,3 +41,17 @@
 .default-cursor { 
   cursor: default;
 }
+
+input#quick-search-field {
+	background-color: var(--faint-grey);
+	border: 1px solid var(--light-grey);
+	margin: 10px;
+	margin-left: 0;
+	width: 28vw;
+	padding: 8px;
+}
+
+input#quick-search-field:focus {
+	background-color: white;
+	border: 1px solid var(--light-grey);
+}

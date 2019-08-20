@@ -69,7 +69,7 @@ const checkAuthorized = (req, res, next) => {
   `;
   connection.query(checkAuthorizedQuery, (authError, authResults) => {
     if (authError) throw new Error(authError);
-    if (authResults[0].user_id === req.user.sub) {
+    if (authResults[0] && (authResults[0].user_id === req.user.sub)) {
       next();
     } else {
       throw new Error('Unauthorized');
@@ -138,6 +138,23 @@ app.get('/api/getrecipe/:id', checkJwt, checkAuthorized, (req, res) => {
   connection.query(`
     SELECT * FROM recipes
     WHERE id = ${+req.params.id} AND recipes.user_id = '${req.user.sub}'
+    `,
+  (error, results) => {
+    if (error) throw error;
+    res.end(JSON.stringify(results));
+  });
+});
+
+app.get('/api/quicksearch/q=:query-sort=:sort', checkJwt, (req, res) => {
+  let order = 'DESC';
+  if (req.params.sort === 'name') {
+    order = 'ASC';
+  }
+  connection.query(`
+    SELECT * FROM recipes
+    WHERE recipes.user_id = '${req.user.sub}'
+    AND recipes.name LIKE '%${req.params.query}%'
+    ORDER BY recipes.${req.params.sort} ${order}, id;
     `,
   (error, results) => {
     if (error) throw error;
