@@ -41,7 +41,11 @@ class Field extends PureComponent {
       <div className={outerClassName}>
         <label htmlFor={id} className={`${labelClassName} field-label`}>
           {labelname || name}
-          {required && <span className="required-label">{t('common:recipeform.required')}</span>}
+          {required && (
+            <span className="required-label">
+              {t('common:recipeform.required')}
+            </span>
+          )}
         </label>
         <p className="form-description">{info}</p>
         <TagType
@@ -66,7 +70,7 @@ class Field extends PureComponent {
 
 Field.propTypes = {
   onChange: PropTypes.func.isRequired,
-  onBlur: PropTypes.func.isRequired,
+  onBlur: PropTypes.func,
   t: PropTypes.func.isRequired,
   className: PropTypes.string,
   labelClassName: PropTypes.string,
@@ -83,6 +87,7 @@ Field.propTypes = {
 };
 
 Field.defaultProps = {
+  onBlur: () => {},
   className: '',
   labelClassName: '',
   value: '',
