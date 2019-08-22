@@ -6,16 +6,19 @@ header.app-main-header {
   font-family: 'Canela', serif;
   width: 100vw;
   text-align: center;
-  padding: 50px;
+  padding: 2.5vw 5vw;
   font-size: 2.5em;
   font-weight: 700;
   box-sizing: border-box;
   margin: 0;
   background-color: var(--key-red);
+  display: flex;
+  justify-content: space-between;
 }
 
 .app-main-header-title {
   color: #fff;
+  display: inline-block;
 }
 
 .app-recipelist {

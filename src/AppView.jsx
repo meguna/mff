@@ -11,6 +11,8 @@ import Signup from './modules/auth/Signup';
 import Welcome from './modules/Welcome';
 import AccountSettings from './modules/AccountSettings';
 import Header from './modules/common/Header';
+import ScreenHOC from './modules/common/ScreenHOC';
+import HeaderMobile from './modules/common/HeaderMobile';
 import Auth0Client from './modules/auth/Auth';
 
 class App extends React.Component {
@@ -43,7 +45,7 @@ class App extends React.Component {
           {!loadingAuth && !isAuthenticated && (
             <Redirect to="/welcome" />
           )}
-          <Header />
+          <ScreenHOC desktop={Header} mobile={HeaderMobile} />
           <Switch>
             <Route exact path="/signup" component={Signup} />
             <Route exact path="/login" component={Login} />

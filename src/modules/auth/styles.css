@@ -12,8 +12,6 @@
 }
 .auth-button-wrapper {
 	display: inline-block;
-	position: absolute;
-	right: 5vw;
 }
 
 .auth0-lock-widget-container {
