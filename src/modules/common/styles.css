@@ -1,6 +1,21 @@
+.mobile-header-wrapper {
+	display: flex;
+	flex-direction: column;
+}
+
 .select-lang-dropdown {
 	background-color: var(--key-red);
 	border: 1px solid black;
 	border-radius: 5px;
 	font-weight: 100;
+}
+.menu-item {
+    display: block;
+    padding: 5vw;
+    background-color: var(--key-red);
+    text-align: center;
+    font-size: 1.5rem;
+    z-index: 10000;
+    width: 100%;
+    box-sizing: border-box;
 }
