@@ -135,7 +135,7 @@ class IngGroup extends Component {
           </p>
           <div className="ing-group-fields">
             <Field
-              labelname={t('common:recipeform.grpNotes')}
+              labelname={t('common:recipeform.grpName')}
               name="name"
               className="ing-group-info"
               outerClassName="no-pad"

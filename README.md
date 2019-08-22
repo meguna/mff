@@ -843,6 +843,9 @@ Notes
   (which included different functions, "more" and "regular", that the client
   needs to call).
 
+## Aug 22
+* adjust styles for HD & MD laptop screens
+
 #### Notes
 * quick search is officially done!! This was a quick one.
 

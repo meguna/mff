@@ -74,6 +74,10 @@
   --notification-yellow: #fff190;
   --notification-medium-yellow: #f3e37a;
   font-size: 75%;
+  --s: 578px;
+  --m: 768px;
+  --l: 992px;
+  --xl: 1200px;
 }
 
 body {

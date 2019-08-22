@@ -22,6 +22,7 @@ svg {
 span.required-label {
     color: var(--medium-red);
     font-size: 1.2rem;
+    margin-left: 5px;
 }
 
 .form-description {
@@ -73,6 +74,8 @@ textarea {
    background-image: none;
    box-sizing: border-box;
    max-width: 30vw;
+   line-height: 1.5rem;
+   height: calc(1.5rem + 40px);
 }
 
 input:not([type=submit]):not([type=file]):not([type=button])::placeholder,
@@ -119,12 +122,12 @@ legend {
     width: 100%;
 }
 
-div.new-ing-fields label, div.new-ing-fields input {
-    margin-right: 50px;
+div.new-ing-fields label, div.new-ing-fields input, div.new-ing-fields textarea {
+    margin-right: 2.5vw;
 }
 
 .new-ing-field-left {
-    width: 20vw;
+    width: 16vw;
 }
 
 .new-ing-field-ctr {
@@ -132,7 +135,8 @@ div.new-ing-fields label, div.new-ing-fields input {
 }
 
 .new-ing-field-right {
-    width: 10vw;
+    width: 14vw;
+    max-width: 14vw;
 }
 .required-field:after {
     content: "*";
@@ -144,7 +148,7 @@ div.new-ing-fields label, div.new-ing-fields input {
     margin-bottom: 50px;
 }
 .new-ing-fields {
-    padding: 30px;
+    padding: 2.5vw;
     display: flex;
     flex-direction: row;
     width: 50vw;
@@ -216,7 +220,7 @@ input[type="submit"], input[type="button"] {
     flex-direction: row;
 }
 .ing-group-info {
-    margin-right: 50px;
+    margin-right: 2.5vw;
     background-color: var(--faint-grey);
 }
 .ing-group-info:focus {
@@ -236,7 +240,8 @@ input[type="submit"], input[type="button"] {
 }
 
 .ing-field-labels {
-    padding: 30px 0px 5px 30px;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 
 input.close-image-button {
@@ -261,3 +266,12 @@ input.close-image-button {
 .recipe-form-image {
     width: 25vw;
 }
+
+
+/*@media (min-width: var(--s)) { ... }*/
+
+/*@media (min-width: var(--m)) { ... }*/
+
+/*@media (min-width: var(--l)) { ... }*/
+
+/*@media (min-width: var(--xl)) { ... }*/
