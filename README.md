@@ -845,6 +845,9 @@ Notes
 
 ## Aug 22
 * adjust styles for HD & MD laptop screens
+* add new mobile/desktop header
+* started implementation of HOC that spits out mobile/desktop component given
+  window width.
 
 #### Notes
 * quick search is officially done!! This was a quick one.
