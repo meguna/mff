@@ -42,7 +42,7 @@
   cursor: default;
 }
 
-input#quick-search-field {
+.quick-search-field {
 	background-color: var(--faint-grey);
 	border: 1px solid var(--light-grey);
 	margin: 10px;
@@ -56,9 +56,21 @@ input#quick-search-field {
 	background-position-y: 50%;
 	border-radius: 2px;
 	padding-right: 2rem;
+	font-size: 1.2rem;
+	color: black;
 }
 
-input#quick-search-field:focus {
+.quick-search-field::placeholder {
+	font-size: 1.2rem;
+}
+
+.quick-search-field:focus {
 	background-color: white;
 	border: 1px solid var(--light-grey);
+}
+
+.mobile {
+	min-width: 90vw;
+	max-width: 90vw;
+
 }

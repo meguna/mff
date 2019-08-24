@@ -27,12 +27,33 @@ class RecipeIndex extends Component {
     }
   }
 
-  static renderMobile() {
+  renderMobile() {
+    const { notification } = this.props;
     return (
       <div className="recipe-everything-wrapper">
-        <RecipeListErrorBoundary>
-          <RecipeList />
-        </RecipeListErrorBoundary>
+        <StatusInfo status={notification.status} message={notification.message} />
+        <Switch>
+          <Route
+            exact
+            path="/"
+            render={props => (
+              <RecipeListErrorBoundary>
+                <RecipeList {...props} />
+              </RecipeListErrorBoundary>
+            )}
+          />
+          <Route exact path="/addRecipe" component={NewRecipeForm} />
+          <Route exact path="/editRecipe/:id" component={EditRecipeForm} />
+          <Route
+            path="/recipe/:id"
+            render={props => (
+              <RecipeInfoErrorBoundary>
+                <RecipeInfo {...props} />
+              </RecipeInfoErrorBoundary>
+            )}
+          />
+          <Route path="/deleteRecipe/:id" component={DeleteRecipe} />
+        </Switch>
       </div>
     );
   }
@@ -41,7 +62,7 @@ class RecipeIndex extends Component {
     const { notification, screen } = this.props;
 
     if (screen === 'mobile') {
-      return RecipeIndex.renderMobile();
+      return this.renderMobile();
     }
 
     return (

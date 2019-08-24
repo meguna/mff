@@ -52,44 +52,6 @@ span.required-label {
     padding-bottom: 50px;
 }
 
-input[type=file] {
-   font-family: 'Apercu', sans-serif;
-   padding: 20px;
-   border-radius: 3px;
-   font-size: 1.5rem;
-   cursor: pointer;
-}
-
-input[type=file]:focus {
-   outline: none;
-}
-
-input:not([type=submit]):not([type=file]):not([type=button]),
-textarea {
-   font-family: 'Apercu', sans-serif;
-   padding: 20px;
-   border-radius: 3px;
-   border: 1px solid var(--grey);
-   font-size: 1.5rem;
-   background-image: none;
-   box-sizing: border-box;
-   max-width: 30vw;
-   line-height: 1.5rem;
-   height: calc(1.5rem + 40px);
-}
-
-input:not([type=submit]):not([type=file]):not([type=button])::placeholder,
-textarea::placeholder {
-   font-size: 0.8em;
-   color: var(--grey);
-}
-
-input:not([type=submit]):not([type=file]):not([type=button]):focus,
-textarea:focus {
-    outline: none;
-    border: 1px solid black;
-}
-
 .input-data-row {
    padding: 25px;
    border-radius: 3px;

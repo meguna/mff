@@ -146,3 +146,78 @@ h2.subtitle {
     margin-bottom: 30px;
     font-weight: 100;
 }
+
+
+button, input[type="submit"], input[type="reset"] {
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+}
+
+select, option {
+  font-family: 'Apercu', sans-serif;
+  font-size: 1.5rem;
+  padding: 10px;
+  border: none;
+  box-sizing: content-box;
+  border-radius: 1px;
+  -webkit-appearance: none;
+  background-color: var(--faint-grey);
+  border: 1px solid var(--light-grey);
+}
+
+select, option :focus {
+    outline: none;
+}
+
+select {
+  background-image: url(./assets/icons/chevron-down.svg);
+  background-repeat: no-repeat;
+  background-position-x: 98%;
+  background-position-y: 50%;
+  border-radius: 2px;
+  padding-right: 2rem;
+}
+
+
+input[type=file]:focus {
+   outline: none;
+}
+
+input,
+textarea {
+  font-family: 'Apercu', sans-serif;
+  padding: 20px;
+  border-radius: 3px;
+  border: 1px solid var(--grey);
+  font-size: 1.5rem;
+  background-image: none;
+  box-sizing: border-box;
+  max-width: 30vw;
+  line-height: 1.5rem;
+  height: calc(1.5rem + 40px);
+}
+
+input,
+textarea::placeholder {
+  font-size: 0.8em;
+  color: var(--grey);
+}
+
+input,
+textarea:focus {
+  outline: none;
+  border: 1px solid black;
+}
+
+input[type=file] {
+  font-family: 'Apercu', sans-serif;
+  padding: 20px;
+  border-radius: 3px;
+  font-size: 1.5rem;
+  cursor: pointer;
+}

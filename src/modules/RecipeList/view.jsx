@@ -83,8 +83,11 @@ class RecipeList extends Component {
       loadingAuth,
       t,
       noMoreResults,
+      screen,
     } = this.props;
     const { sortMethod, sQuery } = this.state;
+
+    const mobileClass = (screen === 'mobile') ? 'mobile' : '';
 
     return (
       <div>
@@ -92,7 +95,7 @@ class RecipeList extends Component {
           <input
             type="text"
             placeholder="quick search"
-            id="quick-search-field"
+            className={`quick-search-field ${mobileClass}`}
             value={sQuery}
             onChange={this.onSearchChange}
           />
@@ -145,6 +148,7 @@ RecipeList.propTypes = {
   fetchRecipes: PropTypes.func.isRequired,
   fetchQuickSearch: PropTypes.func.isRequired,
   sortMethod: PropTypes.string.isRequired,
+  screen: PropTypes.string.isRequired,
   fetchMoreRecipes: PropTypes.func.isRequired,
   setSelectedRecipe: PropTypes.func.isRequired,
   noMoreResults: PropTypes.bool.isRequired,

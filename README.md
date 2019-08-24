@@ -857,10 +857,6 @@ Notes
 * finish mobile-ifying header
 * mobile-ify RecipeIndex
 
-#### Lessons
-* static class functions in ES6! I didn't realize this was a feature in
-  Javascript.
-
 #### Notes
 * For the past few days I've been trying to decide on an appropriate
   mobile implementation for this app. 
@@ -885,7 +881,14 @@ Notes
 * Overall, the implementation could be cleaner, but I do feel like I chose the
   one most appropriate for my project. Not all layouts can just be Flexbox'ed
   and media queried into becoming beautiful and responsive.
+* there were some complications with the complex routing that I had decided to
+  do (Switch component in both App.js and RecipeIndex) but I just made some
+  conditional routes based on mobile/desktop and all was fine.
 
+#### Lessons
+* static class functions in ES6! I didn't realize this was a feature in
+  Javascript.
+* conditional routing! easy peasy
 
 ## To Do Notes - moderate
 
