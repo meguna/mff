@@ -17,7 +17,7 @@ const RecipeImages = ({ images, name, screen }) => {
           return (
             <div className="form-image-wrapper" key={image.elemId}>
               <img
-                className={`ri-image ${mobileClass}`}
+                className={`ri-image-mobile ${mobileClass}`}
                 src={`http://localhost:3005/static/${image.imagePath}`}
                 alt={name}
               />
