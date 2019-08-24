@@ -21,6 +21,7 @@ svg {
 
 .ing-field {
     border: 1px solid var(--grey);
+    color: black;
 }
 
 .ing-field:focus {
