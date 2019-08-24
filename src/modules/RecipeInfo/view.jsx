@@ -145,7 +145,7 @@ class RecipeInfo extends Component {
               screen={screen}
             />
             <RecipeNotes notes={info.notes} />
-            <RecipeImages images={images} name={info.name} />
+            <RecipeImages images={images} name={info.name} screen={screen} />
           </Fragment>
         )}
       </Fragment>

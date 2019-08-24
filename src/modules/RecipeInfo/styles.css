@@ -76,6 +76,11 @@ span.recipe-info-group-letter-label {
 	max-width: 60vw;
 }
 
+.ri-ing-list-group-mobile-full {
+	min-width: 90vw;
+	max-width: 90vw;
+}
+
 .recipe-info-ing-item {
 	margin: 0;
 }
@@ -107,6 +112,15 @@ span.recipe-info-group-letter-label {
 	border-left: 1px solid var(--key-red);
 	height: fit-content;
 	padding-bottom: 15px;
+}
+
+.recipe-info-ingredients-item {
+  padding-left: 10px;
+  text-indent: -10px;
+}
+
+.recipe-info-ingredients-item:before {
+	content: "- "
 }
 
 .recipe-info-ingredients-item-parent {
@@ -153,4 +167,13 @@ span.recipe-info-group-letter-label {
 .ri-group-mobile {
 	min-width: 30vw;
 	max-width: 30vw;
+}
+
+.ri-image {
+	width: 25vw;
+}
+
+.ri-image-mobile {
+	width: 90vw;
+	margin: auto;
 }
