@@ -843,17 +843,49 @@ Notes
   (which included different functions, "more" and "regular", that the client
   needs to call).
 
+#### Notes
+* quick search is officially done!! This was a quick one.
+
 ## Aug 22
 * adjust styles for HD & MD laptop screens
 * add new mobile/desktop header
 * started implementation of HOC that spits out mobile/desktop component given
   window width.
 
-## Aug 24
+## Aug 23-24
 * add screen detection to redux 
+* finish mobile-ifying header
+* mobile-ify RecipeIndex
+
+#### Lessons
+* static class functions in ES6! I didn't realize this was a feature in
+  Javascript.
 
 #### Notes
-* quick search is officially done!! This was a quick one.
+* For the past few days I've been trying to decide on an appropriate
+  mobile implementation for this app. 
+* The general consensus online seems to be that writing each component to be
+  responsive is the way to go here.
+* The layout I settled on for RecipeIndex (with the list of recipes on one side 
+  and a changing details panel on the other) is a decidedly un-mobile layout 
+  that goes beyond the powers of what CSS can do. In other words, I can't just
+  add media queries and call it a day; I need to restructure some components
+  specifically for mobile screens. So this means I need some mechanism to
+  check for screen size and conditionally show different components.
+* I played around with various implementations of HOCs that would allow me
+  to conditionally render different components. Didn't work out, mostly because
+  HOCs are made to wrap around a single component, not two.
+* Ended up just adding screen detection to App.js and then have it call redux
+  actions so that every component has access to the screen parameter.
+* As per best practices, each component will be responsive in and of itself
+  (using the redux param).
+* Also, I found [this](https://bit.ly/2LMH9VC) source that reminded me that I
+  needed to add eventlisteners for window resize events (which I definitely
+  wouldn't have remembered to do on my own).
+* Overall, the implementation could be cleaner, but I do feel like I chose the
+  one most appropriate for my project. Not all layouts can just be Flexbox'ed
+  and media queried into becoming beautiful and responsive.
+
 
 ## To Do Notes - moderate
 

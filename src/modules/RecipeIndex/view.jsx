@@ -27,8 +27,22 @@ class RecipeIndex extends Component {
     }
   }
 
+  static renderMobile() {
+    return (
+      <div className="recipe-everything-wrapper">
+        <RecipeListErrorBoundary>
+          <RecipeList />
+        </RecipeListErrorBoundary>
+      </div>
+    );
+  }
+
   render() {
-    const { notification } = this.props;
+    const { notification, screen } = this.props;
+
+    if (screen === 'mobile') {
+      return RecipeIndex.renderMobile();
+    }
 
     return (
       <div className="recipe-everything-wrapper">
@@ -62,6 +76,7 @@ class RecipeIndex extends Component {
 RecipeIndex.propTypes = {
   fetchRecipes: PropTypes.func,
   sortMethod: PropTypes.string,
+  screen: PropTypes.string.isRequired,
   notification: PropTypes.shape({
     status: PropTypes.string,
     message: PropTypes.string,
