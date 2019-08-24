@@ -16,6 +16,11 @@ import Auth0Client from './modules/auth/Auth';
 export const MOBILE_THRESHOLD = 768;
 
 class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleResize = this.handleResize.bind(this);
+  }
+
   componentDidMount() {
     document.title = 'In the Mood for Food';
     const { checkAuthStatus, fetchRecipes, sortMethod } = this.props;
