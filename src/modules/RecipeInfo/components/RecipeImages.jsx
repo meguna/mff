@@ -2,9 +2,8 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 
-const RecipeImages = ({ images, name, screen }) => {
+const RecipeImages = ({ images, name }) => {
   const { t } = useTranslation();
-  const mobileClass = (screen === 'mobile') ? 'ri-image-mobile' : '';
   return (
     <Fragment>
       {images.length !== 0 && (
@@ -17,7 +16,7 @@ const RecipeImages = ({ images, name, screen }) => {
           return (
             <div className="form-image-wrapper" key={image.elemId}>
               <img
-                className={`ri-image-mobile ${mobileClass}`}
+                className="ri-image"
                 src={`http://localhost:3005/static/${image.imagePath}`}
                 alt={name}
               />
@@ -37,7 +36,6 @@ RecipeImages.propTypes = {
     elemId: PropTypes.number,
   })),
   name: PropTypes.string,
-  screen: PropTypes.string.isRequired,
 };
 
 RecipeImages.defaultProps = {

@@ -125,11 +125,9 @@ class RecipeInfo extends Component {
 
     const hashid = hs.encode(selectedId);
 
-    const mobileClass = (screen === 'mobile') ? 'mobile' : '';
-
     return (
       <Fragment>
-        <div className={`ri-action-buttons-${mobileClass}`}>
+        <div className="ri-action-buttons">
           {(screen !== 'mobile') && <AddRecipeButton />}
           <EditRecipeButton id={hashid} />
           <DeleteRecipeButton id={hashid} />

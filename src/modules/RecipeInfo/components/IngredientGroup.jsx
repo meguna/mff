@@ -17,9 +17,6 @@ const IngredientGroup = ({ ingredients, groups, groupCount, screen }) => {
   if (ingredients.length !== 0 && groupCount > 1) {
     dottedBorderClass = 'recipe-info-ing-list-group';
   }
-  const IngGrMobileClass = (screen === 'mobile') ? 'ri-ing-list-group-mobile' : '';
-  const IngGrMobileClassFull = (screen === 'mobile') ? 'ri-ing-list-group-mobile-full' : '';
-  const RecInfoMobileClass = (screen === 'mobile') ? 'ri-group-mobile' : '';
 
   return (
     <Fragment>
@@ -35,7 +32,7 @@ const IngredientGroup = ({ ingredients, groups, groupCount, screen }) => {
         {ingredientGroups.map((group, i) => (
           <div className="recipe-group-wrapper" key={groups[i].groupId}>
             {/* if this group has no notes or name, use class that spans full width of screen */}
-            <div className={`${dottedBorderClass} ${(groups[i].notes || groups[i].name) ? IngGrMobileClass : IngGrMobileClassFull}`}>
+            <div className={`${dottedBorderClass} ${(groups[i].notes || groups[i].name) ? 'half-width-ig' : 'full-width-ig'}`}>
               <div className="recipe-info-ing-item-parent">
                 {group.map((ingredient, j) => (
                   <Ingredient ingredient={ingredient} key={j} />
@@ -43,7 +40,7 @@ const IngredientGroup = ({ ingredients, groups, groupCount, screen }) => {
               </div>
             </div>
             {(groups[i].notes || groups[i].name) && (
-              <div className={`recipe-group-info-box ${RecInfoMobileClass}`}>
+              <div className="recipe-group-info-box">
                 {groups[i].name && (
                   <p className="recipe-info-group-name">
                     {groups[i].name}

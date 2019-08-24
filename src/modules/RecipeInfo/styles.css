@@ -76,11 +76,6 @@ span.recipe-info-group-letter-label {
 	max-width: 60vw;
 }
 
-.ri-ing-list-group-mobile-full {
-	min-width: 90vw;
-	max-width: 90vw;
-}
-
 .recipe-info-ing-item {
 	margin: 0;
 }
@@ -153,27 +148,34 @@ span.recipe-info-group-letter-label {
 	display: inline-block;
 }
 
-.ri-action-buttons-mobile {
-	display: flex;
-	flex-direction: row;
-}
-
-.ri-action-buttons-mobile > .ri-top-buttons {
-	width: 40vw;
-	margin: 20px;
-	height: auto;
-}
-
-.ri-group-mobile {
-	min-width: 30vw;
-	max-width: 30vw;
-}
-
 .ri-image {
 	width: 25vw;
 }
 
-.ri-image-mobile {
-	width: 90vw;
-	margin: auto;
+@media (width < 768px) {
+	.full-width-ig {
+		min-width: 90vw;
+		max-width: 90vw;
+	}
+	.half-width-ig {
+		min-width: 60vw;
+		max-width: 60vw;
+	}
+	.recipe-group-info-box {
+		min-width: 30vw;
+		max-width: 30vw;
+	}
+	.ri-image {
+		width: 90vw;
+		margin: auto;
+	}
+	.ri-action-buttons {
+		display: flex;
+		flex-direction: row;
+	}
+	.ri-action-buttons > .ri-top-buttons {
+		width: 40vw;
+		margin: 20px;
+		height: auto;
+	}
 }
