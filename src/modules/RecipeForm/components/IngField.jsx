@@ -71,13 +71,14 @@ class IngField extends Component {
       ingId,
       groupId,
       t,
+      screen,
     } = this.props;
 
     return (
       <div className="new-ing-fields form-group">
         <input
           placeholder={t('common:recipeform.ingName')}
-          className="new-ing-field-left field-label"
+          className="new-ing-field-left field-label ing-field"
           id="nr-ing-name-input"
           type="text"
           value={value.name || ''}
@@ -86,7 +87,7 @@ class IngField extends Component {
         />
         <input
           placeholder={t('common:recipeform.ingAmt')}
-          className="new-ing-field-ctr field-label"
+          className="new-ing-field-ctr field-label ing-field"
           id="nr-ing-amount-input"
           type="text"
           value={value.amount || ''}
@@ -94,7 +95,7 @@ class IngField extends Component {
         />
         <input
           placeholder={t('common:recipeform.ingNotes')}
-          className="new-ing-field-right field-label"
+          className="new-ing-field-right field-label ing-field"
           id="nr-ing-notes-input"
           type="text"
           value={value.notes || ''}
@@ -111,7 +112,8 @@ class IngField extends Component {
             onKeyDown={this.removeFields}
             tabIndex="-1"
           >
-            <X />
+            {(screen !== 'mobile') && <X />}
+            {(screen === 'mobile') && <p className="rem-ing-link">remove this ingredient</p>}
           </button>
         )}
       </div>
@@ -124,6 +126,7 @@ IngField.propTypes = {
   onBlur: PropTypes.func.isRequired,
   onFocus: PropTypes.func.isRequired,
   onRemoveSelected: PropTypes.func.isRequired,
+  screen: PropTypes.string.isRequired,
   value: PropTypes.object,
   ingId: PropTypes.number,
   groupId: PropTypes.number,

@@ -857,6 +857,7 @@ Notes
 * finish mobile-ifying header
 * mobile support for RecipeIndex
 * mobile support for RecipeList, RecipeInfo
+* mobile support for RecipeForm!!! doozy
 
 #### Notes
 * For the past few days I've been trying to decide on an appropriate
@@ -876,6 +877,8 @@ Notes
   actions so that every component has access to the screen parameter.
 * As per best practices, each component will be responsive in and of itself
   (using the redux param).
+* Along with the redux screen param, media queries will still be used for
+  simpler css changes
 * Also, I found [this](https://bit.ly/2LMH9VC) source that reminded me that I
   needed to add eventlisteners for window resize events (which I definitely
   wouldn't have remembered to do on my own).

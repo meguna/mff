@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Fragment, Component } from 'react';
 import PropTypes from 'prop-types';
 import { withTranslation } from 'react-i18next';
 import IngField from './IngField';
@@ -104,7 +104,7 @@ class IngGroup extends Component {
       ingredients,
       groupInfo,
     } = this.state;
-    const { groupId, t } = this.props;
+    const { groupId, t, screen } = this.props;
 
     if (ingredients.length === 0) {
       return null;
@@ -113,16 +113,25 @@ class IngGroup extends Component {
     const ingFields = [];
     for (let i = 0; i < ingredients.length; i++) {
       ingFields.push(
-        (<IngField
-          onChange={this.onIngFieldChange}
-          value={ingredients[i]}
-          ingId={i}
-          groupId={groupId}
-          key={i}
-          onFocus={this.addIngField}
-          onBlur={this.removeEmptyIngField}
-          onRemoveSelected={this.removeSelectedIngField}
-        />),
+        (<Fragment key={i}>
+          {(screen === 'mobile') && (
+            <p className="ing-num-label">
+              {t('common:recipe.ing-single')}
+              &nbsp;
+              {i + 1}
+            </p>
+          )}
+          <IngField
+            onChange={this.onIngFieldChange}
+            value={ingredients[i]}
+            ingId={i}
+            groupId={groupId}
+            onFocus={this.addIngField}
+            onBlur={this.removeEmptyIngField}
+            onRemoveSelected={this.removeSelectedIngField}
+            screen={screen}
+          />
+        </Fragment>),
       );
     }
 
@@ -137,7 +146,7 @@ class IngGroup extends Component {
             <Field
               labelname={t('common:recipeform.grpName')}
               name="name"
-              className="ing-group-info"
+              className="ing-group-info igi-name"
               outerClassName="no-pad"
               onChange={this.onFieldChange}
               value={groupInfo.name}
@@ -145,7 +154,7 @@ class IngGroup extends Component {
             <Field
               labelname={t('common:recipeform.grpNotes')}
               name="notes"
-              className="ing-group-info"
+              className="ing-group-info igi-notes"
               outerClassName="no-pad"
               onChange={this.onFieldChange}
               value={groupInfo.notes}
@@ -164,6 +173,7 @@ IngGroup.propTypes = {
   group: PropTypes.object,
   onRemoveGroup: PropTypes.func.isRequired,
   t: PropTypes.func.isRequired,
+  screen: PropTypes.string.isRequired,
 };
 
 IngGroup.defaultProps = {

@@ -219,6 +219,7 @@ class RecipeForm extends Component {
       title,
       messages,
       t,
+      screen,
     } = this.props;
 
     const groupFields = [];
@@ -231,6 +232,7 @@ class RecipeForm extends Component {
             onRemoveGroup={this.onRemoveGroup}
             ingredients={ingredients[i]}
             group={groups[i]}
+            screen={screen}
           />
         </div>,
       );
@@ -324,6 +326,7 @@ RecipeForm.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
+  screen: PropTypes.string.isRequired,
 };
 
 RecipeForm.defaultProps = {

@@ -19,6 +19,7 @@
   },
   "recipe" : {
     "ing": "ingredients",
+    "ing-single": "ingredient",
     "notes": "notes",
     "images": "images"
   },

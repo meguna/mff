@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import { AlertCircle } from 'react-feather';
 
@@ -32,6 +33,7 @@ class Field extends PureComponent {
       info,
       labelname,
       t,
+      screen,
     } = this.props;
 
     const TagType = textarea ? 'textarea' : 'input';
@@ -47,10 +49,10 @@ class Field extends PureComponent {
             </span>
           )}
         </label>
-        <p className="form-description">{info}</p>
+        {info && <p className="form-description">{info}</p>}
         <TagType
           placeholder={labelname || name}
-          className={`${className}${validClass}`}
+          className={`${className}${validClass} rf-input`}
           id={id}
           type="text"
           value={value || ''}
@@ -84,6 +86,7 @@ Field.propTypes = {
   info: PropTypes.string,
   labelname: PropTypes.string,
   required: PropTypes.bool,
+  screen: PropTypes.string.isRequired,
 };
 
 Field.defaultProps = {
@@ -102,4 +105,6 @@ Field.defaultProps = {
   required: false,
 };
 
-export default withTranslation()(Field);
+const mapStateToProps = state => state;
+
+export default connect(mapStateToProps)(withTranslation()(Field));

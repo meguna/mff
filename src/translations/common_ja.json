@@ -19,6 +19,7 @@
   },
   "recipe": {
   	"ing": "材料",
+    "ing-single": "材料",
   	"notes": "メモ",
   	"images": "写真"
   },

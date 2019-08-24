@@ -19,6 +19,14 @@ svg {
     text-transform: lowercase;
 }
 
+.ing-field {
+    border: 1px solid var(--grey);
+}
+
+.ing-field:focus {
+    border: 1px solid black;
+}
+
 span.required-label {
     color: var(--medium-red);
     font-size: 1.2rem;
@@ -229,11 +237,130 @@ input.close-image-button {
     width: 25vw;
 }
 
+.rf-input {
+    color: black;
+    font-size: 1.5rem;
+    border: 1px solid var(--grey);
+}
 
-/*@media (min-width: var(--s)) { ... }*/
+.rf-input:focus {
+    border: 1px solid black;
+}
 
-/*@media (min-width: var(--m)) { ... }*/
+.rf-input::placeholder {
+    color: var(--grey);
+    font-size: 1.5rem;
+}
 
-/*@media (min-width: var(--l)) { ... }*/
+.rf-input-mobile {
+    min-width: 90vw;
+}
 
-/*@media (min-width: var(--xl)) { ... }*/
+input[type="button"] {
+    color: black;
+}
+
+input[type="file"] {
+    border: none;
+    color: black;
+}
+
+@media (max-width: 768px) {
+    .ing-group-fields {
+        display: flex;
+        flex-direction: column;
+    }
+    .igi-name {
+        min-width: 70vw;
+        max-width: 70vw;
+    }
+
+    .igi-notes {
+        max-width: 70vw;
+        min-width: 70vw;
+    }
+    .new-ing-field-left {
+        border-radius: 0px;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+        border-bottom: none;
+    }
+    .new-ing-field-ctr {
+        border-radius: 0px;
+        min-width: 85vw;
+        border-bottom: none;
+    }
+    .new-ing-field-right {
+        border-radius: 0px;
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+    }
+    .new-ing-fields {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 90vw;
+        box-sizing: border-box;
+        margin: 0;
+    }
+    .ing-field {
+        min-width: 85vw;
+        display: block;
+        box-sizing: border-box;
+        margin: 0;
+        color: black;
+    }
+    .ing-field-labels {
+        display: none;
+    }
+    .ingredient-group {
+        width: 90vw;
+    }
+    div.new-ing-fields label, div.new-ing-fields input, div.new-ing-fields textarea {
+        margin-right: 0;
+    }
+    .ing-num-label {
+        text-transform: uppercase;
+        font-family: 'Styrene', sans-serif;
+        padding: 10px 2.5vw 10px 2.5vw;
+        font-size: 1rem;
+        font-weight: 500;
+    }
+    .rem-ing-link {
+        margin-top: 10px;
+        align-self: flex-end;
+        padding: 10px 2.5vw;
+        border-radius: 5px;
+        color: var(--medium-red);
+        border: 1px solid var(--medium-red);
+    }
+    .form-group-buttons {
+        padding: 5vw;
+    }
+    .form-description {
+        text-align: center;
+    }
+    .rf-input {
+        min-width: 90vw;
+    }
+    .ing-group-info {
+        min-width: 80vw;
+    }
+    #recipe-image-upload {
+        min-width: 80vw;
+    }
+    .recipe-form-image {
+        min-width: 45vw;
+    }
+    .close-image-button {
+        min-width: fit-content;
+    }
+    .form-image-wrapper {
+        min-width: 90vw;
+        justify-content: space-between;
+    }
+    input[type="submit"] {
+        min-width: fit-content;
+        font-size: 1.4rem;
+    }
+}
