@@ -14,7 +14,7 @@ const DeleteRecipeButton = ({ id }) => {
         {t('common:actions.delete')}
       </Link>
     </div>
-  )
+  );
 };
 
 DeleteRecipeButton.propTypes = {

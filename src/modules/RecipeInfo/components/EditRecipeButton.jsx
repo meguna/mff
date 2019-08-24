@@ -14,7 +14,7 @@ const EditRecipeButton = ({ id }) => {
         {t('common:actions.edit')}
       </Link>
     </div>
-  )
+  );
 };
 
 EditRecipeButton.propTypes = {

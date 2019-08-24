@@ -13,7 +13,7 @@ const AddRecipeButton = () => {
         {t('common:actions.add')}
       </Link>
     </div>
-  )
+  );
 };
 
 export default React.memo(AddRecipeButton);
