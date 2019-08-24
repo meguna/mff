@@ -855,7 +855,8 @@ Notes
 ## Aug 23-24
 * add screen detection to redux 
 * finish mobile-ifying header
-* mobile-ify RecipeIndex
+* mobile support for RecipeIndex
+* mobile support for RecipeList, RecipeInfo
 
 #### Notes
 * For the past few days I've been trying to decide on an appropriate

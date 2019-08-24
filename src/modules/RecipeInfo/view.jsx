@@ -108,7 +108,7 @@ class RecipeInfo extends Component {
   }
 
   render() {
-    const { selectedId, error } = this.props;
+    const { selectedId, error, screen } = this.props;
     const {
       loadingInfo,
       groups,
@@ -125,11 +125,15 @@ class RecipeInfo extends Component {
 
     const hashid = hs.encode(selectedId);
 
+    const mobileClass = (screen === 'mobile') ? 'mobile' : '';
+
     return (
       <Fragment>
-        <AddRecipeButton />
-        <EditRecipeButton id={hashid} />
-        <DeleteRecipeButton id={hashid} />
+        <div className={`ri-action-buttons-${mobileClass}`}>
+          {(screen !== 'mobile') && <AddRecipeButton />}
+          <EditRecipeButton id={hashid} />
+          <DeleteRecipeButton id={hashid} />
+        </div>
         <p className="recipe-info-name">{info.name}</p>
         <RecipeSize size={info.size} />
         {!loadingInfo && (
@@ -138,6 +142,7 @@ class RecipeInfo extends Component {
               ingredients={ingredients}
               groups={groups}
               groupCount={groupCount}
+              screen={screen}
             />
             <RecipeNotes notes={info.notes} />
             <RecipeImages images={images} name={info.name} />
@@ -161,6 +166,7 @@ RecipeInfo.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
+  screen: PropTypes.string.isRequired,
 };
 
 RecipeInfo.defaultProps = {

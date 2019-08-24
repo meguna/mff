@@ -35,6 +35,13 @@
 	padding: 5vw;
 }
 
+.recipe-everything-wrapper-mobile {
+	display: flex;
+	flex-direction: column;
+	width: 90vw;
+	padding: 5vw;
+}
+
 #recipe-info {
 	width: 55vw;
 	margin-left: 5vw;

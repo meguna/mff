@@ -30,7 +30,7 @@ class RecipeIndex extends Component {
   renderMobile() {
     const { notification } = this.props;
     return (
-      <div className="recipe-everything-wrapper">
+      <div className="recipe-everything-wrapper-mobile">
         <StatusInfo status={notification.status} message={notification.message} />
         <Switch>
           <Route

@@ -1,8 +1,8 @@
 {
   "actions": {
     "add": "Add a new Recipe",
-    "edit": "Edit this Recipe",
-    "delete": "Delete this Recipe",
+    "edit": "Edit",
+    "delete": "Delete",
     "submit": "submit"
   },
   "list": {

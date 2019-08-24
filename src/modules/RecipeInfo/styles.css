@@ -71,6 +71,11 @@ span.recipe-info-group-letter-label {
 	cursor: text;
 }
 
+.ri-ing-list-group-mobile {
+	min-width: 60vw;
+	max-width: 60vw;
+}
+
 .recipe-info-ing-item {
 	margin: 0;
 }
@@ -132,4 +137,20 @@ span.recipe-info-group-letter-label {
 .ri-top-buttons a {
 	padding: 20px;
 	display: inline-block;
+}
+
+.ri-action-buttons-mobile {
+	display: flex;
+	flex-direction: row;
+}
+
+.ri-action-buttons-mobile > .ri-top-buttons {
+	width: 40vw;
+	margin: 20px;
+	height: auto;
+}
+
+.ri-group-mobile {
+	min-width: 30vw;
+	max-width: 30vw;
 }
