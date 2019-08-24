@@ -16,6 +16,7 @@ import {
   LOGIN_FAILURE,
   LOGOUT_SUCCESS,
   AUTH_NOT_LOGGED_IN,
+  SET_SCREEN,
 } from './ActionTypes';
 import Auth0Client from '../auth/Auth';
 import { callApi } from '../helpers';
@@ -192,3 +193,9 @@ export const fetchQuickSearch = (query, sortMethod, offset) => (dispatch) => {
     })
     .catch(err => dispatch(fetchQuickSearchFailure(err)));
 };
+
+/* screen can be either 'desktop' or 'mobile' */
+export const setScreen = screen => ({
+  type: SET_SCREEN,
+  payload: screen,
+});

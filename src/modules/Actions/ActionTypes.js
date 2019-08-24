@@ -40,3 +40,5 @@ export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
 export const LOGOUT_FAILURE = 'LOGOUT_FAILURE';
 
 export const AUTH_NOT_LOGGED_IN = 'AUTH_NOT_LOGGED_IN';
+
+export const SET_SCREEN = 'SET_SCREEN';

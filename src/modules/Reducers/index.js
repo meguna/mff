@@ -16,6 +16,7 @@ import {
   LOGIN_FAILURE,
   LOGOUT_SUCCESS,
   AUTH_NOT_LOGGED_IN,
+  SET_SCREEN,
 } from '../Actions/ActionTypes';
 
 const INITIAL_STATE = {
@@ -33,6 +34,7 @@ const INITIAL_STATE = {
   isAuthenticated: false,
   profile: null,
   noMoreResults: false,
+  screen: 'desktop',
 };
 
 const LIST_COUNT_THRESHOLD = 5;
@@ -157,6 +159,15 @@ const reducer = (state = INITIAL_STATE, action) => {
       ...state,
       isAuthenticated: false,
       error: null,
+    };
+  case SET_SCREEN:
+    if (action.payload !== 'desktop' && action.payload !== 'mobile') {
+      console.error('invalid input');
+      return state;
+    }
+    return {
+      ...state,
+      screen: action.payload,
     };
   default:
     return state;

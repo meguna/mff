@@ -11,9 +11,9 @@ import Signup from './modules/auth/Signup';
 import Welcome from './modules/Welcome';
 import AccountSettings from './modules/AccountSettings';
 import Header from './modules/common/Header';
-import ScreenHOC from './modules/common/ScreenHOC';
-import HeaderMobile from './modules/common/HeaderMobile';
 import Auth0Client from './modules/auth/Auth';
+
+export const MOBILE_THRESHOLD = 768;
 
 class App extends React.Component {
   componentDidMount() {
@@ -29,9 +29,22 @@ class App extends React.Component {
       const { nickname: lang } = Auth0Client.getProfile();
       i18n.changeLanguage(lang);
     };
-
-    /* pass fetchRecipes as callback */
     checkAuthStatus(cb);
+    this.handleResize();
+    window.addEventListener('resize', this.handleResize);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.handleResize);
+  }
+
+  handleResize() {
+    const { setScreen } = this.props;
+    if (window.innerWidth < MOBILE_THRESHOLD) {
+      setScreen('mobile');
+    } else {
+      setScreen('desktop');
+    }
   }
 
   render() {
@@ -45,7 +58,7 @@ class App extends React.Component {
           {!loadingAuth && !isAuthenticated && (
             <Redirect to="/welcome" />
           )}
-          <ScreenHOC desktop={Header} mobile={HeaderMobile} />
+          <Header />
           <Switch>
             <Route exact path="/signup" component={Signup} />
             <Route exact path="/login" component={Login} />
@@ -68,6 +81,7 @@ class App extends React.Component {
 }
 
 App.propTypes = {
+  setScreen: PropTypes.func.isRequired,
   checkAuthStatus: PropTypes.func.isRequired,
   fetchRecipes: PropTypes.func.isRequired,
   sortMethod: PropTypes.string.isRequired,

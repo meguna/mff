@@ -11,20 +11,6 @@ class ScreenHOC extends React.Component {
     };
   }
 
-  componentDidMount() {
-    window.addEventListener('resize', this.handleResize);
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.handleResize);
-  }
-
-  handleResize = () => {
-    this.setState({
-      isMobile: window.innerWidth < MOBILE_THRESHOLD,
-    });
-  };
-
   render() {
     const { isMobile } = this.state;
     const { desktop, mobile } = this.props;

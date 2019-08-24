@@ -849,6 +849,9 @@ Notes
 * started implementation of HOC that spits out mobile/desktop component given
   window width.
 
+## Aug 24
+* add screen detection to redux 
+
 #### Notes
 * quick search is officially done!! This was a quick one.
 
