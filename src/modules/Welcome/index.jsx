@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { ChevronDown } from 'react-feather';
+import { withTranslation } from 'react-i18next';
 import LangChange from './components/LangChange';
 import './styles.css';
 
@@ -18,26 +19,25 @@ class Welcome extends Component {
   }
 
   render() {
+    const { t } = this.props;
     return (
       <div id="welcome">
         <header className="welcome-header">
-          <Link className="w-main-title-link" to="/welcome">Foodnotes</Link>
+          <Link className="w-main-title-link" to="/welcome">{t('common:welcome.app-name')}</Link>
           <LangChange />
         </header>
         <section className="section-1">
           <div className="section-title-wrapper">
             <h1 className="section-title">
-              Experimenting in the kitchen has never felt better.
+              {t('common:welcome.big-title')}
             </h1>
             <p className="section-caption">
-              Designed with serious cooking and baking enthusiasts in mind,
-              Foodnotes is a free recipe manager that helps you build complex
-              recipes then track and search them.
+              {t('common:welcome.big-desc')}
             </p>
           </div>
           <div className="links-row">
-            <Link className="welcome-action-unfilled" to="/signup">Sign Up</Link>
-            <Link className="welcome-action-unfilled" to="/login">Log In</Link>
+            <Link className="welcome-action-unfilled" to="/signup">{t('common:header.signup')}</Link>
+            <Link className="welcome-action-unfilled" to="/login">{t('common:header.login')}</Link>
           </div>
           <img
             className="kitchen-table-image"
@@ -61,7 +61,7 @@ class Welcome extends Component {
             alt="abstract recipe illustration"
           />
           <div className="down-button-wrapper-wrapper">
-            <p className="down-button-desc">scroll to read more</p>
+            <p className="down-button-desc">{t('common:welcome.scroll')}</p>
             <a href="#section-2" className="down-button-wrapper">
               <ChevronDown />
             </a>
@@ -69,7 +69,7 @@ class Welcome extends Component {
         </section>
         <section className="section-2">
           <h1 className="section-title regular-section-title" id="section-2">
-            Features
+            {t('common:welcome.features')}
           </h1>
           <div className="w-feature-row-wrapper">
             <div className="w-feature-wrapper">
@@ -80,10 +80,9 @@ class Welcome extends Component {
                   http://localhost:3005/welcomeimages/complexity_2x.png 2x"
                 alt="ramen illustration"
               />
-              <h3 className="w-feature-section-title">Complex Recipes</h3>
+              <h3 className="w-feature-section-title">{t('common:welcome.complex-title')}</h3>
               <p className="w-feature-description">
-                Easily build complex recipes with the ability to group and label ingredients,
-                add pictures, and edit frequently.
+                {t('common:welcome.complex-desc')}
               </p>
             </div>
             <div className="w-feature-wrapper">
@@ -94,9 +93,9 @@ class Welcome extends Component {
                   http://localhost:3005/welcomeimages/mobility_2x.png 2x"
                 alt="pizza in single slice wrapper illustration"
               />
-              <h3 className="w-feature-section-title">Mobile Friendly</h3>
+              <h3 className="w-feature-section-title">{t('common:welcome.mobile-title')}</h3>
               <p className="w-feature-description">
-                View, share, or update your recipes on-the-go with our mobile friendly UI.
+                {t('common:welcome.mobile-desc')}
               </p>
             </div>
             <div className="w-feature-wrapper">
@@ -107,17 +106,16 @@ class Welcome extends Component {
                   http://localhost:3005/welcomeimages/sortsearch_2x.png 2x"
                 alt="cupcakes illustration"
               />
-              <h3 className="w-feature-section-title">Sort & Search</h3>
+              <h3 className="w-feature-section-title">{t('common:welcome.ss-title')}</h3>
               <p className="w-feature-description">
-                Sort, categorize, and search through your recipes like you&apos;ve
-                never done before!
+                {t('common:welcome.ss-desc')}
               </p>
             </div>
           </div>
         </section>
         <section className="section-3">
           <h1 className="section-title regular-section-title" id="section-2">
-            Screenshots
+            {t('common:welcome.screenshots')}
           </h1>
           <div className="w-sshot-wrapper-wrapper">
             <div className="w-sshot-wrapper">
@@ -129,8 +127,8 @@ class Welcome extends Component {
                 alt="cupcakes illustration"
               />
               <div className="w-sshot-info">
-                <h3 className="w-sshot-title">Viewing a Recipe</h3>
-                <p className="w-sshot-desc">The recipe viewing panel.</p>
+                <h3 className="w-sshot-title">{t('common:welcome.view-title')}</h3>
+                <p className="w-sshot-desc">{t('common:welcome.view-desc')}</p>
               </div>
             </div>
             <div className="w-sshot-wrapper">
@@ -142,8 +140,8 @@ class Welcome extends Component {
                 alt="cupcakes illustration"
               />
               <div className="w-sshot-info">
-                <h3 className="w-sshot-title">Editing a Recipe</h3>
-                <p className="w-sshot-desc">The recipe viewing panel.</p>
+                <h3 className="w-sshot-title">{t('common:welcome.edit-title')}</h3>
+                <p className="w-sshot-desc">{t('common:welcome.edit-desc')}</p>
               </div>
             </div>
           </div>
@@ -154,8 +152,8 @@ class Welcome extends Component {
             className="footer-gh-logo"
             alt="github logo"
           />
-          <a href="https://github.com/meguna/inthemoodforfood">View this project on github</a>
-          <p>Copyright &copy; 2019 Meguna</p>
+          <a href="https://github.com/meguna/inthemoodforfood">{t('common:welcome.github')}</a>
+          <p>{t('common:welcome.cp')}</p>
         </footer>
       </div>
     );
@@ -167,6 +165,7 @@ Welcome.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
+  t: PropTypes.func.isRequired,
 };
 
 Welcome.defaultProps = {
@@ -178,4 +177,4 @@ const mapDispatchToProps = {
   Welcome,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Welcome);
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(Welcome));

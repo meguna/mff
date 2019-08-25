@@ -12,7 +12,7 @@ class LangChange extends Component {
     const { i18n } = this.props;
     if (e.target.value === 'en') {
       i18n.changeLanguage('en');
-    } else if (e.target.value === 'en') {
+    } else if (e.target.value === 'ja') {
       i18n.changeLanguage('ja');
     }
   }

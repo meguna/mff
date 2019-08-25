@@ -15,7 +15,8 @@
   "header": {
     "account": "Account",
     "logout": "Log Out",
-    "login": "Log In"
+    "login": "Log In",
+    "signup": "Sign Up"
   },
   "recipe" : {
     "ing": "ingredients",
@@ -89,5 +90,25 @@
     "confirm": "You are about to delete this recipe. Are you sure?",
     "yes": "Yes, I am sure.",
     "cancel": "cancel"
+  },
+  "welcome": {
+    "app-name": "Foodnotes",
+    "big-title": "Experimenting in the kitchen has never felt better.",
+    "big-desc": "Designed with serious cooking and baking enthusiasts in mind,\nFoodnotes is a free recipe manager that helps you build complex\nrecipes then track and search them.",
+    "scroll": "scroll to read more",
+    "features": "Features",
+    "complex-title": "Complex Recipes",
+    "complex-desc": "Easily build complex recipes with the ability to group and label ingredients, add pictures, and edit frequently.",
+    "mobile-title": "Mobile Friendly",
+    "mobile-desc": "View, share, or update your recipes on-the-go with our mobile friendly UI.",
+    "ss-title": "Sort & Search",
+    "ss-desc": "Sort, categorize, and search through your recipes like you've never done before!",
+    "screenshots": "Screenshots",
+    "view-title": "Viewing a Recipe",
+    "view-desc": "The recipe viewing panel.",
+    "edit-title": "Editing a Recipe",
+    "edit-desc": "The recipe editing panel.",
+    "github": "View this project on github",
+    "cp": "Copyright © 2019 Meguna"
   }
 }

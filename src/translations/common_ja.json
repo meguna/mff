@@ -15,7 +15,8 @@
   "header" : {
   	"account": "アカウント",
   	"logout": "ログアウト",
-  	"login": "ログイン"
+  	"login": "ログイン",
+    "signup": "アカウント作成"
   },
   "recipe": {
   	"ing": "材料",
@@ -89,5 +90,25 @@
     "confirm": "このレシピを削除します。お間違えないですか？",
     "yes": "はい、削除します",
     "cancel": "キャンセル"
+  },
+  "welcome": {
+    "app-name": "料理日記",
+    "big-title": "キッチン作業を\nデジタル化。",
+    "big-desc": "料理日記は",
+    "scroll": "もっと読む",
+    "features": "機能",
+    "complex-title": "複雑なレシピを作成",
+    "complex-desc": "Easily build complex recipes with the ability to group and label ingredients, add pictures, and edit frequently.",
+    "mobile-title": "モバイル対応",
+    "mobile-desc": "View, share, or update your recipes on-the-go with our mobile friendly UI.",
+    "ss-title": "検索や並べ替え",
+    "ss-desc": "Sort, categorize, and search through your recipes like you've never done before!",
+    "screenshots": "スクリーンショット",
+    "view-title": "レシピ詳細画面",
+    "view-desc": "The recipe viewing panel.",
+    "edit-title": "レシピ更新画面",
+    "edit-desc": "The recipe editing panel.",
+    "github": "ギットハブで見る",
+    "cp": "コピーライト © 2019 メグナ"
   }
 }
