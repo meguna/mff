@@ -859,6 +859,16 @@ Notes
 * mobile support for RecipeList, RecipeInfo
 * mobile support for RecipeForm!!! doozy
 
+## Aug 25
+* spent all day working on final graphics for the Welcome page
+* Welcome page is completed!!!!!!!
+* full translations etc
+
+#### Lessons
+* learned how to use `srcset`. Great [resource](https://bit.ly/2Zr6hYh)
+  on Google Web Fundamentals.
+* lots of dumb headaches with CSS. was kind of a front end review kind of day.
+
 #### Notes
 * For the past few days I've been trying to decide on an appropriate
   mobile implementation for this app. 

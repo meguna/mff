@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { withTranslation } from 'react-i18next';
-import LangChange from '../common/LangChange';
 import './styles.css';
 
 class AuthButton extends Component {
@@ -17,7 +16,6 @@ class AuthButton extends Component {
       if (!isAuthenticated) {
         return (
           <div className="auth-button-wrapper">
-            <LangChange />
             <Link className="auth-button-link" to="/login">
               {t('common:header.login')}
             </Link>

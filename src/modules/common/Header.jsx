@@ -5,7 +5,6 @@ import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { Menu, X } from 'react-feather';
 import AuthButton from '../auth/AuthButton';
-import LangChange from './LangChange';
 
 class Header extends Component {
   constructor(props) {
@@ -28,7 +27,6 @@ class Header extends Component {
       if (!isAuthenticated) {
         return (
           <div className="menu-items-wrapper">
-            <LangChange />
             <Link className="menu-item" to="/login" onClick={this.toggleMenu}>
               {t('common:header.login')}
             </Link>

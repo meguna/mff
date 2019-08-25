@@ -1,7 +1,6 @@
 import React, { Fragment, Component } from 'react';
 import PropTypes from 'prop-types';
 import { withTranslation } from 'react-i18next';
-import './styles.css';
 
 class LangChange extends Component {
   constructor(props) {

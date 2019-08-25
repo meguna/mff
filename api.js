@@ -420,6 +420,7 @@ app.delete('/api/deleteRecipe/:id', checkJwt, checkAuthorized, (req, res) => {
 });
 
 app.use('/static', express.static('static/userImages'));
+app.use('/welcomeimages', express.static('static/welcome'));
 
 app.use((req, res) => {
   res.status(404).sendFile(`${__dirname}/static/404.jpg`);

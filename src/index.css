@@ -58,7 +58,15 @@
   font-weight: 100;
 }
 
+@font-face {
+  font-family: 'Gentona';
+  src: url('./assets/fonts/Gentona-Regular.otf');
+  font-weight: 300;
+}
+
 :root {
+  --key-yellow: #FFFF00;
+  --key-orange: #FC4712;
   --key-red: #FF320C;
   --medium-red: #FF6E54;
   --light-red: #FF9582;
@@ -78,6 +86,10 @@
   --m: 768px;
   --l: 992px;
   --xl: 1200px;
+}
+
+html, body {
+    height: 100%;
 }
 
 body {

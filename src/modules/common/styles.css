@@ -3,12 +3,6 @@
 	flex-direction: column;
 }
 
-.select-lang-dropdown {
-	background-color: var(--key-red);
-	border: 1px solid black;
-	border-radius: 5px;
-	font-weight: 100;
-}
 .menu-item {
     display: block;
     padding: 5vw;
