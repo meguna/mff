@@ -859,16 +859,6 @@ Notes
 * mobile support for RecipeList, RecipeInfo
 * mobile support for RecipeForm!!! doozy
 
-## Aug 25
-* spent all day working on final graphics for the Welcome page
-* Welcome page is completed!!!!!!!
-* full translations etc
-
-#### Lessons
-* learned how to use `srcset`. Great [resource](https://bit.ly/2Zr6hYh)
-  on Google Web Fundamentals.
-* lots of dumb headaches with CSS. was kind of a front end review kind of day.
-
 #### Notes
 * For the past few days I've been trying to decide on an appropriate
   mobile implementation for this app. 
@@ -903,6 +893,24 @@ Notes
 * static class functions in ES6! I didn't realize this was a feature in
   Javascript.
 * conditional routing! easy peasy
+
+## Aug 25
+* spent all day working on final graphics for the Welcome page
+* Welcome page is completed!!!!!!!
+* full translations etc
+
+#### Lessons
+* learned how to use `srcset`. Great [resource](https://bit.ly/2Zr6hYh)
+  on Google Web Fundamentals.
+* For image sizes, this is what I settled on: 
+  * 1920px for 1x, 100vw
+  * 3840px for 2x, 100vw
+  * don't forget ai resolution 72
+  * for each image, I roughly grab the percentage vw from my Illustrator
+    mockup and generate 1x and 2x images based on that percentage.
+* lots of dumb headaches with CSS. was kind of a front end review kind of day.
+* tried to add parallax scrolling with CSS. was too complicated with the
+  html structure I have right now and gave up.
 
 ## To Do Notes - moderate
 
