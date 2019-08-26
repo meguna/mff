@@ -908,6 +908,8 @@ Notes
   * don't forget ai resolution 72
   * for each image, I roughly grab the percentage vw from my Illustrator
     mockup and generate 1x and 2x images based on that percentage.
+  * Then I pass it through the compressor at tinypng.com.
+  * According the google thing, high max is 200kb per image
 * lots of dumb headaches with CSS. was kind of a front end review kind of day.
 * tried to add parallax scrolling with CSS. was too complicated with the
   html structure I have right now and gave up.

@@ -33,7 +33,6 @@ class Field extends PureComponent {
       info,
       labelname,
       t,
-      screen,
     } = this.props;
 
     const TagType = textarea ? 'textarea' : 'input';

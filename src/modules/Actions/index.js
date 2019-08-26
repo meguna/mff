@@ -15,7 +15,6 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
   LOGOUT_SUCCESS,
-  AUTH_NOT_LOGGED_IN,
   SET_SCREEN,
 } from './ActionTypes';
 import Auth0Client from '../auth/Auth';
@@ -133,10 +132,6 @@ export const signup = () => (dispatch) => {
       loginFailure(err);
     });
 };
-
-const notLoggedIn = () => ({
-  type: AUTH_NOT_LOGGED_IN,
-});
 
 const logoutSuccess = () => ({
   type: LOGOUT_SUCCESS,

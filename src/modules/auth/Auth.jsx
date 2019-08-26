@@ -40,7 +40,6 @@ class Auth {
             resolve(res.accessToken);
           })
           .catch((err) => {
-            console.error(err);
             reject(err);
           });
       }
@@ -188,7 +187,6 @@ class Auth {
     return new Promise((resolve, reject) => {
       this.auth0.checkSession({}, (err, authResult) => {
         if (err) {
-          console.error(err);
           reject(err);
         } else {
           this.setSession(authResult);

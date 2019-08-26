@@ -120,7 +120,6 @@ const reducer = (state = INITIAL_STATE, action) => {
     };
   }
   case LOGIN_FAILURE:
-    console.error(action.payload);
     return {
       ...state,
       error: false,

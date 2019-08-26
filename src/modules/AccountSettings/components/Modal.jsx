@@ -80,7 +80,7 @@ class Modal extends Component {
 
   render() {
     const { fieldVal, errorStatus, langVal } = this.state;
-    const { desc, title, t, fieldParamName, i18n } = this.props;
+    const { desc, title, t, fieldParamName } = this.props;
     let formInputElem = null;
     if (fieldParamName === 'language') {
       formInputElem = (
