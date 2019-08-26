@@ -19,11 +19,13 @@ class Welcome extends Component {
   }
 
   render() {
-    const { t } = this.props;
+    const { t, screen } = this.props;
     return (
       <div id="welcome">
         <header className="welcome-header">
-          <Link className="w-main-title-link" to="/welcome">{t('common:welcome.app-name')}</Link>
+          <Link className="w-main-title-link" to="/welcome">
+            {t('common:welcome.app-name')}
+          </Link>
           <LangChange />
         </header>
         <section className="section-1">
@@ -36,36 +38,57 @@ class Welcome extends Component {
             </p>
           </div>
           <div className="links-row">
-            <Link className="welcome-action-unfilled" to="/signup">{t('common:header.signup')}</Link>
-            <Link className="welcome-action-unfilled" to="/login">{t('common:header.login')}</Link>
+            <Link className="welcome-action-unfilled" to="/signup">
+              {t('common:header.signup')}
+            </Link>
+            <Link className="welcome-action-unfilled" to="/login">
+              {t('common:header.login')}
+            </Link>
           </div>
-          <img
-            className="kitchen-table-image"
-            src="http://localhost:3005/welcomeimages/kitchen_table_1x.png"
-            srcSet="http://localhost:3005/welcomeimages/kitchen_table_1x.png 1x,
-              http://localhost:3005/welcomeimages/kitchen_table_2x.png 2x"
-            alt="kitchen table illustration"
-          />
-          <img
-            className="cookie-desktop-image"
-            src="http://localhost:3005/welcomeimages/desktop_cookie_1x.png"
-            srcSet="http://localhost:3005/welcomeimages/desktop_cookie_1x.png 1x,
-              http://localhost:3005/welcomeimages/desktop_cookie_2x.png 2x"
-            alt="monkey chef illustration"
-          />
-          <img
-            className="recipe-corner-image"
-            src="http://localhost:3005/welcomeimages/recipe_corner_1x.png"
-            srcSet="http://localhost:3005/welcomeimages/recipe_corner_1x.png 1x,
-              http://localhost:3005/welcomeimages/recipe_corner_2x.png 2x"
-            alt="abstract recipe illustration"
-          />
-          <div className="down-button-wrapper-wrapper">
-            <p className="down-button-desc">{t('common:welcome.scroll')}</p>
-            <a href="#section-2" className="down-button-wrapper">
-              <ChevronDown />
-            </a>
-          </div>
+          {(screen !== 'mobile') && (
+            <img
+              className="kitchen-table-image"
+              src="http://localhost:3005/welcomeimages/kitchen_table_1x.png"
+              srcSet="http://localhost:3005/welcomeimages/kitchen_table_1x.png 1x,
+                http://localhost:3005/welcomeimages/kitchen_table_2x.png 2x"
+              alt="kitchen table illustration"
+            />
+          )}
+          {(screen !== 'mobile') && (
+            <img
+              className="cookie-desktop-image"
+              src="http://localhost:3005/welcomeimages/desktop_cookie_1x.png"
+              srcSet="http://localhost:3005/welcomeimages/desktop_cookie_1x.png 1x,
+                http://localhost:3005/welcomeimages/desktop_cookie_2x.png 2x"
+              alt="monkey chef illustration"
+            />
+          )}
+          {(screen === 'mobile') && (
+            <img
+              className="cookie-mobile-image"
+              src="http://localhost:3005/welcomeimages/mobile_cookie_1x.png"
+              srcSet="http://localhost:3005/welcomeimages/mobile_cookie_1x.png 1x,
+                http://localhost:3005/welcomeimages/mobile_cookie_2x.png 2x"
+              alt="monkey chef illustration"
+            />
+          )}
+          {(screen !== 'mobile') && (
+            <img
+              className="recipe-corner-image"
+              src="http://localhost:3005/welcomeimages/recipe_corner_1x.png"
+              srcSet="http://localhost:3005/welcomeimages/recipe_corner_1x.png 1x,
+                http://localhost:3005/welcomeimages/recipe_corner_2x.png 2x"
+              alt="abstract recipe illustration"
+            />
+          )}
+          {(screen !== 'mobile') && (
+            <div className="down-button-wrapper-wrapper">
+              <p className="down-button-desc">{t('common:welcome.scroll')}</p>
+              <a href="#section-2" className="down-button-wrapper">
+                <ChevronDown />
+              </a>
+            </div>
+          )}
         </section>
         <section className="section-2">
           <h1 className="section-title regular-section-title" id="section-2">
@@ -80,7 +103,9 @@ class Welcome extends Component {
                   http://localhost:3005/welcomeimages/complexity_2x.png 2x"
                 alt="ramen illustration"
               />
-              <h3 className="w-feature-section-title">{t('common:welcome.complex-title')}</h3>
+              <h3 className="w-feature-section-title">
+                {t('common:welcome.complex-title')}
+              </h3>
               <p className="w-feature-description">
                 {t('common:welcome.complex-desc')}
               </p>
@@ -93,7 +118,9 @@ class Welcome extends Component {
                   http://localhost:3005/welcomeimages/mobility_2x.png 2x"
                 alt="pizza in single slice wrapper illustration"
               />
-              <h3 className="w-feature-section-title">{t('common:welcome.mobile-title')}</h3>
+              <h3 className="w-feature-section-title">
+                {t('common:welcome.mobile-title')}
+              </h3>
               <p className="w-feature-description">
                 {t('common:welcome.mobile-desc')}
               </p>
@@ -106,7 +133,9 @@ class Welcome extends Component {
                   http://localhost:3005/welcomeimages/sortsearch_2x.png 2x"
                 alt="cupcakes illustration"
               />
-              <h3 className="w-feature-section-title">{t('common:welcome.ss-title')}</h3>
+              <h3 className="w-feature-section-title">
+                {t('common:welcome.ss-title')}
+              </h3>
               <p className="w-feature-description">
                 {t('common:welcome.ss-desc')}
               </p>
@@ -152,7 +181,9 @@ class Welcome extends Component {
             className="footer-gh-logo"
             alt="github logo"
           />
-          <a href="https://github.com/meguna/inthemoodforfood">{t('common:welcome.github')}</a>
+          <a href="https://github.com/meguna/inthemoodforfood">
+            {t('common:welcome.github')}
+          </a>
           <p>{t('common:welcome.cp')}</p>
         </footer>
       </div>

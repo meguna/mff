@@ -903,8 +903,9 @@ Notes
 * learned how to use `srcset`. Great [resource](https://bit.ly/2Zr6hYh)
   on Google Web Fundamentals.
 * For image sizes, this is what I settled on: 
-  * 1920px for 1x, 100vw
-  * 3840px for 2x, 100vw
+  * desktop: 1920px for 1x, 100vw / 3840px for 2x, 100vw
+  * mobile: 563px for 1x (width of iphone x resolution), 100vw /
+    1125px for 2x, 100vw
   * don't forget ai resolution 72
   * for each image, I roughly grab the percentage vw from my Illustrator
     mockup and generate 1x and 2x images based on that percentage.
@@ -913,6 +914,9 @@ Notes
 * lots of dumb headaches with CSS. was kind of a front end review kind of day.
 * tried to add parallax scrolling with CSS. was too complicated with the
   html structure I have right now and gave up.
+
+## Aug 26
+* complete mobile styles for Welcome page
 
 ## To Do Notes - moderate
 
@@ -965,13 +969,13 @@ Notes
 * ~~set up error boundary components for: RecipeInfo, RecipeForm, RecipeList,
   and general fallback for entire app~~
 * ~~image handling (CRUD for images per recipe)~~
-* search functionality
+* ~~search functionality~~
 * ~~routing~~
 * ~~authentication with auth0~~
-* Welcome page
-* i18n with i18next & react-i18next
-* responsive styling for mobile screens
-* graphics / illustrations
+* ~~Welcome page~~
+* ~~i18n with i18next & react-i18next~~
+* ~~responsive styling for mobile screens~~
+* ~~graphics / illustrations~~
 * deploy to web
 * set up demo page
 
