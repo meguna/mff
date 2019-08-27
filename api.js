@@ -88,7 +88,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(cors());
 
-const server = app.listen(3005, '127.0.0.1');
+const server = app.listen(3010, '127.0.0.1');
 server.timeout = 1000 * 60 * 10;
 
 app.use((req, res, next) => {

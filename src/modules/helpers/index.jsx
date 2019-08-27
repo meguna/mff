@@ -1,7 +1,7 @@
 import HashId from 'hashids';
 import Auth0Client from '../auth/Auth';
 
-export const API_ROOT = 'http://localhost:3005/api';
+export const API_ROOT = 'http://localhost:3010/api';
 
 export const callApi = (endpoint, options) => {
   return new Promise((resolve, reject) => {
