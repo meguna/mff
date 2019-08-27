@@ -105,9 +105,9 @@
     "ss-desc": "Sort, categorize, and search through your recipes like you've never done before!",
     "screenshots": "Screenshots",
     "view-title": "Viewing a Recipe",
-    "view-desc": "The recipe viewing panel.",
+    "view-desc": "",
     "edit-title": "Editing a Recipe",
-    "edit-desc": "The recipe editing panel.",
+    "edit-desc": "",
     "github": "View this project on github",
     "cp": "Copyright © 2019 Meguna"
   }

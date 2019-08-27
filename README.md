@@ -916,10 +916,21 @@ Notes
   html structure I have right now and gave up.
 
 ## Aug 26
-* complete mobile styles for Welcome page
+* complete mobile styles for Welcome page - big task!
+* finish Japanese translations
+
+## Aug 27
+* heading into meguna.co territory....
+* update featured post mechanism
+* write posts summarizing meguna.co, Foodnotes, and c4d art
+* make new graphics to go with the posts
+* redesign basically everything
+* clean up ENTIRE website
+* deploy new website to web
 
 ## To Do Notes - moderate
 
+* print button
 * back/forward buttons on welcome page shows nothing
 * maybe signup/signout shouldnt be on paths but should just be popup windows
 * make signup/signout modals closable? what was the reasoning behind making it
