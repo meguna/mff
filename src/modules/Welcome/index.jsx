@@ -48,36 +48,36 @@ class Welcome extends Component {
           {(screen !== 'mobile') && (
             <img
               className="kitchen-table-image"
-              src="http://localhost:3010/welcomeimages/kitchen_table_1x.png"
-              srcSet="http://localhost:3010/welcomeimages/kitchen_table_1x.png 1x,
-                http://localhost:3010/welcomeimages/kitchen_table_2x.png 2x"
+              src="/api/welcomeimages/kitchen_table_1x.png"
+              srcSet="/api/welcomeimages/kitchen_table_1x.png 1x,
+                /api/welcomeimages/kitchen_table_2x.png 2x"
               alt="kitchen table illustration"
             />
           )}
           {(screen !== 'mobile') && (
             <img
               className="cookie-desktop-image"
-              src="http://localhost:3010/welcomeimages/desktop_cookie_1x.png"
-              srcSet="http://localhost:3010/welcomeimages/desktop_cookie_1x.png 1x,
-                http://localhost:3010/welcomeimages/desktop_cookie_2x.png 2x"
+              src="/api/welcomeimages/desktop_cookie_1x.png"
+              srcSet="/api/welcomeimages/desktop_cookie_1x.png 1x,
+                /api/welcomeimages/desktop_cookie_2x.png 2x"
               alt="monkey chef illustration"
             />
           )}
           {(screen === 'mobile') && (
             <img
               className="cookie-mobile-image"
-              src="http://localhost:3010/welcomeimages/mobile_cookie_1x.png"
-              srcSet="http://localhost:3010/welcomeimages/mobile_cookie_1x.png 1x,
-                http://localhost:3010/welcomeimages/mobile_cookie_2x.png 2x"
+              src="/api/welcomeimages/mobile_cookie_1x.png"
+              srcSet="/api/welcomeimages/mobile_cookie_1x.png 1x,
+                /api/welcomeimages/mobile_cookie_2x.png 2x"
               alt="monkey chef illustration"
             />
           )}
           {(screen !== 'mobile') && (
             <img
               className="recipe-corner-image"
-              src="http://localhost:3010/welcomeimages/recipe_corner_1x.png"
-              srcSet="http://localhost:3010/welcomeimages/recipe_corner_1x.png 1x,
-                http://localhost:3010/welcomeimages/recipe_corner_2x.png 2x"
+              src="/api/welcomeimages/recipe_corner_1x.png"
+              srcSet="/api/welcomeimages/recipe_corner_1x.png 1x,
+                /api/welcomeimages/recipe_corner_2x.png 2x"
               alt="abstract recipe illustration"
             />
           )}
@@ -98,9 +98,9 @@ class Welcome extends Component {
             <div className="w-feature-wrapper">
               <img
                 className="w-feature-image"
-                src="http://localhost:3010/welcomeimages/complexity_1x.png"
-                srcSet="http://localhost:3010/welcomeimages/complexity_1x.png 1x,
-                  http://localhost:3010/welcomeimages/complexity_2x.png 2x"
+                src="/api/welcomeimages/complexity_1x.png"
+                srcSet="/api/welcomeimages/complexity_1x.png 1x,
+                  /api/welcomeimages/complexity_2x.png 2x"
                 alt="ramen illustration"
               />
               <h3 className="w-feature-section-title">
@@ -113,9 +113,9 @@ class Welcome extends Component {
             <div className="w-feature-wrapper">
               <img
                 className="w-feature-image"
-                src="http://localhost:3010/welcomeimages/mobility_1x.png"
-                srcSet="http://localhost:3010/welcomeimages/mobility_1x.png 1x,
-                  http://localhost:3010/welcomeimages/mobility_2x.png 2x"
+                src="/api/welcomeimages/mobility_1x.png"
+                srcSet="/api/welcomeimages/mobility_1x.png 1x,
+                  /api/welcomeimages/mobility_2x.png 2x"
                 alt="pizza in single slice wrapper illustration"
               />
               <h3 className="w-feature-section-title">
@@ -128,9 +128,9 @@ class Welcome extends Component {
             <div className="w-feature-wrapper">
               <img
                 className="w-feature-image"
-                src="http://localhost:3010/welcomeimages/sortsearch_1x.png"
-                srcSet="http://localhost:3010/welcomeimages/sortsearch_1x.png 1x,
-                  http://localhost:3010/welcomeimages/sortsearch_2x.png 2x"
+                src="/api/welcomeimages/sortsearch_1x.png"
+                srcSet="/api/welcomeimages/sortsearch_1x.png 1x,
+                  /api/welcomeimages/sortsearch_2x.png 2x"
                 alt="cupcakes illustration"
               />
               <h3 className="w-feature-section-title">
@@ -150,9 +150,9 @@ class Welcome extends Component {
             <div className="w-sshot-wrapper">
               <img
                 className="w-sshot-image"
-                src="http://localhost:3010/welcomeimages/listview_1x.png"
-                srcSet="http://localhost:3010/welcomeimages/listview_1x.png 1x,
-                  http://localhost:3010/welcomeimages/listview_2x.png 2x"
+                src="/api/welcomeimages/listview_1x.png"
+                srcSet="/api/welcomeimages/listview_1x.png 1x,
+                  /api/welcomeimages/listview_2x.png 2x"
                 alt="cupcakes illustration"
               />
               <div className="w-sshot-info">
@@ -163,9 +163,9 @@ class Welcome extends Component {
             <div className="w-sshot-wrapper">
               <img
                 className="w-sshot-image"
-                src="http://localhost:3010/welcomeimages/editview_1x.png"
-                srcSet="http://localhost:3010/welcomeimages/editview_1x.png 1x,
-                  http://localhost:3010/welcomeimages/editview_2x.png 2x"
+                src="/api/welcomeimages/editview_1x.png"
+                srcSet="/api/welcomeimages/editview_1x.png 1x,
+                  /api/welcomeimages/editview_2x.png 2x"
                 alt="cupcakes illustration"
               />
               <div className="w-sshot-info">
@@ -177,7 +177,7 @@ class Welcome extends Component {
         </section>
         <footer className="welcome-footer">
           <img
-            src="http://localhost:3010/welcomeimages/github.svg"
+            src="/api/welcomeimages/github.svg"
             className="footer-gh-logo"
             alt="github logo"
           />

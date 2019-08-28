@@ -17,7 +17,7 @@ const RecipeImages = ({ images, name }) => {
             <div className="form-image-wrapper" key={image.elemId}>
               <img
                 className="ri-image"
-                src={`http://localhost:3010/static/${image.imagePath}`}
+                src={`/api/static/${image.imagePath}`}
                 alt={name}
               />
             </div>

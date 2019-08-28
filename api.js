@@ -14,9 +14,8 @@ const jwksRsa = require('jwks-rsa');
 const app = express();
 
 const connection = mysql.createConnection({
-  host: 'localhost',
   user: 'root',
-  port: 3306,
+  socketPath: process.env.MYSQL_SOCKET,
   password: process.env.DB_PASS,
   database: 'mffdb',
   multipleStatements: true,
@@ -419,8 +418,31 @@ app.delete('/api/deleteRecipe/:id', checkJwt, checkAuthorized, (req, res) => {
   });
 });
 
-app.use('/static', express.static('static/userImages'));
-app.use('/welcomeimages', express.static('static/welcome'));
+app.get('/api/static/:file', (req, res) => {
+  const options = {
+    root: `${__dirname}/static/userImages/`,
+    dotfiles: 'deny',
+    headers: {
+      'x-timestamp': Date.now(),
+      'x-sent': true,
+    },
+  };
+  const fileName = req.params.file;
+  res.sendFile(`${fileName}`, options);
+});
+
+app.get('/api/welcomeimages/:file', (req, res) => {
+  const options = {
+    root: `${__dirname}/static/welcome/`,
+    dotfiles: 'deny',
+    headers: {
+      'x-timestamp': Date.now(),
+      'x-sent': true,
+    },
+  };
+  const fileName = req.params.file;
+  res.sendFile(`${fileName}`, options);
+});
 
 app.use((req, res) => {
   res.status(404).sendFile(`${__dirname}/static/404.jpg`);
