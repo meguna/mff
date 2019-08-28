@@ -1,7 +1,6 @@
 /mockups
 /node_modules
 /data
-/static
 
 npm-debug.log*
 yarn-debug.log*
