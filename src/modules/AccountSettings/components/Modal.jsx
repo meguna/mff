@@ -31,8 +31,10 @@ class Modal extends Component {
     });
     if (e.target.value === 'en') {
       i18n.changeLanguage('en');
+      document.documentElement.setAttribute('lang', 'en');
     } else if (e.target.value === 'en') {
       i18n.changeLanguage('ja');
+      document.documentElement.setAttribute('lang', 'ja');
     }
   }
 

@@ -88,6 +88,15 @@
   --xl: 1200px;
 }
 
+:lang(ja) {
+  font-weight: 100;
+  font-family: sans-serif !important;
+};
+
+:lang(ja) .w-main-title-link {
+  font-weight: 300;
+}
+
 html, body {
     height: 100%;
 }
