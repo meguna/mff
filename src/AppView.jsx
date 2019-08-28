@@ -22,7 +22,6 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    document.title = 'In the Mood for Food';
     const { checkAuthStatus, fetchRecipes, sortMethod } = this.props;
 
     const cb = () => {
